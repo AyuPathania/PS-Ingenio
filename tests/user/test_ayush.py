@@ -36,4 +36,4 @@ def test_valid_login_web(web_user_driver, web_advisor_driver, test_data):
     advisor.input_text(*advisor_locators.EMAIL, test_data['advisor']['valid_email'])
     advisor.input_text(*advisor_locators.PASSWORD, test_data['advisor']['valid_password'])
     user.input_text(*locators.EMAIL, test_data['user']['email'])
-    user.input_text(*locators.PASSWORD, test_data['user']['valid_password'])
+    # user.input_text(*locators.PASSWORD, test_data['user']['valid_password'])
