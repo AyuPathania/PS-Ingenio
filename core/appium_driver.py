@@ -187,7 +187,19 @@ class AppiumDriver:
         if self.driver:
             self.driver.quit()
             print("Driver quit successfully")
-    
+    def go_to_url(self, url):
+        """
+        Navigate to the specified URL (for web testing).
+        """
+        if hasattr(self, 'driver') and self.driver:
+            try:
+                self.driver.get(url)
+                print(f"Navigated to URL: {url}")
+            except Exception as e:
+                print(f"Failed to navigate to URL {url}: {e}")
+                raise
+        else:
+            print("Driver not initialized. Cannot navigate to URL.")
     # Element Finding Methods
     def find_element(self, locator_type, locator_value, timeout=None):
         """Find element with explicit wait"""
