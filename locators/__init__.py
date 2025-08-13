@@ -1,1 +1,0 @@
-# Locators package initialization

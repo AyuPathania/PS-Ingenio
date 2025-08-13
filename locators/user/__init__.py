@@ -1,1 +1,0 @@
-# User locators package initialization
