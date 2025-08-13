@@ -21,3 +21,7 @@ class TestAyush:
         advisor.click(*advisor_locators.OTP_SEND)
         user.click(*locators.VERIFY_BUTTON)
 
+
+
+
+print("Valid login test completed on Android User app")
