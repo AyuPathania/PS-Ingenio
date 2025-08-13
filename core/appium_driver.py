@@ -3,6 +3,8 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
+
 import time
 import os
 from config.config import Config
@@ -187,6 +189,7 @@ class AppiumDriver:
         if self.driver:
             self.driver.quit()
             print("Driver quit successfully")
+    
     def go_to_url(self, url):
         """
         Navigate to the specified URL (for web testing).
@@ -390,29 +393,41 @@ class AppiumDriver:
             print(f"LambdaTest status set to: {status}")
         except Exception as e:
             print(f"Failed to set LambdaTest status: {e}")
-
-from appium import webdriver
-from appium.webdriver.common.appiumby import AppiumBy
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import time
-import os
-from config.config import Config
-
-class AppiumDriver:
-    def __init__(self, platform='android', user_type='user'):
-        """
-        Initialize Appium driver based on platform and user type
+    
+    def handle_notification_alert(self, action='allow'):
+        """Handle notification permission alert
         
         Args:
-            platform (str): 'android', 'ios', or 'web'
-            user_type (str): 'user' or 'advisor'
+            action (str): 'allow' or 'block' notifications
         """
-        self.platform = platform
-        self.user_type = user_type
-        self.driver = None
-        self.wait = None
+        try:
+            # Wait a moment for the alert to appear
+            time.sleep(2)
+            
+            # Switch to the alert
+            alert = self.driver.switch_to.alert
+            print("Going to alert")
+            print(alert.text)
+            
+            if action.lower() == 'allow':
+                # Accept the alert (this will allow notifications)
+                alert.accept()
+                print("Accepted notification alert (Allow)")
+                return True
+            elif action.lower() == 'block':
+                # Dismiss the alert (this will block notifications)
+                alert.dismiss()
+                print("Dismissed notification alert (Block)")
+                return True
+                
+        except Exception as e:
+            print(f"Failed to handle notification alert: {e}")
+            # Switch back to default content
+            try:
+                self.driver.switch_to.default_content()
+            except:
+                pass
+            return False
         
     def start_driver(self):
         """Start the Appium driver with LambdaTest capabilities using working structure"""
