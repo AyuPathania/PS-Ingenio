@@ -53,7 +53,7 @@ class TestAdvisorLogin:
             # Wait for and click Sign In Button
             user.wait_for_element_visible(*locators.SIGN_IN_BUTTON)
             user.click(*locators.SIGN_IN_BUTTON)
-            time.sleep(40)
+            time.sleep(30)
             
             
             # Verify we're logged in by checking profile element
@@ -62,22 +62,40 @@ class TestAdvisorLogin:
             
             user.wait_for_element_visible(*locators.SEARCH_ADVISOR)
             user.input_text(*locators.SEARCH_ADVISOR, "Hubert Blaine")
-            time.sleep(5)
+            time.sleep(10)
             user.click(*locators.FIND_ADVISOR)
-            time.sleep(5)
+            time.sleep(10)
             user.click(*locators.CLICK_ADVISOR)
             user.wait_for_element_visible(*locators.CLICK_CHAT)
             user.click(*locators.CLICK_CHAT)
             user.wait_for_element_visible(*locators.START_CHAT)
             user.click(*locators.START_CHAT)
-            advisor.wait_for_element_visible(*locators.ACCEPT_CHAT)
+            time.sleep(10)
             advisor.click(*locators.ACCEPT_CHAT)
-
-
-
-
-
+            time.sleep(10)
+           # advisor.input_text(*locators.TYPE_MESSAGE_ADVISOR2USER, test_data['advisor']['messageadvisor'])
+           # advisor.click(*locators.SEND_MESSAGE_BUTTON_ADVISOR)
             
+           # user.input_text(*locators.TYPE_MESSAGE_USER2ADVISOR, test_data['user']['messageuser'])
+           # user.click(*locators.SEND_MESSAGE_BUTTON_USER)
+           # time.sleep(10)
+            user.go_to_url("https://eu.mixpanel.com/login/")
+            user.wait_for_element_visible(*locators.MIXPANEL_EMAIL)
+            user.input_text(*locators.MIXPANEL_EMAIL, test_data['user']['valid_email_mp'])
+            user.click(*locators.MIXPANEL_CONTINUE)
+            user.input_text(*locators.MIXPANEL_PASSWORD, test_data['user']['valid_password_mp'])
+            user.click(*locators.MIXPANEL_CONTINUE)
+            time.sleep(20)
+            user.click(*locators.MIXPANEL_LEFTPANEL)
+            user.click(*locators.MIXPANEL_LEFTPANEL_PROJECT)
+            time.sleep(15)
+            user.click(*locators.MIXPANEL_USER)
+            time.sleep(10)
+            user.click(*locators.MIXPANEL_USER_SELECTION)
+            time.sleep(10)
+            user.click(*locators.MIXPANEL_USER_CHAT)
+            time.sleep(10)
+
             
             
             # Wait a moment to see the result
