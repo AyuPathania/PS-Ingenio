@@ -133,3 +133,4 @@ screenshots/
 reports/
 *.log
 **/__init__.py
+.DS_Store
