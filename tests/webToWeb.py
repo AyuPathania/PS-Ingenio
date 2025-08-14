@@ -1,5 +1,4 @@
-from core.web_driver import WebDriver
-from core.web_elements import WebElements
+from drivers.web_driver import WebDriver
 from locators.test.ayush_locator import AyushLocator
 import time
 
@@ -29,11 +28,7 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*locators.AVAILABLE_ADVISOR)
             advisor.click(*locators.AVAILABLE_ADVISOR)
             time.sleep(10)
-        
-            # Navigate to the staging URL
 
-        
-            
             # Wait for and click Sign In button
             user.wait_for_element_visible(*locators.SIGN_IN)
             user.click(*locators.SIGN_IN)
@@ -53,7 +48,7 @@ class TestAdvisorLogin:
             # Wait for and click Sign In Button
             user.wait_for_element_visible(*locators.SIGN_IN_BUTTON)
             user.click(*locators.SIGN_IN_BUTTON)
-            time.sleep(30)
+            user.wait_for_page_load()
             
             
             # Verify we're logged in by checking profile element
@@ -73,12 +68,12 @@ class TestAdvisorLogin:
             time.sleep(10)
             advisor.click(*locators.ACCEPT_CHAT)
             time.sleep(10)
-           # advisor.input_text(*locators.TYPE_MESSAGE_ADVISOR2USER, test_data['advisor']['messageadvisor'])
-           # advisor.click(*locators.SEND_MESSAGE_BUTTON_ADVISOR)
+        #    # advisor.input_text(*locators.TYPE_MESSAGE_ADVISOR2USER, test_data['advisor']['messageadvisor'])
+        #    # advisor.click(*locators.SEND_MESSAGE_BUTTON_ADVISOR)
             
-           # user.input_text(*locators.TYPE_MESSAGE_USER2ADVISOR, test_data['user']['messageuser'])
-           # user.click(*locators.SEND_MESSAGE_BUTTON_USER)
-           # time.sleep(10)
+        #    # user.input_text(*locators.TYPE_MESSAGE_USER2ADVISOR, test_data['user']['messageuser'])
+        #    # user.click(*locators.SEND_MESSAGE_BUTTON_USER)
+        #    # time.sleep(10)
             user.go_to_url("https://eu.mixpanel.com/login/")
             user.wait_for_element_visible(*locators.MIXPANEL_EMAIL)
             user.input_text(*locators.MIXPANEL_EMAIL, test_data['user']['valid_email_mp'])

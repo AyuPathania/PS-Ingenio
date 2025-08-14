@@ -2,8 +2,8 @@ import pytest
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from core.appium_driver import AppiumDriver
-from core.web_driver import WebDriver
+from drivers.appium_driver import AppiumDriver
+from drivers.web_driver import WebDriver
 from config.config import Config
 
 @pytest.fixture(scope="function")
