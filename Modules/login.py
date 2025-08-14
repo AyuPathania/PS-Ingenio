@@ -22,6 +22,7 @@ class Login:
             user.wait_for_element_visible(*locators.SIGN_IN_BUTTON)
             user.click(*locators.SIGN_IN_BUTTON)
             user.wait_for_page_load()
+            user.handle_alert()
             
         except Exception as e:
             print(f"Test failed: {e}")
@@ -39,6 +40,11 @@ class Login:
             advisor.wait_for_element_visible(*locators.PASSWORD_ADVISOR)
             advisor.input_text(*locators.PASSWORD_ADVISOR, test_data['advisor']['valid_password'])
             advisor.click(*locators.SIGN_IN_BUTTON_ADVISOR)
+            advisor.wait_for_element_visible(*locators.ALLOW_NOTIFICATIONS)
+            advisor.click(*locators.ALLOW_NOTIFICATIONS)
+            time.sleep(30)
+            advisor.switch_to.alert.accept()
+            # advisor.handle_alert()
             advisor.wait_for_element_visible(*locators.PROFILE_ADVISOR)
             time.sleep(30)
             advisor.click(*locators.AWAY_ADVISOR)

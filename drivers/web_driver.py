@@ -57,26 +57,44 @@ class WebDriver:
             
             # Set basic capabilities exactly like your Java code
             web_caps.set_capability("browserName", self.browser)  # Use original case (e.g., "Chrome")
-            web_caps.set_capability("platformName", "Windows 11")
+            web_caps.set_capability("platformName", "Windows 10")
             web_caps.set_capability("browserVersion", "latest")
-            
-            # Add Chrome-specific options for notification handling
-            if self.browser.lower() == 'chrome':
-                # Set notification preferences to automatically allow notifications
-                # This prevents the notification permission dialog from appearing
-                # 1 = Allow notifications, 2 = Block notifications, 0 = Ask every time
-                web_caps.set_capability("goog:chromeOptions", {
-                    "prefs": {
-                        "profile.default_content_setting_values.notifications": 1
-                    }
-                })
+            web_caps.set_capability("goog:chromeOptions", {
+                    "args": [
+                        "lang=en_GB",
+                        "start-maximized",
+                        "disable-popup-blocking",
+                        "disable-sync",
+                        "disable-search-engine-choice-screen",
+                        "--disable-features=DisableLoadExtensionCommandLineSwitch",
+                        "profile-directory=Default"
+                    ]
+            })
             
             # Create LT:Options exactly like your Java code
             lt_options_web = {
-                "user": Config.LAMBDATEST_USERNAME,
+                "username": Config.LAMBDATEST_USERNAME,
+                "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
                 "build": "WebAndMobileChat",
-                "name": f"Web {user_type.title()} Test"
+                "name": f"Web {user_type.title()} Test",
+                "platform": "Windows 10",
+                "version": "latest",
+                "selenium_version": "4.0.0",
+                "w3c": True,
+                "commandLog": True,
+                "console": True,
+                "idleTimeout": 300,
+                "isRealMobile": False,
+                "maxDuration": 20,
+                "queueTimeout": "900",
+                "systemLog": True,
+                "visual": True,
+                "goog:chromeOptions": {
+                    "prefs": {
+                        "profile.default_content_setting_values.notifications": 1
+                    }
+                }
             }
             
             # Set LT:Options capability
