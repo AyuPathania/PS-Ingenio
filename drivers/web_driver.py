@@ -702,3 +702,118 @@ class WebDriver:
         except Exception as e:
             print(f"Error waiting for title: {e}")
             return False
+    
+    # Assertion Methods
+    def assert_element_text_equals(self, locator_type, locator_value, expected_text, timeout=None):
+        """Assert that element text equals expected text"""
+        actual_text = self.get_element_text(locator_type, locator_value, timeout)
+        assert actual_text == expected_text, f"Expected '{expected_text}', but got '{actual_text}' for element {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Element text equals '{expected_text}'")
+        return True
+    
+    def assert_element_contains_text(self, locator_type, locator_value, expected_text, timeout=None):
+        """Assert that element contains expected text"""
+        actual_text = self.get_element_text(locator_type, locator_value, timeout)
+        assert expected_text in actual_text, f"Text '{expected_text}' not found in '{actual_text}' for element {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Element contains text '{expected_text}'")
+        return True
+    
+    def assert_element_is_displayed(self, locator_type, locator_value, timeout=None):
+        """Assert that element is displayed"""
+        is_displayed = self.is_element_displayed(locator_type, locator_value, timeout)
+        assert is_displayed, f"Element {locator_type} = {locator_value} is not displayed"
+        print(f"✓ Assertion passed: Element is displayed")
+        return True
+    
+    def assert_element_is_enabled(self, locator_type, locator_value, timeout=None):
+        """Assert that element is enabled"""
+        is_enabled = self.is_element_enabled(locator_type, locator_value, timeout)
+        assert is_enabled, f"Element {locator_type} = {locator_value} is not enabled"
+        print(f"✓ Assertion passed: Element is enabled")
+        return True
+    
+    def assert_element_is_not_displayed(self, locator_type, locator_value, timeout=None):
+        """Assert that element is not displayed"""
+        is_displayed = self.is_element_displayed(locator_type, locator_value, timeout)
+        assert not is_displayed, f"Element {locator_type} = {locator_value} is displayed but should not be"
+        print(f"✓ Assertion passed: Element is not displayed")
+        return True
+    
+    def assert_element_is_not_enabled(self, locator_type, locator_value, timeout=None):
+        """Assert that element is not enabled"""
+        is_enabled = self.is_element_enabled(locator_type, locator_value, timeout)
+        assert not is_enabled, f"Element {locator_type} = {locator_value} is enabled but should not be"
+        print(f"✓ Assertion passed: Element is not enabled")
+        return True
+    
+    def assert_url_contains(self, expected_url_part):
+        """Assert that current URL contains expected text"""
+        current_url = self.get_current_url()
+        assert expected_url_part in current_url, f"URL '{current_url}' does not contain '{expected_url_part}'"
+        print(f"✓ Assertion passed: URL contains '{expected_url_part}'")
+        return True
+    
+    def assert_url_equals(self, expected_url):
+        """Assert that current URL equals expected URL"""
+        current_url = self.get_current_url()
+        assert current_url == expected_url, f"Expected URL '{expected_url}', but got '{current_url}'"
+        print(f"✓ Assertion passed: URL equals '{expected_url}'")
+        return True
+    
+    def assert_title_contains(self, expected_title_part):
+        """Assert that page title contains expected text"""
+        current_title = self.get_title()
+        assert expected_title_part in current_title, f"Title '{current_title}' does not contain '{expected_title_part}'"
+        print(f"✓ Assertion passed: Title contains '{expected_title_part}'")
+        return True
+    
+    def assert_title_equals(self, expected_title):
+        """Assert that page title equals expected title"""
+        current_title = self.get_title()
+        assert current_title == expected_title, f"Expected title '{expected_title}', but got '{current_title}'"
+        print(f"✓ Assertion passed: Title equals '{expected_title}'")
+        return True
+    
+    def assert_element_attribute_equals(self, locator_type, locator_value, attribute, expected_value, timeout=None):
+        """Assert that element attribute equals expected value"""
+        actual_value = self.get_element_attribute(locator_type, locator_value, attribute, timeout)
+        assert actual_value == expected_value, f"Expected attribute '{attribute}' = '{expected_value}', but got '{actual_value}' for element {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Attribute '{attribute}' equals '{expected_value}'")
+        return True
+    
+    def assert_element_attribute_contains(self, locator_type, locator_value, attribute, expected_value, timeout=None):
+        """Assert that element attribute contains expected value"""
+        actual_value = self.get_element_attribute(locator_type, locator_value, attribute, timeout)
+        assert expected_value in actual_value, f"Attribute '{attribute}' = '{actual_value}' does not contain '{expected_value}' for element {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Attribute '{attribute}' contains '{expected_value}'")
+        return True
+    
+    def assert_element_count_equals(self, locator_type, locator_value, expected_count, timeout=None):
+        """Assert that number of elements equals expected count"""
+        elements = self.find_elements(locator_type, locator_value, timeout)
+        actual_count = len(elements)
+        assert actual_count == expected_count, f"Expected {expected_count} elements, but found {actual_count} for {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Found {actual_count} elements as expected")
+        return True
+    
+    def assert_element_count_greater_than(self, locator_type, locator_value, min_count, timeout=None):
+        """Assert that number of elements is greater than minimum count"""
+        elements = self.find_elements(locator_type, locator_value, timeout)
+        actual_count = len(elements)
+        assert actual_count > min_count, f"Expected more than {min_count} elements, but found {actual_count} for {locator_type} = {locator_value}"
+        print(f"✓ Assertion passed: Found {actual_count} elements (greater than {min_count})")
+        return True
+    
+    def assert_text_present_on_page(self, expected_text, timeout=None):
+        """Assert that text is present anywhere on the page"""
+        text_found = self.wait_for_text_present(expected_text, timeout)
+        assert text_found, f"Text '{expected_text}' not found on page after timeout"
+        print(f"✓ Assertion passed: Text '{expected_text}' found on page")
+        return True
+    
+    def assert_text_not_present_on_page(self, unexpected_text, timeout=None):
+        """Assert that text is not present anywhere on the page"""
+        text_found = self.wait_for_text_present(unexpected_text, timeout)
+        assert not text_found, f"Text '{unexpected_text}' found on page but should not be present"
+        print(f"✓ Assertion passed: Text '{unexpected_text}' not found on page")
+        return True

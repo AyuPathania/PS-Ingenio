@@ -35,6 +35,10 @@ class AyushLocator:
     ACCEPT_CHAT = (By.XPATH, "(//button[normalize-space()='ANSWER CHAT'])[1]")
     TYPE_MESSAGE_ADVISOR2USER = (By.XPATH, "//textarea[@placeholder='Type your message here']")
     SEND_MESSAGE_BUTTON_ADVISOR = (By.XPATH, "//button[normalize-space()='Send']")
+    TOTAL_DURATION = (By.XPATH, "//label[normalize-space()='Total duration']/following-sibling::span")
+    YOUR_RATE = (By.XPATH, "//label[normalize-space()='Your rate']/following-sibling::span")
+    TOTAL_CREDIT_CHARGED = (By.XPATH, "//label[normalize-space()='Total credit charged']/following-sibling::span")
+    TOTAL_EARNED = (By.XPATH, "//label[normalize-space()='Total earned']/following-sibling::span")
 
 
     
