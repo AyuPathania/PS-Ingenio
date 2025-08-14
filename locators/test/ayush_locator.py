@@ -29,6 +29,7 @@ class AyushLocator:
     EMAIL_ADVISOR = (By.XPATH, "//input[@placeholder='Email']")
     PASSWORD_ADVISOR = (By.XPATH, "//input[@placeholder='Password']")
     SIGN_IN_BUTTON_ADVISOR = (By.XPATH, "//button[text()='LOG IN TO YOUR ACCOUNT']")
+    ALLOW_NOTIFICATIONS = (By.XPATH, "//button[@class='primary']")
     PROFILE_ADVISOR = (By.XPATH, "//div[@class='advisor-name']")
     AWAY_ADVISOR = (By.XPATH, "(//div[@class='status away'][normalize-space()='Away'])[1]")
     AVAILABLE_ADVISOR = (By.XPATH, "//div[@class='status available']")

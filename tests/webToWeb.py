@@ -21,6 +21,7 @@ class TestAdvisorLogin:
             login.login_in_with_advisor(advisor, test_data)
             login.login_in_with_user(user, test_data)
             time.sleep(10)
+            
             profile_element = user.get_element_text(*locators.PROFILE)
             print(f"Profile element text: {profile_element}")
             user.wait_for_element_visible(*locators.SEARCH_ADVISOR)
@@ -35,6 +36,7 @@ class TestAdvisorLogin:
             user.click(*locators.START_CHAT)
             advisor.wait_for_element_visible(*locators.ACCEPT_CHAT)
             advisor.click(*locators.ACCEPT_CHAT)
+            time.sleep(40)
             advisor.wait_for_element_visible(*locators.TOTAL_DURATION)
             total_duration = advisor.get_element_text(*locators.TOTAL_DURATION)
             advisor.assert_element_text_equals(*locators.TOTAL_DURATION, total_duration)

@@ -13,9 +13,12 @@ class TestAdvisorLogin:
 
         
         try:
-            user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            user.wait_for_page_load()
+            user.go_to_url("chrome://version")
             
+            # print(f"Page source: {user.get_page_source}")
+            time.sleep(10)
+            user.go_to_url("https://mail.google.com/")
+            time.sleep(10)
 
 
 
