@@ -17,6 +17,8 @@ class TestAdvisorLogin:
             advisor.go_to_url("https://stg-expert.purpleocean.co/sign-in")
             advisor.wait_for_page_load()
             user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
+            user.refresh_page()
+            
             user.wait_for_page_load()
             login.login_in_with_advisor(advisor, test_data)
             login.login_in_with_user(user, test_data)
