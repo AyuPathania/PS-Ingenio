@@ -61,7 +61,7 @@ class WebDriver:
             # LT:Options (this is where browserProfile goes)
             lt_options_web = {
                 "username": Config.LAMBDATEST_USERNAME,
-                #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
+                # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile 24.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
                 "build": "WebAndMobileChat",
                 "name": f"Web {user_type.title()} Test",
