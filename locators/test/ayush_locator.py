@@ -38,6 +38,9 @@ class AyushLocator:
     ADVISOR_SIDE_MESSAGE_VALIDATION = (By.XPATH, "//div[@class='client-card-messages']//div[contains(text(), 'Hello Hubert')]")
     ADVISOR_MESSAGE_BOX = (By.XPATH, "//div[@class='public-DraftStyleDefault-block public-DraftStyleDefault-ltr']")
     ADVISOR_SIDE_OWN_MESSAGE_VALIDATION = (By.XPATH, "//div[normalize-space()='Hello Sweet']")
+    CLIENT_NAME = (By.XPATH, "//td[normalize-space()='Sweet']")
+    MESSAGE_TAB = (By.XPATH, "//div[normalize-space()='Messages']")
+
 
     # Mixpanel
     MIXPANEL_EMAIL = (By.XPATH, "//input[@placeholder='e.g. eleanor@mixpanel.com']")
