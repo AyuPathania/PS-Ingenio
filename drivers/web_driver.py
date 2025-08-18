@@ -82,18 +82,18 @@ class WebDriver:
                 # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-1666889/Profile"
 
                 # 👇 pass chrome options inside LT:Options
-                # "goog:chromeOptions": {
-                #     "args": [
-                #         "lang=en_GB",
-                #         "start-maximized",
-                #         "disable-popup-blocking",
-                #         "disable-sync",
-                #         "disable-search-engine-choice-screen",
-                #     ]
-                    # "prefs": {
-                    #     "profile.default_content_setting_values.notifications": 1
-                    # }
-                # }
+                "goog:chromeOptions": {
+                    "args": [
+                        "lang=en_GB",
+                        "start-maximized",
+                        "disable-popup-blocking",
+                        "disable-sync",
+                        "disable-search-engine-choice-screen",
+                    ],
+                    "prefs": {
+                        "profile.default_content_setting_values.notifications": 1
+                    }
+                }
             }
 
             # Attach LT options
