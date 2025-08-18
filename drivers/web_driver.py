@@ -61,6 +61,7 @@ class WebDriver:
             # LT:Options (this is where browserProfile goes)
             lt_options_web = {
                 "username": Config.LAMBDATEST_USERNAME,
+                #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
                 "build": "WebAndMobileChat",
                 "name": f"Web {user_type.title()} Test",
@@ -566,7 +567,8 @@ class WebDriver:
         except Exception as e:
             print(f"Error inputting text: {e}")
             return False
-    
+
+
     def get_element_text(self, locator_type, locator_value, timeout=None):
         """Get text from element"""
         try:
@@ -729,7 +731,28 @@ class WebDriver:
         except Exception as e:
             print(f"Error waiting for title: {e}")
             return False
-    
+        
+    def input_text_advisor(self, locator_type, locator_value, text, timeout=None):
+        """Input text into element and send ENTER (advisor style)"""
+        from selenium.webdriver.common.keys import Keys
+        wait_time = timeout or self.explicit_wait
+        try:
+            wait = WebDriverWait(self.driver, wait_time)
+            element = wait.until(EC.presence_of_element_located((locator_type, locator_value)))
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
+            element = wait.until(EC.element_to_be_clickable((locator_type, locator_value)))
+            element.click()
+            element.send_keys(text, Keys.ENTER)
+
+            print("✅ Message typed and sent.")
+            return True
+        except Exception as e:
+            print(f"❌ Failed to type message: {e}")
+            return False
+
+
+
     # Assertion Methods
     def assert_element_text_equals(self, locator_type, locator_value, expected_text, timeout=None):
         """Assert that element text equals expected text"""
