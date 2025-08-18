@@ -59,4 +59,4 @@ class AyushLocator:
     SIDEMENU_Activity_UserClick = (By.XPATH, "//span[normalize-space()='Hubert Blaine'][1]")
     SIDEMENU_Activity_Message_Field = (By.XPATH, "//textarea[@id='sendInput']")
     SIDEMENU_Activity_Send_Button = (By.XPATH, "//button[@class='sendButton--R6WFP']//*[name()='svg']")
-    SIDEMENU_Activity_User_Message_Validation = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[2]")
+    SIDEMENU_Activity_User_Message_Validation = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[1]")

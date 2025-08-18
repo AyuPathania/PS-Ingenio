@@ -88,7 +88,7 @@ class TestAdvisorLogin:
 
             # ✅ compare messages send by advisor side first and then to user side
             assert own_message_val_advisor_side == own_message_val_user_side, "User and Advisor messages do not match!"
-            print("✅ Message validation successful — both sides show the same message.")
+            print("✅ Message validation successful — Advisor to user:both sides show the same message.")
             time.sleep(10)
             
             #User sends a message to Advisor
@@ -114,7 +114,7 @@ class TestAdvisorLogin:
 
             # # ✅ compare messages send by user side first and then to advisor side
             assert message_val_userside == message_val_advisor_side, "User and Advisor messages do not match!"
-            print("✅ Message validation successful — both sides show the same message.")
+            print("✅ User to Advisor: Message validation successful — both sides show the same message.")
             time.sleep(10)
             
 
