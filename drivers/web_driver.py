@@ -43,35 +43,22 @@ class WebDriver:
     def start_driver(self, user_type='advisor'):
         """Start the web driver using LambdaTest with exact capabilities structure"""
         try:
-            # Import config here to avoid circular imports
             from config.config import Config
-            
+
             if not Config.is_lambdatest_enabled():
                 raise Exception("LambdaTest credentials not configured. Please check your .env file.")
-            
+
             print(f"Using LambdaTest hub for web browser: {self.browser}")
-            
-            # Create DesiredCapabilities equivalent using ArgOptions
+
             from selenium.webdriver.common.options import ArgOptions
             web_caps = ArgOptions()
-            
-            # Set basic capabilities exactly like your Java code
-            web_caps.set_capability("browserName", self.browser)  # Use original case (e.g., "Chrome")
+
+            # Base browser setup
+            web_caps.set_capability("browserName", self.browser)   # e.g. "Chrome"
             web_caps.set_capability("platformName", "Windows 10")
             web_caps.set_capability("browserVersion", "latest")
-            web_caps.set_capability("goog:chromeOptions", {
-                    "args": [
-                        "lang=en_GB",
-                        "start-maximized",
-                        "disable-popup-blocking",
-                        "disable-sync",
-                        "disable-search-engine-choice-screen",
-                        "--disable-features=DisableLoadExtensionCommandLineSwitch",
-                        "profile-directory=Default"
-                    ]
-            })
-            
-            # Create LT:Options exactly like your Java code
+
+            # LT:Options (this is where browserProfile goes)
             lt_options_web = {
                 "username": Config.LAMBDATEST_USERNAME,
                 #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
@@ -90,25 +77,37 @@ class WebDriver:
                 "queueTimeout": "900",
                 "systemLog": True,
                 "visual": True,
-                "goog:chromeOptions": {
-                    "prefs": {
-                        "profile.default_content_setting_values.notifications": 1
-                    }
-                }
+
+                # 👇 load your uploaded Chrome profile
+                # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-1666889/Profile"
+
+                # 👇 pass chrome options inside LT:Options
+                # "goog:chromeOptions": {
+                #     "args": [
+                #         "lang=en_GB",
+                #         "start-maximized",
+                #         "disable-popup-blocking",
+                #         "disable-sync",
+                #         "disable-search-engine-choice-screen",
+                #     ]
+                    # "prefs": {
+                    #     "profile.default_content_setting_values.notifications": 1
+                    # }
+                # }
             }
-            
-            # Set LT:Options capability
+
+            # Attach LT options
             web_caps.set_capability("LT:Options", lt_options_web)
-            
-            # Create server URL exactly like your Java code
+
+            # Hub URL
             server_url = f"https://{Config.LAMBDATEST_USERNAME}:{Config.LAMBDATEST_ACCESS_KEY}@hub.lambdatest.com/wd/hub"
-            
+
             print(f"Server URL: {server_url}")
             print(f"Capabilities: {web_caps.capabilities}")
-            
-            # Create remote driver
+
+            # Start driver
             self.driver = webdriver.Remote(server_url, options=web_caps)
-            
+
             if self.driver:
                 self.driver.implicitly_wait(self.implicit_wait)
                 self.wait = WebDriverWait(self.driver, self.explicit_wait)
@@ -124,6 +123,7 @@ class WebDriver:
             traceback.print_exc()
             raise
     
+
     def _create_chrome_driver(self):
         """Create Chrome driver with options"""
         options = ChromeOptions()
@@ -215,6 +215,16 @@ class WebDriver:
         if self.driver:
             self.driver.quit()
             print(f"{self.browser.title()} driver quit successfully")
+    
+    def get_session_id(self):
+        """Get the current session ID of the driver"""
+        if self.driver:
+            try:
+                return self.driver.session_id
+            except Exception as e:
+                print(f"Failed to get session ID: {e}")
+                return None
+        return None
     
     def handle_alert(self, action='accept'):
         """Handle browser alerts and permission dialogs

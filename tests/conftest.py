@@ -125,6 +125,11 @@ def test_data():
             'phone_number': '6666666666',
             'otp': '656565',
             'messageadvisor': 'Hello, what you want!',
+        },
+        'gmail': {
+            'email': 'ayushlambdatest',
+            'password': '@Ayush0703',
+            
         }
     }
 
