@@ -50,7 +50,6 @@ class Signup:
                 time.sleep(10)
                 user.click(*user_web_locators.TERMS_POLICY)
                 user.wait_for_page_load()
-                time.sleep(50)
 
 
         except Exception as e:
