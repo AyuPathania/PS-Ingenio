@@ -769,23 +769,26 @@ class WebDriver:
             return False
 
     def go_offline(self):
-            self.driver.execute_cdp_cmd('Network.enable', {})
-            self.driver.execute_cdp_cmd('Network.emulateNetworkConditions', {
-                'offline': True,
-                'latency': 0,
-                'downloadThroughput': 0,
-                'uploadThroughput': 0
-            })
-            print("🔌 Network disabled")
+            """Disable network connection"""
+            try:
+                self.driver.execute_script("lambda-throttle-network","Offline")
+                print("🔌 Network disabled")
+
+                return True
+            except Exception as e:
+                print(f"❌ Failed to Disable network: {e}")
+                return False
 
     def go_online(self):
-            self.driver.execute_cdp_cmd('Network.emulateNetworkConditions', {
-                'offline': False,
-                'latency': 5,
-                'downloadThroughput': 500 * 1024,
-                'uploadThroughput': 500 * 1024
-            })
-            print("📶 Network re-enabled")
+            """Enable network connection"""
+            try:
+                self.driver.execute_script("lambda-throttle-network","Reset")
+                print("� Network re-enabled")
+
+                return True
+            except Exception as e:
+                print(f"❌ Failed to Enable network: {e}")
+                return False
 
 
 

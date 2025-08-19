@@ -48,7 +48,7 @@ class TestAdvisorLogin:
             time.sleep(10)
 
             #User disconnects the network..wait for 20 seconds
-            user.driver.execute_script("lambda-throttle-network","Offline")
+            user.go_offline()
             print("🔌 Network disabled")
 
             time.sleep(20)
@@ -56,19 +56,19 @@ class TestAdvisorLogin:
             print("✅ User: Network offline message is displayed")
 
             #User reconnects the network
-            user.driver.execute_script("lambda-throttle-network","Reset")
+            user.go_online()
             print("🔌 Network enabled")
             time.sleep(20)
             user.input_text(*user_web_locators.TYPE_MESSAGE_USER2ADVISOR, 'User side message after network reconnection after 20 seconds')
             user.click(*user_web_locators.SEND_MESSAGE_BUTTON_USER)
 
             # advisor disconnects the network..wait for 20 seconds
-            advisor.driver.execute_script("lambda-throttle-network","Offline")
+            advisor.go_offline()
             print("🔌 Network disabled")
             time.sleep(20)
 
             # advisor reconnects the network
-            advisor.driver.execute_script("lambda-throttle-network","Reset")
+            advisor.go_online()
             print("🔌 Network enabled")
             time.sleep(20)
               
@@ -76,12 +76,12 @@ class TestAdvisorLogin:
             advisor.click(*advisor_web_locators.SEND_MESSAGE_BUTTON_ADVISOR)
 
             # advisor disconnects the network..wait for 40 seconds
-            advisor.driver.execute_script("lambda-throttle-network","Offline")
+            advisor.go_offline()
             print("🔌 Network disabled")
             time.sleep(100)
            
            # advisor reconnects the network
-            advisor.driver.execute_script("lambda-throttle-network","Reset")
+            advisor.go_online()
             print("🔌 Network enabled")
             time.sleep(20)
 
