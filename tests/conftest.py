@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
 from config.config import Config
+from faker import Faker
 
 @pytest.fixture(scope="function")
 def android_user_driver():
@@ -103,19 +104,11 @@ def web_user():
             driver.quit_driver()
 
 @pytest.fixture(scope="session")
-def creditcard_details():
-    from faker import Faker
-    fake = Faker()
-    return {
-        'card_number': fake.credit_card_number(card_type="visa"),
-        'card_expire': fake.credit_card_expire(),
-        'card_security_code': fake.credit_card_security_code(card_type="visa"),
-        'postcode': fake.postcode()
-    }
-
-@pytest.fixture(scope="session")
 def test_data():
     """Test data for all test cases"""
+    from faker import Faker
+    fake = Faker()
+    
     return {
         'user': {
             'valid_email': 'anna.benishai+2705qa@ingenio.com',
@@ -138,10 +131,11 @@ def test_data():
             'messageadvisor': 'Hello, what you want!',
         },
         'creditcard': {
-            'cardNumber': creditcard_details['card_number'],
-            'cardExpire': creditcard_details['card_expire'],
-            'cardSecurityCode': creditcard_details['card_security_code'],
-            'postcode': creditcard_details['postcode']
+            'card_number': fake.credit_card_number(card_type="visa"),
+            'card_expire': fake.credit_card_expire(),
+            'card_security_code': fake.credit_card_security_code(card_type="visa"),
+            'postcode': fake.postcode(),
+            'card_holder_name': fake.name()
         }
     }
 
