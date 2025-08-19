@@ -20,27 +20,7 @@ class TestAdvisorLogin:
 
         
         try:
-            
-            # user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            # user.wait_for_page_load()
-            
-            # # user.click(*user_web_locators.JOIN)
-            # # time.sleep(5)
-            # # # Wait for and click Accept button
-            # # user.wait_for_element_visible(*user_web_locators.ACCEPT)
-            # # user.click(*user_web_locators.ACCEPT)
-
-            # # # random_Email
-            # # prefix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=5)) +'@' +'aa.com' 
-            # # char = ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
-            # # user.input_text(*user_web_locators.RANDOM_EMAIL, prefix)
-            # # user.input_text(*user_web_locators.RETYPE_EMAIL, prefix)
-            # # user.input_text(*user_web_locators.RANDOM_PASSWORD, char)
-            # # user.click(*user_web_locators.CREATE_ACCOUNT)
-            # # time.sleep(10)
-            # # user.click(*user_web_locators.TERMS_POLICY)
-            # # user.wait_for_page_load()
-            # # time.sleep(50)
+        
             signup.signup_with_user(user)
 
             # add_credit_card details
