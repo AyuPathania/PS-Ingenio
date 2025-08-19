@@ -25,6 +25,18 @@ class UserWebLocators:
     TERMS_POLICY = (By.XPATH, "//button[@class='ppTofModalSignUpButton--Imglp']")
     HANG_UP_BUTTON = (By.XPATH, "//button[@class='hangupBtn--EGCTW']")
     CONTINUE_BUTTON = (By.XPATH, "//button[normalize-space()='Continue']")
+        # add_Credit_Card_Detail
+    ADD_NEW_CREDIT_DEBIT_CARD = (By.XPATH, "//button[@id='add_new_cc']")
+    CARD_HOLDER_NAME = (By.XPATH, "//input[@id='nameOfCard']")
+    CARD_NUMBER_FRAME = (By.XPATH, "//iframe[@id='cardNumber']")
+    CARD_NUMBER = (By.XPATH, "//input[@id='checkout-frames-card-number']")
+    EXPIRE_DATE_FRAME = (By.XPATH, "//iframe[@id='expiryDate']")
+    EXPIRE_DATE = (By.XPATH, "//input[@id='checkout-frames-expiry-date']")
+    CVC_FRAME = (By.XPATH, "//iframe[@id='cvc']")
+    CVV = (By.XPATH, "//input[@name='cvc']")
+    ZIP_CODE = (By.XPATH, "//input[@id='zip']")
+    ADD_CARD_BUTTON = (By.XPATH, "//button[text()='Add card']")
+
         # Sidemenu_items
 
     SIDEMENU = (By.XPATH, "//div[contains(@class, 'contentHolder')]//div[contains(@class, 'headerLogoContainer')]//button[@type='button']//*[name()='svg']")
