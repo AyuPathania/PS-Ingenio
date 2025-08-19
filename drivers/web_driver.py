@@ -61,7 +61,7 @@ class WebDriver:
             # LT:Options (this is where browserProfile goes)
             lt_options_web = {
                 "username": Config.LAMBDATEST_USERNAME,
-                # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile 24.zip",
+                #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
                 "build": "WebAndMobileChat",
                 "name": f"Web {user_type.title()} Test",
@@ -77,6 +77,7 @@ class WebDriver:
                 "queueTimeout": "900",
                 "systemLog": True,
                 "visual": True,
+                "network": True,
 
                 # 👇 load your uploaded Chrome profile
                 # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-1666889/Profile"
@@ -505,7 +506,7 @@ class WebDriver:
             print(f"Error waiting for element visibility: {e}")
             return None
     
-    def wait_for_element_present(self, locator_type, locator_value, timeout=None):
+    def wait_for_element_present(self, locator_type, locator_value, timeout=10):
         """Wait for element to be present in DOM"""
         wait_time = timeout or self.explicit_wait
         try:
@@ -521,7 +522,7 @@ class WebDriver:
             print(f"Error waiting for element presence: {e}")
             return None
     
-    def wait_for_element_clickable(self, locator_type, locator_value, timeout=None):
+    def wait_for_element_clickable(self, locator_type, locator_value, timeout=10):
         """Wait for element to be clickable"""
         wait_time = timeout or self.explicit_wait
         try:
