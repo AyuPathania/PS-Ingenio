@@ -1,5 +1,7 @@
 from drivers.web_driver import WebDriver
-from locators.test.ayush_locator import AyushLocator
+from locators.MixPanel.MixPanel import MixPanelLocators
+from locators.user.web_locators import UserWebLocators
+from locators.advisor.web_locators import AdvisorWebLocators
 from Modules.login import Login
 import time
 
@@ -10,106 +12,88 @@ class TestAdvisorLogin:
         """Test valid login on Web Advisor app using LambdaTest"""
         advisor = web_advisor
         user = web_user
-        locators = AyushLocator()
+        user_web_locators = UserWebLocators()
+        advisor_web_locators = AdvisorWebLocators()
+        mixpanel_locators = MixPanelLocators()
         login = Login()
         
         try:
-            advisor.go_to_url("https://stg-expert.purpleocean.co/sign-in")
-            advisor.wait_for_page_load()
-            user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            user.wait_for_page_load()
+
             login.login_in_with_advisor(advisor, test_data)
             login.login_in_with_user(user, test_data)
             time.sleep(10)
             
-            profile_element = user.get_element_text(*locators.PROFILE)
+            profile_element = user.get_element_text(*user_web_locators.PROFILE)
             print(f"Profile element text: {profile_element}")
-            user.wait_for_element_visible(*locators.SEARCH_ADVISOR)
-            user.input_text(*locators.SEARCH_ADVISOR, "Hubert Blaine")
-            user.wait_for_element_visible(*locators.FIND_ADVISOR)
-            user.click(*locators.FIND_ADVISOR)
-            user.wait_for_element_visible(*locators.CLICK_ADVISOR)
-            user.click(*locators.CLICK_ADVISOR)
-            user.wait_for_element_visible(*locators.CLICK_CHAT)
-            user.click(*locators.CLICK_CHAT)
-            user.wait_for_element_visible(*locators.START_CHAT)
-            user.click(*locators.START_CHAT)
-            advisor.wait_for_element_visible(*locators.ACCEPT_CHAT)
-            advisor.click(*locators.ACCEPT_CHAT)
+            user.wait_for_element_visible(*user_web_locators.SEARCH_ADVISOR)
+            user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
+            user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
+            user.click(*user_web_locators.FIND_ADVISOR)
+            user.wait_for_element_visible(*user_web_locators.CLICK_ADVISOR)
+            user.click(*user_web_locators.CLICK_ADVISOR)
+            user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
+            user.click(*user_web_locators.CLICK_CHAT)
+            user.wait_for_element_visible(*user_web_locators.START_CHAT)
+            user.click(*user_web_locators.START_CHAT)
+            advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
+            advisor.click(*advisor_web_locators.ACCEPT_CHAT)
             time.sleep(40)
-            advisor.wait_for_element_visible(*locators.TOTAL_DURATION)
-            total_duration = advisor.get_element_text(*locators.TOTAL_DURATION)
-            advisor.assert_element_text_equals(*locators.TOTAL_DURATION, total_duration)
+            user.click(*user_web_locators.HANG_UP_BUTTON)
+            user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
+            user.click(*user_web_locators.CONTINUE_BUTTON)
+            
+            advisor.wait_for_element_visible(*advisor_web_locators.TOTAL_DURATION)
+            total_duration = advisor.get_element_text(*advisor_web_locators.TOTAL_DURATION)
+            advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_DURATION, total_duration)
             # print(f"Total duration: {total_duration}")
-            your_rate = advisor.get_element_text(*locators.YOUR_RATE)
-            advisor.assert_element_text_equals(*locators.YOUR_RATE, your_rate)
+            your_rate = advisor.get_element_text(*advisor_web_locators.YOUR_RATE)
+            advisor.assert_element_text_equals(*advisor_web_locators.YOUR_RATE, your_rate)
             # print(f"Your rate: {your_rate}")
-            total_credit_charged = advisor.get_element_text(*locators.TOTAL_CREDIT_CHARGED)
-            advisor.assert_element_text_equals(*locators.TOTAL_CREDIT_CHARGED, total_credit_charged)
+            total_credit_charged = advisor.get_element_text(*advisor_web_locators.TOTAL_CREDIT_CHARGED)
+            advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_CREDIT_CHARGED, total_credit_charged)
             # print(f"Total credit charged: {total_credit_charged}")
-            total_earned = advisor.get_element_text(*locators.TOTAL_EARNED)
-            advisor.assert_element_text_equals(*locators.TOTAL_EARNED, total_earned)
+            total_earned = advisor.get_element_text(*advisor_web_locators.TOTAL_EARNED)
+            advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_EARNED, total_earned)
             print(f"Total earned: {total_earned}")
+            advisor.wait_for_element_visible(*advisor_web_locators.CLOSE_CHAT_BUTTON)
+            advisor.click(*advisor_web_locators.CLOSE_CHAT_BUTTON)
 
-            #Advisor sends a message to user
+            advisor.click(*advisor_web_locators.CLIENT_NAME)
+            advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TAB)
+            advisor.click(*advisor_web_locators.MESSAGE_TAB)
+            advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_MESSAGE_BOX)
+            advisor.input_text_advisor(*advisor_web_locators.ADVISOR_MESSAGE_BOX, "Hello Sweet")
+            advisor.click(*advisor_web_locators.SEND_MESSAGE_BUTTON_ADVISOR)
+            
 
-            advisor.go_to_url("https://stg-expert.purpleocean.co/clients")
-            advisor.wait_for_page_load()
-            time.sleep(10)
-            advisor.click(*locators.CLIENT_NAME)
-            advisor.wait_for_element_visible(*locators.MESSAGE_TAB)
-            advisor.click(*locators.MESSAGE_TAB)
-            advisor.wait_for_element_visible(*locators.ADVISOR_MESSAGE_BOX)
-            advisor.input_text_advisor(*locators.ADVISOR_MESSAGE_BOX, "Hello Sweet")
-            advisor.click(*locators.SEND_MESSAGE_BUTTON_ADVISOR)
-            time.sleep(5)
-
-            own_message_val_advisor_side = advisor.get_element_text(*locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
-            advisor.assert_element_text_equals(*locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_advisor_side)
+            own_message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
+            advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {own_message_val_advisor_side}")
-            time.sleep(5)
             
-            user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            user.wait_for_page_load()
-            time.sleep(20)
-            user.click(*locators.SIDEMENU)
-            time.sleep(10)
-            user.click(*locators.SIDEMENU_Activity)
-            time.sleep(10)
-            user.click(*locators.SIDEMENU_Activity_UserClick)
-            time.sleep(10)
-            user.scroll_to_element(*locators.SIDEMENU_Activity_Message_Field)
-            time.sleep(10)
             
-            own_message_val_user_side = user.get_element_text(*locators.USER_SIDE_ADVISOR_MESSAGE_VALIDATION)
-            user.assert_element_text_equals(*locators.USER_SIDE_ADVISOR_MESSAGE_VALIDATION, own_message_val_user_side)
+            user.scroll_to_element(*user_web_locators.SIDEMENU_ACTIVITY_MESSAGE_FIELD)
+            own_message_val_user_side = user.get_element_text(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
+            user.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_user_side)
             print(f"Message displayed on the user side is: {own_message_val_user_side}")
-            time.sleep(5)
+            
 
             # ✅ compare messages send by advisor side first and then to user side
             assert own_message_val_advisor_side == own_message_val_user_side, "User and Advisor messages do not match!"
             print("✅ Message validation successful — Advisor to user:both sides show the same message.")
-            time.sleep(10)
+            
             
             #User sends a message to Advisor
 
-            user.input_text(*locators.SIDEMENU_Activity_Message_Field, "Hello Hubert")
-            user.click(*locators.SIDEMENU_Activity_Send_Button)
-            time.sleep(20)
-            message_val_userside = user.get_element_text(*locators.SIDEMENU_Activity_User_Message_Validation)
-            user.assert_element_text_equals(*locators.SIDEMENU_Activity_User_Message_Validation, message_val_userside)
+            user.input_text(*user_web_locators.SIDEMENU_ACTIVITY_MESSAGE_FIELD, "Hello Hubert")
+            user.click(*user_web_locators.SIDEMENU_ACTIVITY_SEND_BUTTON)
+            
+            message_val_userside = user.get_element_text(*user_web_locators.SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION)
+            user.assert_element_text_equals(*user_web_locators.SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION, message_val_userside)
             print(f"Message displayed on the user side is: {message_val_userside}")
 
-            time.sleep(10)
-            advisor.go_to_url("https://stg-expert.purpleocean.co/clients")
-            advisor.wait_for_page_load()
-            time.sleep(10)         
-            advisor.click(*locators.CLIENT_NAME)
-            advisor.wait_for_element_visible(*locators.MESSAGE_TAB)
-            advisor.click(*locators.MESSAGE_TAB)
-            advisor.wait_for_element_visible(*locators.ADVISOR_MESSAGE_BOX)
-            message_val_advisor_side = advisor.get_element_text(*locators.ADVISOR_SIDE_MESSAGE_VALIDATION)
-            advisor.assert_element_text_equals(*locators.ADVISOR_SIDE_MESSAGE_VALIDATION, message_val_advisor_side)
+
+            message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION)
+            advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION, message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {message_val_advisor_side}")
 
             # # ✅ compare messages send by user side first and then to advisor side
