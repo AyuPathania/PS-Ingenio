@@ -113,7 +113,7 @@ def test_data():
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
             'otp': '656565',
-            'messageuser': 'Hello, I need your advice!',
+            'messageuser': 'Hello,@Hubert. I need your advice 2day!',
             'valid_email_mp': 'basithusain@lambdatest.com',
             'valid_password_mp': '360logica@09',
         },
@@ -124,7 +124,7 @@ def test_data():
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
             'otp': '656565',
-            'messageadvisor': 'Hello, what you want!',
+            'messageadvisor': 'Hello, @Sweet what you want 2day!',
         },
         'gmail': {
             'email': 'ayushlambdatest',

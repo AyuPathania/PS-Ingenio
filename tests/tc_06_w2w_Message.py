@@ -58,6 +58,8 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*advisor_web_locators.CLOSE_CHAT_BUTTON)
             advisor.click(*advisor_web_locators.CLOSE_CHAT_BUTTON)
 
+
+            # Advisor sends a message to User
             advisor.click(*advisor_web_locators.CLIENT_NAME)
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TAB)
             advisor.click(*advisor_web_locators.MESSAGE_TAB)
@@ -69,7 +71,6 @@ class TestAdvisorLogin:
             own_message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
             advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {own_message_val_advisor_side}")
-            
             
             user.scroll_to_element(*user_web_locators.SIDEMENU_ACTIVITY_MESSAGE_FIELD)
             own_message_val_user_side = user.get_element_text(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
@@ -92,6 +93,8 @@ class TestAdvisorLogin:
             print(f"Message displayed on the user side is: {message_val_userside}")
 
 
+            advisor.click(*advisor_web_locators.NOTES_TAB)
+            advisor.click(*advisor_web_locators.MESSAGE_TAB)
             message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION)
             advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION, message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {message_val_advisor_side}")
@@ -101,17 +104,6 @@ class TestAdvisorLogin:
             print("✅ User to Advisor: Message validation successful — both sides show the same message.")
             time.sleep(10)
             
-
-
-            
-
-
-        #    # advisor.input_text(*locators.TYPE_MESSAGE_ADVISOR2USER, test_data['advisor']['messageadvisor'])
-        #    # advisor.click(*locators.SEND_MESSAGE_BUTTON_ADVISOR)
-            
-        #    # user.input_text(*locators.TYPE_MESSAGE_USER2ADVISOR, test_data['user']['messageuser'])
-        #    # user.click(*locators.SEND_MESSAGE_BUTTON_USER)
-        #    # time.sleep(10)
             # user.go_to_url("https://eu.mixpanel.com/login/")
             # user.wait_for_element_visible(*locators.MIXPANEL_EMAIL)
             # user.input_text(*locators.MIXPANEL_EMAIL, test_data['user']['valid_email_mp'])
