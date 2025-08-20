@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 
 class UserWebLocators:
     """Web locators for User website"""
-    
        # User
     SIGN_IN = (By.XPATH, "//button[normalize-space()='Sign in']")
     EMAIL = (By.XPATH, "//input[@id='email']")
@@ -12,7 +11,7 @@ class UserWebLocators:
     PROFILE = (By.XPATH, "//div[@type='button']//div[contains(text(),'Sweet')]")
     SEARCH_ADVISOR = (By.XPATH, "//input[@placeholder='Search by specialty or reading type']")
     FIND_ADVISOR = (By.XPATH, "(//button[@class='searchButton--zl5Mn'])[1]")
-    CLICK_ADVISOR = (By.XPATH, "//img[@alt='Hubert Blaine']")
+    CLICK_ADVISOR = (By.XPATH, "//img[@alt='{advisor_name}']")
     CLICK_CHAT = (By.XPATH, "(//span[@class='modeTitle--KFD4l'][normalize-space()='Chat'])[2]")
     START_CHAT = (By.XPATH, "//button[@class='mbw-button-primary']")
     TYPE_MESSAGE_USER2ADVISOR = (By.XPATH, "//div[@class='formContainer--LzD2M']//textarea[@placeholder='Your message...']")
@@ -32,10 +31,16 @@ class UserWebLocators:
     CARD_NUMBER = (By.XPATH, "//input[@id='checkout-frames-card-number']")
     EXPIRE_DATE_FRAME = (By.XPATH, "//iframe[@id='expiryDate']")
     EXPIRE_DATE = (By.XPATH, "//input[@id='checkout-frames-expiry-date']")
-    CVC_FRAME = (By.XPATH, "//iframe[@id='cvc']")
-    CVV = (By.XPATH, "//input[@name='cvc']")
+    CVC_FRAME = (By.XPATH, "//iframe[@id='cvv']")
+    CVV = (By.XPATH, "//input[@id='checkout-frames-cvv']")
     ZIP_CODE = (By.XPATH, "//input[@id='zip']")
     ADD_CARD_BUTTON = (By.XPATH, "//button[text()='Add card']")
+    PAY_BUTTON = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
+    START_LIVE_CHAT_BUTTON = (By.XPATH, "//button[normalize-space()='Start live chat']")
+    NICKNAME = (By.XPATH, "//input[@placeholder='Nickname']")
+    MALE_RADIO_BUTTON = (By.XPATH, "//div[@value='M']")
+    DOB = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
+    DURATION_CARD = (By.XPATH, "(//div[@class='durationItem--qG0j_'])")
 
         # Sidemenu_items
 
