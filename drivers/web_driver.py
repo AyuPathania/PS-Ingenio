@@ -66,6 +66,7 @@ class WebDriver:
                 "build": "WebAndMobileChat",
                 "name": f"Web {user_type.title()} Test",
                 "platform": "Windows 10",
+                "region": "ap",
                 "version": "latest",
                 "selenium_version": "4.0.0",
                 "w3c": True,

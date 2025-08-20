@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 
 class UserWebLocators:
     """Web locators for User website"""
-    
        # User
     SIGN_IN = (By.XPATH, "//button[normalize-space()='Sign in']")
     EMAIL = (By.XPATH, "//input[@id='email']")
@@ -12,7 +11,7 @@ class UserWebLocators:
     PROFILE = (By.XPATH, "//div[@type='button']//div[contains(text(),'Sweet')]")
     SEARCH_ADVISOR = (By.XPATH, "//input[@placeholder='Search by specialty or reading type']")
     FIND_ADVISOR = (By.XPATH, "(//button[@class='searchButton--zl5Mn'])[1]")
-    CLICK_ADVISOR = (By.XPATH, "//img[@alt='Hubert Blaine']")
+    CLICK_ADVISOR = (By.XPATH, "//img[@alt='{advisor_name}']")
     CLICK_CHAT = (By.XPATH, "(//span[@class='modeTitle--KFD4l'][normalize-space()='Chat'])[2]")
     START_CHAT = (By.XPATH, "//button[@class='mbw-button-primary']")
     TYPE_MESSAGE_USER2ADVISOR = (By.XPATH, "//textarea[@placeholder='Your message...']")
@@ -27,6 +26,25 @@ class UserWebLocators:
     TERMS_POLICY = (By.XPATH, "//button[@class='ppTofModalSignUpButton--Imglp']")
     HANG_UP_BUTTON = (By.XPATH, "//button[@class='hangupBtn--EGCTW']")
     CONTINUE_BUTTON = (By.XPATH, "//button[normalize-space()='Continue']")
+
+        # add_Credit_Card_Detail
+    ADD_NEW_CREDIT_DEBIT_CARD = (By.XPATH, "//button[@id='add_new_cc']")
+    CARD_HOLDER_NAME = (By.XPATH, "//input[@id='nameOfCard']")
+    CARD_NUMBER_FRAME = (By.XPATH, "//iframe[@id='cardNumber']")
+    CARD_NUMBER = (By.XPATH, "//input[@id='checkout-frames-card-number']")
+    EXPIRE_DATE_FRAME = (By.XPATH, "//iframe[@id='expiryDate']")
+    EXPIRE_DATE = (By.XPATH, "//input[@id='checkout-frames-expiry-date']")
+    CVC_FRAME = (By.XPATH, "//iframe[@id='cvv']")
+    CVV = (By.XPATH, "//input[@id='checkout-frames-cvv']")
+    ZIP_CODE = (By.XPATH, "//input[@id='zip']")
+    ADD_CARD_BUTTON = (By.XPATH, "//button[text()='Add card']")
+    PAY_BUTTON = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
+    START_LIVE_CHAT_BUTTON = (By.XPATH, "//button[normalize-space()='Start live chat']")
+    NICKNAME = (By.XPATH, "//input[@placeholder='Nickname']")
+    MALE_RADIO_BUTTON = (By.XPATH, "//div[@value='M']")
+    DOB = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
+    DURATION_CARD = (By.XPATH, "(//div[@class='durationItem--qG0j_'])")
+
         # Sidemenu_items
 
     SIDEMENU = (By.XPATH, "//div[contains(@class, 'contentHolder')]//div[contains(@class, 'headerLogoContainer')]//button[@type='button']//*[name()='svg']")
@@ -35,3 +53,11 @@ class UserWebLocators:
     SIDEMENU_ACTIVITY_MESSAGE_FIELD = (By.XPATH, "//textarea[@id='sendInput']")
     SIDEMENU_ACTIVITY_SEND_BUTTON = (By.XPATH, "//button[@class='sendButton--R6WFP']//*[name()='svg']")
     SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[1]")
+
+    #chat on live call
+    TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
+    SEND=(By.XPATH, "//button[normalize-space()='Send']")
+    MESSAGE_TEXT=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[3]")
+    MESSAGE_TEXT_FROM_ADVISOR=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[4]")
+
+

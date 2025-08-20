@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
 from config.config import Config
+from faker import Faker
 
 @pytest.fixture(scope="function")
 def android_user_driver():
@@ -105,10 +106,14 @@ def web_user():
 @pytest.fixture(scope="session")
 def test_data():
     """Test data for all test cases"""
+    from faker import Faker
+    fake = Faker()
+    
     return {
         'user': {
             'valid_email': 'anna.benishai+2705qa@ingenio.com',
             'valid_password': 'test123',
+            'advisor_name': 'tetsLanguageOrder',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
@@ -118,18 +123,20 @@ def test_data():
             'valid_password_mp': '360logica@09',
         },
         'advisor': {
-            'valid_email': 'anna.benishai+0302@ingenio.com',
-            'valid_password': 'test666',
+            'valid_email': 'mykhailo.orban+0108001@bargestech.com',
+            'valid_password': 'qwerty',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
             'otp': '656565',
             'messageadvisor': 'Hello, @Sweet what you want 2day!',
         },
-        'gmail': {
-            'email': 'ayushlambdatest',
-            'password': '@Ayush0703',
-            
+        'creditcard': {
+            'card_number': fake.credit_card_number(card_type="visa"),
+            'card_expire': fake.credit_card_expire(),
+            'card_security_code': fake.credit_card_security_code(card_type="visa"),
+            'postcode': fake.postcode(),
+            'card_holder_name': fake.name()
         }
     }
 
