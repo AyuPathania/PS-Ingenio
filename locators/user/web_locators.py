@@ -24,6 +24,7 @@ class UserWebLocators:
     TERMS_POLICY = (By.XPATH, "//button[@class='ppTofModalSignUpButton--Imglp']")
     HANG_UP_BUTTON = (By.XPATH, "//button[@class='hangupBtn--EGCTW']")
     CONTINUE_BUTTON = (By.XPATH, "//button[normalize-space()='Continue']")
+
         # add_Credit_Card_Detail
     ADD_NEW_CREDIT_DEBIT_CARD = (By.XPATH, "//button[@id='add_new_cc']")
     CARD_HOLDER_NAME = (By.XPATH, "//input[@id='nameOfCard']")
@@ -50,3 +51,11 @@ class UserWebLocators:
     SIDEMENU_ACTIVITY_MESSAGE_FIELD = (By.XPATH, "//textarea[@id='sendInput']")
     SIDEMENU_ACTIVITY_SEND_BUTTON = (By.XPATH, "//button[@class='sendButton--R6WFP']//*[name()='svg']")
     SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[1]")
+
+    #chat on live call
+    TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
+    SEND=(By.XPATH, "//button[normalize-space()='Send']")
+    MESSAGE_TEXT=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[3]")
+    MESSAGE_TEXT_FROM_ADVISOR=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[4]")
+
+

@@ -4,6 +4,7 @@ from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
 from Modules.signup import Signup
 from Modules.login import Login
+from Modules.send_message_in_live import send_message_in_live
 import time
 import random
 import string
@@ -19,7 +20,7 @@ class TestAdvisorLogin:
         advisor_web_locators = AdvisorWebLocators()
         signup = Signup()
         login = Login()
-        
+        sendmessage_in_live = send_message_in_live()
         try:
             login.login_in_with_advisor(advisor, test_data)
             signup.signup_with_user(user)
@@ -34,13 +35,13 @@ class TestAdvisorLogin:
             user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
             
-            user.wait_for_element_visible(*user_web_locators.DURATION_CARD)
-            user.click(*user_web_locators.DURATION_CARD)
+            # user.wait_for_element_visible(*user_web_locators.DURATION_CARD)
+            # user.click(*user_web_locators.DURATION_CARD)
             user.wait_for_element_visible(*user_web_locators.START_CHAT)
             user.click(*user_web_locators.START_CHAT)
             user.wait_for_element_visible(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
             user.click(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
-            
+            time.sleep(10)
             # Wait for card holder name field to be clickable (not just visible)
             user.wait_for_element_clickable(*user_web_locators.CARD_HOLDER_NAME)
             user.input_text(*user_web_locators.CARD_HOLDER_NAME, test_data['creditcard']['card_holder_name'])
@@ -76,17 +77,12 @@ class TestAdvisorLogin:
             user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)    
+            time.sleep(15)
+            sendmessage_in_live.send_message_in_live(user, advisor, test_data)
             time.sleep(60)
-            user.click(*user_web_locators.HANG_UP_BUTTON)
-            user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
-            user.click(*user_web_locators.CONTINUE_BUTTON)
-            advisor.wait_for_element_visible(*advisor_web_locators.TOTAL_DURATION)
-            total_duration = advisor.get_element_text(*advisor_web_locators.TOTAL_DURATION)
-            advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_DURATION, total_duration)
-            your_rate = advisor.get_element_text(*advisor_web_locators.YOUR_RATE)
-            advisor.assert_element_text_equals(*advisor_web_locators.YOUR_RATE, your_rate)
-            total_credit_charged = advisor.get_element_text(*advisor_web_locators.TOTAL_CREDIT_CHARGED)
-            advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_CREDIT_CHARGED, total_credit_charged)
+            sendmessage_in_live.after_call_assertions(user, advisor, test_data)
+
+
 
 
          
@@ -102,3 +98,4 @@ class TestAdvisorLogin:
         finally:
             # Clean up
             user.quit_driver()
+            advisor.quit_driver()

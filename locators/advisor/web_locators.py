@@ -17,6 +17,9 @@ class AdvisorWebLocators:
     YOUR_RATE = (By.XPATH, "//label[normalize-space()='Your rate']/following-sibling::span")
     TOTAL_CREDIT_CHARGED = (By.XPATH, "//label[normalize-space()='Total credit charged']/following-sibling::span")
     TOTAL_EARNED = (By.XPATH, "//label[normalize-space()='Total earned']/following-sibling::span")
+    TOTAL_EARNED=(By.XPATH, "//div[@class='earnings']//span")
+    CONNECTION_FEE=(By.XPATH, "//div[@class='small-info']/span[1]")
+    PLATFORM_FEE=(By.XPATH, "//div[@class='small-info']/span[2]")
     FIRST_MSG_BTN = (By.XPATH, "(//button[contains(@class, 'cl-shedule-button')])[1]")
     ADVISOR_SIDE_MESSAGE_VALIDATION = (By.XPATH, "//div[@class='client-card-messages']//div[contains(text(), 'Hello Hubert')]")
     ADVISOR_MESSAGE_BOX = (By.XPATH, "//div[@class='public-DraftStyleDefault-block public-DraftStyleDefault-ltr']")
@@ -24,3 +27,10 @@ class AdvisorWebLocators:
     CLIENT_NAME = (By.XPATH, "//td[normalize-space()='Sweet']")
     MESSAGE_TAB = (By.XPATH, "//div[normalize-space()='Messages']")
     CLOSE_CHAT_BUTTON = (By.XPATH, "//button[normalize-space()='Close Chat']")
+
+
+    #chat on live call
+    TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Say hello to your client']")
+    SEND=(By.XPATH, "//div[@class='send-button']")
+    MESSAGE_TEXT=(By.XPATH, "(//div[@class='expert-message'])")
+    MESSAGE_TEXT_FROM_USER=(By.XPATH, "(//div[@class='client-message'])")
