@@ -79,6 +79,7 @@ class WebDriver:
                 "systemLog": True,
                 "visual": True,
                 "network": True,
+                "enableNetworkThrottling": True,
 
                 # 👇 load your uploaded Chrome profile
                 # "browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-1666889/Profile"
@@ -615,6 +616,21 @@ class WebDriver:
         except Exception as e:
             print(f"Error checking element display: {e}")
             return False
+
+    def is_element_not_displayed(self, locator_type, locator_value, timeout=None):
+        """Check if element is not displayed"""
+        try:
+            element = self.wait_for_element_visible(locator_type, locator_value, timeout)
+            if element:
+                is_displayed = not element.is_displayed()
+                print(f"Element not displayed: {is_displayed} - {locator_type} = {locator_value}")
+                return is_displayed
+            else:
+                print(f"Failed to check element display: {locator_type} = {locator_value}")
+                return False
+        except Exception as e:
+            print(f"Error checking element display: {e}")
+            return False
     
     def is_element_enabled(self, locator_type, locator_value, timeout=None):
         """Check if element is enabled"""
@@ -752,6 +768,28 @@ class WebDriver:
         except Exception as e:
             print(f"❌ Failed to type message: {e}")
             return False
+
+    def go_offline(self):
+            """Disable network connection"""
+            try:
+                self.driver.execute_script("lambda-throttle-network","Offline")
+                print("🔌 Network disabled")
+
+                return True
+            except Exception as e:
+                print(f"❌ Failed to Disable network: {e}")
+                return False
+
+    def go_online(self):
+            """Enable network connection"""
+            try:
+                self.driver.execute_script("lambda-throttle-network","Reset")
+                print("� Network re-enabled")
+
+                return True
+            except Exception as e:
+                print(f"❌ Failed to Enable network: {e}")
+                return False
 
 
 
