@@ -2,10 +2,11 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.modules import Modules
+from Modules.login import Login
+from Modules.send_message_in_live import SendMessage
 import time
 
-class TestAdvisorLogin:
+class TestAdvisorLogin: 
     """Test cases for Advisor Login functionality using WebDriver"""
     
     def test_valid_login_web(self, web_advisor, web_user, test_data):
@@ -16,11 +17,12 @@ class TestAdvisorLogin:
         advisor_web_locators = AdvisorWebLocators()
         mixpanel_locators = MixPanelLocators()
         # login = Login()
-        modules = Modules()
+        login = Login() 
+        send_message = SendMessage()
         try:
 
-            modules.login_in_with_advisor(advisor, test_data)
-            modules.login_in_with_user(user, test_data)
+            login.login_in_with_advisor(advisor, test_data)
+            login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             time.sleep(10)
             
             profile_element = user.get_element_text(*user_web_locators.PROFILE)
@@ -47,7 +49,9 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
             time.sleep(40)
-            modules.after_call_assertions(user, advisor)
+            send_message.send_message_in_live(user, advisor)
+            time.sleep(10)
+            send_message.after_call_assertions(user, advisor)
             # user.click(*user_web_locators.HANG_UP_BUTTON)
             # user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
             # user.click(*user_web_locators.CONTINUE_BUTTON)

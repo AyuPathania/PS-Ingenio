@@ -2,7 +2,7 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.modules import Modules
+from Modules.login import Login
 import time
 
 class TestAdvisorLogin:
@@ -16,20 +16,20 @@ class TestAdvisorLogin:
         advisor_web_locators = AdvisorWebLocators()
         mixpanel_locators = MixPanelLocators()
         # login = Login()
-        modules = Modules()
+        login = Login()
         try:
 
-            modules.login_in_with_advisor(advisor, test_data)
-            modules.login_in_with_user(user, test_data)
+            login.login_in_with_advisor(advisor, test_data)
+            login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             time.sleep(10)
             
             profile_element = user.get_element_text(*user_web_locators.PROFILE)
             print(f"Profile element text: {profile_element}")
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
-            user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
+            user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
             user.click(*user_web_locators.FIND_ADVISOR)
             formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
-                    user_web_locators.CLICK_ADVISOR[1].format(advisor_name="tetsLanguageOrder"))
+                    user_web_locators.CLICK_ADVISOR[1].format(advisor_name="Hubert Blaine"))
             user.wait_for_element_visible(*formatted_locator)
             user.click(*formatted_locator)
             user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)

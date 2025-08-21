@@ -2,7 +2,7 @@ from drivers.web_driver import WebDriver
 from Modules.signup import Signup
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.modules import Modules
+from Modules.signup import Signup
 import time
 import random
 import string
@@ -17,35 +17,13 @@ class TestAdvisorLogin:
         web_user_web_locators = AdvisorWebLocators()
         
         # signup = Signup()
-        modules = Modules()
+        signup = Signup()
         # card_holder_name = "abcdef"
 
         
         try:
             
-            # user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            # user.wait_for_page_load()
-
-            user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-            user.wait_for_page_load()
-            print("Clearing user cookies, localStorage, and sessionStorage")
-            user.driver.delete_all_cookies()
-            user.execute_script("""
-                try {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    // Force clear by setting to empty object
-                    Object.keys(localStorage).forEach(key => localStorage.removeItem(key));
-                    Object.keys(sessionStorage).forEach(key => sessionStorage.removeItem(key));
-                } catch(e) {
-                    console.log('Storage clear error:', e);
-                }
-            """)
-            user.go_to_url("https://staging.purplegarden.co/")
-            # Wait for storage clearing to take effect
-            user.wait_for_page_load()
-            
-            modules.signup_with_user(user)
+            signup.signup_with_user(user)
             # add_credit_card details
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
             user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
