@@ -44,10 +44,33 @@ class UserWebLocators:
     MALE_RADIO_BUTTON = (By.XPATH, "//div[@value='M']")
     DOB = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
     DURATION_CARD = (By.XPATH, "(//div[@class='durationItem--qG0j_'])")
+    ADD_MIN_BALANCE_BUTTON = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
+
+    # promocode_apply
+    HOME_PAGE = (By.XPATH, "(//div[@class='headerTitle--EzGzO'])[1]")
+    SIDEMENU_APPLY_PROMOCODE = (By.XPATH, "//div[contains(text(),'Apply promo code')]")
+    SIDEMENU_PROMOCODE = (By.XPATH, "//input[@class='inputContent--omlML']")
+    SIDEMENU_SUBMIT_BUTTON = (By.XPATH, "//button[@class='submitButton--yY77x']") 
+    PROMOCODE_SUCCESS_MESSAGE = (By.XPATH, "//button[@class='promoCodeModalOkButton--DMvSR']")
+    CLOSE_CHAT_POPUP = (By.XPATH, "//button[@class='closeBtn--KvTru']//*[name()='svg']")
+
+    # bonus_get
+    ADD_BONUS_BUTTON = (By.XPATH, "//div[@class='buttonTitleText--pZbgX']")
+    CONFIRM_BONUS_MESSAGE = (By.XPATH, "//button[@class='confirmButton--VMA1l']")
+
+    # user_balance_check
+    USER_ICON = (By.XPATH, "//img[@class='avatar--e_6rk']")
+    BALANCE = (By.XPATH, "//a[@class='addCreditsButton--zTp2Z']")
+
+    # user_introduction_form
+    # NICKNAME = (By.XPATH, "//input[@class='inputClass--DG6nI']")
+    # GENDER = (By.XPATH, "//div[contains(text(),'Male')]//*[name()='svg']")
+    # DATE_OF_BIRTH = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
+    # START_LIVE_CHAT_BUTTON = (By.XPATH, "//span[normalize-space()='Start live chat']")
 
         # Sidemenu_items
 
-    SIDEMENU = (By.XPATH, "//div[contains(@class, 'contentHolder')]//div[contains(@class, 'headerLogoContainer')]//button[@type='button']//*[name()='svg']")
+    SIDEMENU = (By.XPATH, "(//button[@class='menuButton--uALyj'])[1]")
     SIDEMENU_ACTIVITY = (By.XPATH, "//div[contains(text(),'My activity')]")
     SIDEMENU_ACTIVITY_USERCLICK = (By.XPATH, "//span[normalize-space()='Hubert Blaine'][1]")
     SIDEMENU_ACTIVITY_MESSAGE_FIELD = (By.XPATH, "//textarea[@id='sendInput']")

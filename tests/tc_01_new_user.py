@@ -10,8 +10,9 @@ import string
 class TestAdvisorLogin:
     """Test cases for Advisor Login functionality using WebDriver"""
     
-    def test_valid_login_web(self, web_user,):
+    def test_valid_login_web(self, web_advisor, web_user, test_data):
         """Test valid login on Web Advisor app using LambdaTest"""
+        advisor = web_advisor
         user = web_user
         user_web_locators = UserWebLocators()
         # advisor_web_locators = AdvisorWebLocators()
