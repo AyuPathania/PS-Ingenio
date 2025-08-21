@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-
+import random
 import time
 
 class send_message_in_live:
@@ -14,18 +14,24 @@ class send_message_in_live:
         advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
-            user.input_text(*user_web_locators.TYPE_MESSAGE, "Hello from user")
+            special_chars = "!@#$%^&*()_+{}[]|:;<>?,./~`"
+            emojis = ["😝", "😜", "🤪", "🤨", "🔥", "❤️", "🚀", "😂", "🌟"]
+            random_text = ''.join(random.choices(special_chars, k=5)) + random.choice(emojis)
+            emoji_text = random_text.encode('unicode_escape').decode('utf-8')
+            print(f"Random text with special characters and emojis: {emoji_text}")
+
+            user.input_text(*user_web_locators.TYPE_MESSAGE, emoji_text)
             user.click(*user_web_locators.SEND)
             user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, "Hello from user")
+            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, emoji_text)
             time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, "Hello from user")
+            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, emoji_text)
             advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
-            advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, "Hello from advisor")
+            advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, emoji_text)
             advisor.click(*advisor_web_locators.SEND)
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, "Hello from advisor")
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, "Hello from advisor")
+            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, emoji_text)
+            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, emoji_text)
         except Exception as e:
             print(f"Test failed: {e}")
             # Take screenshot on failure

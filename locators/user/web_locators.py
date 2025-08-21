@@ -63,10 +63,10 @@ class UserWebLocators:
     BALANCE = (By.XPATH, "//a[@class='addCreditsButton--zTp2Z']")
 
     # user_introduction_form
-    NICKNAME = (By.XPATH, "//input[@class='inputClass--DG6nI']")
-    GENDER = (By.XPATH, "//div[contains(text(),'Male')]//*[name()='svg']")
-    DATE_OF_BIRTH = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
-    START_LIVE_CHAT_BUTTON = (By.XPATH, "//span[normalize-space()='Start live chat']")
+    # NICKNAME = (By.XPATH, "//input[@class='inputClass--DG6nI']")
+    # GENDER = (By.XPATH, "//div[contains(text(),'Male')]//*[name()='svg']")
+    # DATE_OF_BIRTH = (By.XPATH, "//input[@class='datePickerInput--x0pit']")
+    # START_LIVE_CHAT_BUTTON = (By.XPATH, "//span[normalize-space()='Start live chat']")
 
         # Sidemenu_items
 

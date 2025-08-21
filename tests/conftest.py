@@ -123,7 +123,7 @@ def test_data():
             'valid_password_mp': '360logica@09',
         },
         'advisor': {
-            'valid_email': 'anna.benishai+0302@ingenio',
+            'valid_email': 'anna.benishai+0302@ingenio.com',
             'valid_password': 'test666',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
