@@ -2,7 +2,7 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.login import Login
+from Modules.modules import Modules
 import time
 
 class TestAdvisorLogin:
@@ -15,26 +15,33 @@ class TestAdvisorLogin:
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         mixpanel_locators = MixPanelLocators()
-        login = Login()
-        
+        # login = Login()
+        modules = Modules()
         try:
 
-            login.login_in_with_advisor(advisor, test_data)
-            login.login_in_with_user(user, test_data)
+            modules.login_in_with_advisor(advisor, test_data)
+            modules.login_in_with_user(user, test_data)
             time.sleep(10)
             
             profile_element = user.get_element_text(*user_web_locators.PROFILE)
             print(f"Profile element text: {profile_element}")
-            user.wait_for_element_visible(*user_web_locators.SEARCH_ADVISOR)
-            user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
+            user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
             user.click(*user_web_locators.FIND_ADVISOR)
-            user.wait_for_element_visible(*user_web_locators.CLICK_ADVISOR)
-            user.click(*user_web_locators.CLICK_ADVISOR)
+            formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
+                    user_web_locators.CLICK_ADVISOR[1].format(advisor_name="tetsLanguageOrder"))
+            user.wait_for_element_visible(*formatted_locator)
+            user.click(*formatted_locator)
             user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
-            user.wait_for_element_visible(*user_web_locators.START_CHAT)
-            user.click(*user_web_locators.START_CHAT)
+            user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
+            while True:
+                minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
+                if minute_text == "1":
+                    user.click(*user_web_locators.START_CHAT)
+                    break
+                else:
+                    user.click(*user_web_locators.BACK_BUTTON)
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
             time.sleep(10)
