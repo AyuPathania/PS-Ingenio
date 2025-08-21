@@ -762,6 +762,26 @@ class WebDriver:
         except Exception as e:
             print(f"❌ Failed to type message: {e}")
             return False
+        
+    def input_text_user(self, locator_type, locator_value, text, timeout=None):
+        """Input text into element (user style), scrolling into view first"""
+        from selenium.webdriver.common.keys import Keys
+        wait_time = timeout or self.explicit_wait
+        try:
+            wait = WebDriverWait(self.driver, wait_time)
+            element = wait.until(EC.presence_of_element_located((locator_type, locator_value)))
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
+            element = wait.until(EC.element_to_be_clickable((locator_type, locator_value)))
+            element.click()
+            element.send_keys(text)
+
+            print(f"✅ Text '{text}' typed into element: {locator_type} = {locator_value}")
+            return True
+        except Exception as e:
+            print(f"❌ Failed to type text: {e}")
+            return False
+        
 
     def go_offline(self):
             """Disable network connection"""
