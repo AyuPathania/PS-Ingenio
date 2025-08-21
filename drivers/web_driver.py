@@ -69,6 +69,7 @@ class WebDriver:
                 "region": "ap",
                 "version": "latest",
                 "selenium_version": "4.0.0",
+                "region": "ap",
                 "w3c": True,
                 "commandLog": True,
                 "console": True,
@@ -86,13 +87,6 @@ class WebDriver:
 
                 # 👇 pass chrome options inside LT:Options
                 "goog:chromeOptions": {
-                    "args": [
-                        "lang=en_GB",
-                        "start-maximized",
-                        "disable-popup-blocking",
-                        "disable-sync",
-                        "disable-search-engine-choice-screen",
-                    ],
                     "prefs": {
                         "profile.default_content_setting_values.notifications": 1
                     }
@@ -907,3 +901,15 @@ class WebDriver:
         assert not text_found, f"Text '{unexpected_text}' found on page but should not be present"
         print(f"✓ Assertion passed: Text '{unexpected_text}' not found on page")
         return True
+    
+    def wait_for_document_loaded(self, timeout=30):
+        """Wait until document.readyState is 'complete'."""
+        start_time = time.time()
+        while True:
+            ready_state = self.driver.execute_script("return document.readyState")
+            if ready_state == "complete":
+                print("Document loaded")
+                return
+            if time.time() - start_time > timeout:
+                raise TimeoutException("Timed out waiting for document to load.")
+            time.sleep(0.5)
