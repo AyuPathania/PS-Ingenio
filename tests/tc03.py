@@ -2,9 +2,9 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.signup import Signup
-from Modules.login import Login
-from Modules.send_message_in_live import send_message_in_live
+# from Modules.signup import Signup
+# from Modules.login import Login
+from Modules.modules import Modules
 import time
 import random
 import string
@@ -18,12 +18,12 @@ class TestAdvisorLogin:
         advisor = web_advisor
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
-        signup = Signup()
-        login = Login()
-        sendmessage_in_live = send_message_in_live()
+        # signup = Signup()
+        # login = Login()
+        modules = Modules()
         try:
-            login.login_in_with_advisor(advisor, test_data)
-            signup.signup_with_user(user)
+            modules.login_in_with_advisor(advisor, test_data)
+            modules.signup_with_user(user)
             # user.click(*user_web_locators.SIDEMENU)
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
             user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
@@ -78,9 +78,9 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)    
             time.sleep(15)
-            sendmessage_in_live.send_message_in_live(user, advisor, test_data)
+            modules.send_message_in_live(user, advisor, test_data)
             time.sleep(60)
-            sendmessage_in_live.after_call_assertions(user, advisor, test_data)
+            modules.after_call_assertions(user, advisor, test_data)
 
 
 
