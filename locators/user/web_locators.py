@@ -60,4 +60,10 @@ class UserWebLocators:
     MESSAGE_TEXT=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[3]")
     MESSAGE_TEXT_FROM_ADVISOR=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[4]")
 
+    # chat duration pop up
+    BACK_BUTTON = (By.XPATH, "(//div[@class='arrowImgContainer--bSijc'])[1]")
+    FORWARD_BUTTON = (By.XPATH, "(//div[@class='arrowImgContainer--bSijc'])[2]")
+    MINUTES_TEXT = (By.XPATH, "//div[@class='mbw-duration-item-duration-selected']")
+    CLOSE_POPUP_BUTTON = (By.XPATH, "(//button[@class='downloadAppPopupCloseBtn--E9rKR'])[1]")
+
 
