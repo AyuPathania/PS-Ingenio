@@ -56,7 +56,47 @@ class TestAdvisorLogin:
             user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-            time.sleep(360)
+            time.sleep(250)
+            #code for hang up
+            user.wait_for_element_visible(*user_web_locators.HANG_UP_BUTTON)
+            user.click(*user_web_locators.HANG_UP_BUTTON)      
+            if user.wait_for_element_present(*user_web_locators.CLOSE_POPUP_BUTTON):
+                user.click(*user_web_locators.CLOSE_POPUP_BUTTON)
+            if user.wait_for_element_present(*user_web_locators.CLOSE_POPUP_AFTER_CALL):
+                user.wait_for_element_visible(*user_web_locators.CLOSE_POPUP_AFTER_CALL)
+                user.click(*user_web_locators.CLOSE_POPUP_AFTER_CALL)
+            else:
+                pass
+
+            send_message_in_live.after_call_assertions(advisor)
+            total_duration = user.get_element_text(*user_web_locators.TOTAL_DURATION)
+            advisor_rate = float(user.get_element_text(*user_web_locators.ADVISOR_RATE).split("$")[1].strip().split("/")[0])
+            total_credit_charged = float(user.get_element_text(*user_web_locators.TOTAL_CREDIT_CHARGED).split("$")[1].strip())
+
+            minutes = int(total_duration.split(":")[1].strip())
+            if total_duration.split(":")[2].strip().startswith("0"):
+             seconds = int(total_duration.split(":")[2].strip()[-1])  # seconds = 7
+            else:
+                seconds = int(total_duration.split(":")[2].strip())
+            total_seconds = (minutes * 60) + seconds
+
+            total = total_seconds * advisor_rate / 60
+            total_cost = "{:.2f}".format(int(total * 100) / 100)    
+
+            try:
+                assert float(total_cost) == float(total_credit_charged)
+            except AssertionError:
+                print(f"Assertion failed for total_cost: expected {total_credit_charged}, found {total_cost}")
+                raise
+
+            user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
+            user.click(*user_web_locators.CONTINUE_BUTTON)
+
+
+            
+
+
+
 
         except Exception as e:
             print(f"Test failed: {e}")

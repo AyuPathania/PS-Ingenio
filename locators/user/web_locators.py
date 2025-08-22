@@ -96,4 +96,10 @@ class UserWebLocators:
     PAY_TEXT = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
     CLOSE_POPUP_AFTER_CALL = (By.XPATH, "//button[@data-testid='popup-close-btn']")
 
+    #call calculations
+
+    TOTAL_DURATION = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[1]")
+    ADVISOR_RATE = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[2]")
+    TOTAL_CREDIT_CHARGED = (By.XPATH, "(//div[@class='totalValue--iTijP'])")
+
 
