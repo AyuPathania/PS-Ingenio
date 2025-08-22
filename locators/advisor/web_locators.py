@@ -38,6 +38,6 @@ class AdvisorWebLocators:
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Say hello to your client']")
     SEND=(By.XPATH, "//div[@class='send-button']")
-    MESSAGE_TEXT=(By.XPATH, "(//div[@class='expert-message'])")
+    ADVISOR_SEND_MESSAGE_TEXT=(By.XPATH, "(//div[contains(@class,'message')])[last()]")
     MESSAGE_TEXT_FROM_USER=(By.XPATH, "(//div[@class='client-message'])")
     NOTES_TAB = (By.XPATH, "//div[normalize-space()='Notes']")

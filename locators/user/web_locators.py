@@ -82,7 +82,7 @@ class UserWebLocators:
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
     SEND=(By.XPATH, "//button[normalize-space()='Send']")
-    MESSAGE_TEXT=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[3]")
+    USER_SEND_MESSAGE_TEXT=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[last()]")
     MESSAGE_TEXT_FROM_ADVISOR=(By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[4]")
 
     # chat duration pop up

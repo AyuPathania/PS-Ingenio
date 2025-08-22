@@ -23,17 +23,14 @@ class TestAdvisorLogin:
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         mixpanel_locators = MixPanelLocators()
-        signup = Signup()
         login = Login()
         send_message_in_live = SendMessage()
-        credit_card = CreditCard()
-        details_form = DetailsForm()
         modules = Modules()
 
         
         try:
         
-            modules.signup_with_user(user)
+            login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             modules.login_in_with_advisor(advisor, test_data)
             time.sleep(10)
 
@@ -49,16 +46,16 @@ class TestAdvisorLogin:
             user.wait_for_element_visible(*user_web_locators.START_CHAT)
             user.click(*user_web_locators.START_CHAT)
             time.sleep(10)
-            credit_card.add_credit_card(user, test_data)
+            # credit_card.add_credit_card(user, test_data)
 
 
-            user.wait_for_element_visible(*user_web_locators.START_LIVE_CHAT_BUTTON)
-            user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
+            # user.wait_for_element_visible(*user_web_locators.START_LIVE_CHAT_BUTTON)
+            # user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
 
-            details_form.your_details_form(user)
+            # details_form.your_details_form(user)
 
-            user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
-            advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
+            # user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
+            # advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
             time.sleep(15)
             send_message_in_live.user_send_special_character_message_in_live(user)

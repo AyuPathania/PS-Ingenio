@@ -79,6 +79,7 @@ class SendMessage:
     }
 """)
             advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "abcd")
+            time.sleep(5)
             advisor.click(*advisor_web_locators.SEND)
             
         except Exception as e:
@@ -108,6 +109,7 @@ class SendMessage:
             short_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
 
             advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, short_message)
+            time.sleep(5)
             advisor.click(*advisor_web_locators.SEND)
 
         except Exception as e:
