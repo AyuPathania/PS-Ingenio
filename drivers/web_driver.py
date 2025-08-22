@@ -73,7 +73,7 @@ class WebDriver:
                 "w3c": True,
                 "commandLog": True,
                 "console": True,
-                "idleTimeout": 300,
+                "idleTimeout": 400,
                 "isRealMobile": False,
                 "maxDuration": 20,
                 "queueTimeout": "900",

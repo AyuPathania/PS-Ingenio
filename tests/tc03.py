@@ -2,9 +2,10 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-# from Modules.signup import Signup
-# from Modules.login import Login
-from Modules.modules import Modules
+from Modules.signup import Signup
+from Modules.login import Login
+from Modules.send_message_in_live import SendMessage
+# from Modules.modules import Modules
 import time
 import random
 import string
@@ -18,12 +19,13 @@ class TestAdvisorLogin:
         advisor = web_advisor
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
-        # signup = Signup()
-        # login = Login()
-        modules = Modules()
+        signup = Signup()
+        login = Login()
+        send_message = SendMessage()
+        # modules = Modules()
         try:
-            modules.login_in_with_advisor(advisor, test_data)
-            modules.signup_with_user(user)
+            login.login_in_with_advisor(advisor, test_data)
+            login.signup_with_user(user)
             # user.click(*user_web_locators.SIDEMENU)
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
             user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
@@ -34,6 +36,14 @@ class TestAdvisorLogin:
             user.click(*formatted_locator)
             user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
+            user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
+            while True:
+                minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
+                if minute_text == "1":
+                    user.click(*user_web_locators.START_CHAT)
+                    break
+                else:
+                    user.click(*user_web_locators.BACK_BUTTON)            
             
             # user.wait_for_element_visible(*user_web_locators.DURATION_CARD)
             # user.click(*user_web_locators.DURATION_CARD)
@@ -78,9 +88,9 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)    
             time.sleep(15)
-            modules.send_message_in_live(user, advisor, test_data)
+            send_message.send_message_in_live(user, advisor)
             time.sleep(60)
-            modules.after_call_assertions(user, advisor, test_data)
+            send_message.after_call_assertions(user, advisor)
 
 
 

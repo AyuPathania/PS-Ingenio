@@ -8,7 +8,7 @@ import time
 
 class Login:
     
-    def login_in_with_user(self, web_user, test_data):
+    def login_in_with_user(self, web_user, user_name, password):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
         user_web_locators = UserWebLocators()
@@ -36,9 +36,9 @@ class Login:
             user.wait_for_element_visible(*user_web_locators.SIGN_IN)
             user.click(*user_web_locators.SIGN_IN)
             user.wait_for_element_visible(*user_web_locators.EMAIL)
-            user.input_text(*user_web_locators.EMAIL, test_data['user']['valid_email'])
+            user.input_text(*user_web_locators.EMAIL, user_name)
             user.wait_for_element_visible(*user_web_locators.PASSWORD)
-            user.input_text(*user_web_locators.PASSWORD, test_data['user']['valid_password'])
+            user.input_text(*user_web_locators.PASSWORD, password)
             user.wait_for_element_visible(*user_web_locators.ACCEPT)
             user.click(*user_web_locators.ACCEPT)
             user.wait_for_element_visible(*user_web_locators.SIGN_IN_BUTTON)

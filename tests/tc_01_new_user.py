@@ -2,7 +2,7 @@ from drivers.web_driver import WebDriver
 from locators.MixPanel.MixPanel import MixPanelLocators
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.modules import Modules
+from Modules.signup import Signup
 import time
 import random
 import string
@@ -10,20 +10,20 @@ import string
 class TestAdvisorLogin:
     """Test cases for Advisor Login functionality using WebDriver"""
     
-    def test_valid_login_web(self, web_advisor, web_user, test_data):
+    def test_valid_login_web(self, web_user):
         """Test valid login on Web Advisor app using LambdaTest"""
-        advisor = web_advisor
+        # advisor = web_advisor
         user = web_user
         user_web_locators = UserWebLocators()
         # advisor_web_locators = AdvisorWebLocators()
         # mixpanel_locators = MixPanelLocators()
         # signup = Signup()
-        modules = Modules()
+        signup = Signup()
 
         
         try:
         
-            modules.signup_with_user(user)
+            signup.signup_with_user(user) 
 
             # add_credit_card details
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
