@@ -45,7 +45,8 @@ class SendMessage:
         console.log("⚠️ Error:", e);
     }
 """)
-            user.input_text_user(*user_web_locators.TYPE_MESSAGE, "bc")
+            user.input_text_without_clear(*user_web_locators.TYPE_MESSAGE, "bc")
+            time.sleep(5)
             user.click(*user_web_locators.SEND)
             
             user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
@@ -84,7 +85,7 @@ class SendMessage:
         console.log("⚠️ Error inserting text:", e);
     }
 """)
-            advisor.input_text_advisor(*advisor_web_locators.TYPE_MESSAGE, "bcd")
+            advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "bcd")
             advisor.click(*advisor_web_locators.SEND)
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
             advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, "!@#$%^&*()_+[]|:;<>?,./~😝😜abcd")

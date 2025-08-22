@@ -78,7 +78,7 @@ class TestAdvisorLogin:
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TAB)
             advisor.click(*advisor_web_locators.MESSAGE_TAB)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_MESSAGE_BOX)
-            advisor.input_text_advisor(*advisor_web_locators.ADVISOR_MESSAGE_BOX, "Hello Sweet")
+            advisor.input_text_without_clear(*advisor_web_locators.ADVISOR_MESSAGE_BOX, "Hello Sweet")
             advisor.click(*advisor_web_locators.SEND_MESSAGE_BUTTON_ADVISOR)
             
 

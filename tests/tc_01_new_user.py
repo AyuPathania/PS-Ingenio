@@ -101,9 +101,9 @@ class TestAdvisorLogin:
             user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-            time.sleep(5)
+            time.sleep(15)
             send_message_in_live.send_message_in_live(user, advisor, test_data)
-            time.sleep(60)
+            time.sleep(65)
             send_message_in_live.after_call_assertions(user, advisor, test_data)
 
 
