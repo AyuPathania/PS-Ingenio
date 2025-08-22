@@ -92,5 +92,6 @@ class UserWebLocators:
     AMOUNT_BEFORE_PAYMENT_SALES = (By.XPATH, "//div[@class='mbw-duration-item-selected']// div[@class='durationItemPriceContainerSalesPrice--wS3iW']")
     ACTUAL_AMOUNT = (By.XPATH, "(//b[@class='priceTitle--iaF2q'])[1]")
     PAY_TEXT = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
+    CLOSE_POPUP_AFTER_CALL = (By.XPATH, "//button[@data-testid='popup-close-btn']")
 
 
