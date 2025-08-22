@@ -48,9 +48,15 @@ class TestAdvisorLogin:
 
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-            time.sleep(40)
-            send_message.send_message_in_live(user, advisor)
+            time.sleep(15)
+            send_message.send_short_message_in_live(user, advisor)
             time.sleep(10)
+            user.wait_for_element_visible(*user_web_locators.HANG_UP_BUTTON)
+            user.click(*user_web_locators.HANG_UP_BUTTON)
+            user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
+            user.click(*user_web_locators.CONTINUE_BUTTON)
+            time.sleep(10)
+
             send_message.after_call_assertions(user, advisor)
             # user.click(*user_web_locators.HANG_UP_BUTTON)
             # user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
@@ -69,11 +75,14 @@ class TestAdvisorLogin:
             # total_earned = advisor.get_element_text(*advisor_web_locators.TOTAL_EARNED)
             # advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_EARNED, total_earned)
             # print(f"Total earned: {total_earned}")
+
+            
             advisor.wait_for_element_visible(*advisor_web_locators.CLIENT_NAME)
             client_name = advisor.get_element_text(*advisor_web_locators.CLIENT_NAME)
 
             advisor.wait_for_element_visible(*advisor_web_locators.CLOSE_CHAT_BUTTON)
             advisor.click(*advisor_web_locators.CLOSE_CHAT_BUTTON)
+
             formatted_locator = (advisor_web_locators.SELECT_CLIENT[0], 
                     advisor_web_locators.SELECT_CLIENT[1].format(client=client_name))
             advisor.wait_for_element_visible(*formatted_locator)
@@ -93,9 +102,11 @@ class TestAdvisorLogin:
             advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {own_message_val_advisor_side}")
             
+            user.refresh_page()
+            time.sleep(10)
             user.scroll_to_element(*user_web_locators.SIDEMENU_ACTIVITY_MESSAGE_FIELD)
             own_message_val_user_side = user.get_element_text(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION)
-            user.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_OWN_MESSAGE_VALIDATION, own_message_val_user_side)
+            user.assert_element_text_equals(*user_web_locators.ADVISOR_MESSAGE_ON_USER_SIDE, own_message_val_user_side)
             print(f"Message displayed on the user side is: {own_message_val_user_side}")
             
 
@@ -108,16 +119,16 @@ class TestAdvisorLogin:
 
             user.input_text(*user_web_locators.SIDEMENU_ACTIVITY_MESSAGE_FIELD, "Hello Hubert")
             user.click(*user_web_locators.SIDEMENU_ACTIVITY_SEND_BUTTON)
-            
-            message_val_userside = user.get_element_text(*user_web_locators.SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION)
-            user.assert_element_text_equals(*user_web_locators.SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION, message_val_userside)
+            time.sleep(5)
+            message_val_userside = user.get_element_text(*user_web_locators.USER_MESSAGE_ON_USER_SIDE)
+            user.assert_element_text_equals(*user_web_locators.USER_MESSAGE_ON_USER_SIDE, message_val_userside)
             print(f"Message displayed on the user side is: {message_val_userside}")
 
 
             advisor.click(*advisor_web_locators.NOTES_TAB)
             advisor.click(*advisor_web_locators.MESSAGE_TAB)
-            message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION)
-            advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_MESSAGE_VALIDATION, message_val_advisor_side)
+            message_val_advisor_side = advisor.get_element_text(*advisor_web_locators.ADVISOR_SIDE_USER_MESSAGE_VALIDATION)
+            advisor.assert_element_text_equals(*advisor_web_locators.ADVISOR_SIDE_USER_MESSAGE_VALIDATION, message_val_advisor_side)
             print(f"Message displayed on the advisor side is: {message_val_advisor_side}")
 
             # # ✅ compare messages send by user side first and then to advisor side

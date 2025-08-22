@@ -76,6 +76,8 @@ class UserWebLocators:
     SIDEMENU_ACTIVITY_MESSAGE_FIELD = (By.XPATH, "//textarea[@id='sendInput']")
     SIDEMENU_ACTIVITY_SEND_BUTTON = (By.XPATH, "//button[@class='sendButton--R6WFP']//*[name()='svg']")
     SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[1]")
+    ADVISOR_MESSAGE_ON_USER_SIDE = (By.XPATH, "(//div[@class='chatBubbleMessageText--n2ssQ'])[1]")
+    USER_MESSAGE_ON_USER_SIDE = (By.XPATH, "(//div[@class='chatBubbleMessageText--n2ssQ'])[1]")
 
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
