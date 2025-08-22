@@ -52,6 +52,7 @@ class Signup:
                 user.wait_for_page_load()
 
 
+
         except Exception as e:
                 print(f"Test failed: {e}")
                 # Take screenshot on failure

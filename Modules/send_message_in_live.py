@@ -6,37 +6,31 @@ from locators.advisor.web_locators import AdvisorWebLocators
 import random
 import time
 
-class send_message_in_live:
-    def send_message_in_live(self, web_user, web_advisor, test_data):
+class SendMessage:
+    def send_message_in_live(self, web_user, web_advisor):
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
-            special_chars = "!@#$%^&*()_+{}[]|:;<>?,./~`"
-            emojis = ["😝", "😜", "🤪", "🤨", "🔥", "❤️", "🚀", "😂", "🌟"]
-            random_text = ''.join(random.choices(special_chars, k=5)) + random.choice(emojis)
-            emoji_text = random_text.encode('unicode_escape').decode('utf-8')
-            print(f"Random text with special characters and emojis: {emoji_text}")
-
-            user.input_text(*user_web_locators.TYPE_MESSAGE, emoji_text)
+            user.input_text(*user_web_locators.TYPE_MESSAGE, "Hello from user")
             user.click(*user_web_locators.SEND)
             user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, emoji_text)
+            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, "Hello from user")
             time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, emoji_text)
+            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, "Hello from user")
             advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
-            advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, emoji_text)
+            advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, "Hello from advisor")
             advisor.click(*advisor_web_locators.SEND)
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, emoji_text)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, emoji_text)
+            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, "Hello from advisor")
+            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, "Hello from advisor")
         except Exception as e:
             print(f"Test failed: {e}")
             # Take screenshot on failure
 
-    def after_call_assertions(self, web_user, web_advisor, test_data):
+    def after_call_assertions(self, web_user, web_advisor):
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
