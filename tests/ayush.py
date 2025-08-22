@@ -1,5 +1,5 @@
 from drivers.web_driver import WebDriver
-from locators.test.ayush_locator import AyushLocator
+# from locators.test.ayush_locator import AyushLocator
 from Modules.login import Login
 import time
 
@@ -11,7 +11,7 @@ class TestAdvisorLogin:
         
         user = web_user
         advisor = web_advisor
-        locators = AyushLocator()
+        # locators = AyushLocator()
         login = Login()
 
         
