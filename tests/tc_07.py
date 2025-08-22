@@ -60,9 +60,9 @@ class TestAdvisorLogin:
             #code for hang up
             user.wait_for_element_visible(*user_web_locators.HANG_UP_BUTTON)
             user.click(*user_web_locators.HANG_UP_BUTTON)      
-            if user.wait_for_element_present(*user_web_locators.CLOSE_POPUP_BUTTON):
+            if user.is_element_displayed(*user_web_locators.CLOSE_POPUP_BUTTON):
                 user.click(*user_web_locators.CLOSE_POPUP_BUTTON)
-            if user.wait_for_element_present(*user_web_locators.CLOSE_POPUP_AFTER_CALL):
+            if user.is_element_displayed(*user_web_locators.CLOSE_POPUP_AFTER_CALL):
                 user.wait_for_element_visible(*user_web_locators.CLOSE_POPUP_AFTER_CALL)
                 user.click(*user_web_locators.CLOSE_POPUP_AFTER_CALL)
             else:
