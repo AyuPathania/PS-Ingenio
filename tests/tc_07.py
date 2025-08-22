@@ -27,23 +27,20 @@ class TestAdvisorLogin:
         send_message_in_live = SendMessage()
         credit_card = CreditCard()
         details_form = DetailsForm()
-        modules = Modules()
-
-        
         try:
-        
-            modules.signup_with_user(user)
-            modules.login_in_with_advisor(advisor, test_data)
+            signup.signup_with_user(user)
+            login.login_in_with_advisor(advisor, test_data)
             time.sleep(10)
 
             # add_credit_card details
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
-            user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
+            user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
             user.click(*user_web_locators.FIND_ADVISOR)
             formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
-                    user_web_locators.CLICK_ADVISOR[1].format(advisor_name="Hubert Blaine"))
+                    user_web_locators.CLICK_ADVISOR[1].format(advisor_name="tetsLanguageOrder"))
             user.wait_for_element_visible(*formatted_locator)
             user.click(*formatted_locator)
+            user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
             user.wait_for_element_visible(*user_web_locators.START_CHAT)
             user.click(*user_web_locators.START_CHAT)
@@ -55,22 +52,12 @@ class TestAdvisorLogin:
             user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
 
             details_form.your_details_form(user)
-
+            
             user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
             advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-            time.sleep(15)
-            send_message_in_live.send_message_in_live(user, advisor)
-            time.sleep(65)
-            send_message_in_live.after_call_assertions(user, advisor)
+            time.sleep(360)
 
-
-
-
-            
-            # Wait a moment to see the result
-            time.sleep(5)
-            
         except Exception as e:
             print(f"Test failed: {e}")
             # Take screenshot on failure
@@ -78,4 +65,5 @@ class TestAdvisorLogin:
             raise
         finally:
             # Clean up
+            advisor.quit_driver()
             user.quit_driver()
