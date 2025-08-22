@@ -111,7 +111,7 @@ def test_data():
     
     return {
         'user': {
-            'valid_email': 'anna.benishai+2705qa@ingenio.com',
+            'valid_email': 'ayushp@aa.com',
             'valid_password': 'test123',
             'advisor_name': 'tetsLanguageOrder',
             'invalid_email': 'invalid@example.com',
@@ -123,8 +123,8 @@ def test_data():
             'valid_password_mp': '360logica@09',
         },
         'advisor': {
-            'valid_email': 'anna.benishai+0302@ingenio.com',
-            'valid_password': 'test666',
+            'valid_email': 'mykhailo.orban+0108001@bargestech.com',
+            'valid_password': 'qwerty',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',

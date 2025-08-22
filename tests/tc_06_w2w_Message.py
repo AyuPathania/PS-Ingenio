@@ -69,16 +69,23 @@ class TestAdvisorLogin:
             # total_earned = advisor.get_element_text(*advisor_web_locators.TOTAL_EARNED)
             # advisor.assert_element_text_equals(*advisor_web_locators.TOTAL_EARNED, total_earned)
             # print(f"Total earned: {total_earned}")
+            advisor.wait_for_element_visible(*advisor_web_locators.CLIENT_NAME)
+            client_name = advisor.get_element_text(*advisor_web_locators.CLIENT_NAME)
+
             advisor.wait_for_element_visible(*advisor_web_locators.CLOSE_CHAT_BUTTON)
             advisor.click(*advisor_web_locators.CLOSE_CHAT_BUTTON)
+            formatted_locator = (advisor_web_locators.SELECT_CLIENT[0], 
+                    advisor_web_locators.SELECT_CLIENT[1].format(client=client_name))
+            advisor.wait_for_element_visible(*formatted_locator)
+            advisor.click(*formatted_locator)
 
 
             # Advisor sends a message to User
-            advisor.click(*advisor_web_locators.CLIENT_NAME)
+            # advisor.click(*advisor_web_locators.CLIENT_NAME)
             advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TAB)
             advisor.click(*advisor_web_locators.MESSAGE_TAB)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_MESSAGE_BOX)
-            advisor.input_text_without_clear(*advisor_web_locators.ADVISOR_MESSAGE_BOX, "Hello Sweet")
+            advisor.input_text_without_clear(*advisor_web_locators.ADVISOR_MESSAGE_BOX, f"Hello {client_name}")
             advisor.click(*advisor_web_locators.SEND_MESSAGE_BUTTON_ADVISOR)
             
 

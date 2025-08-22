@@ -23,9 +23,10 @@ class TestAdvisorLogin:
         login = Login()
         send_message = SendMessage()
         # modules = Modules()
+        status = "failed"
         try:
             login.login_in_with_advisor(advisor, test_data)
-            login.signup_with_user(user)
+            signup.signup_with_user(user)
             # user.click(*user_web_locators.SIDEMENU)
             user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
             user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
@@ -36,17 +37,6 @@ class TestAdvisorLogin:
             user.click(*formatted_locator)
             user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
-            user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
-            while True:
-                minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
-                if minute_text == "1":
-                    user.click(*user_web_locators.START_CHAT)
-                    break
-                else:
-                    user.click(*user_web_locators.BACK_BUTTON)            
-            
-            # user.wait_for_element_visible(*user_web_locators.DURATION_CARD)
-            # user.click(*user_web_locators.DURATION_CARD)
             user.wait_for_element_visible(*user_web_locators.START_CHAT)
             user.click(*user_web_locators.START_CHAT)
             user.wait_for_element_visible(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
@@ -89,9 +79,9 @@ class TestAdvisorLogin:
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)    
             time.sleep(15)
             send_message.send_message_in_live(user, advisor)
-            time.sleep(60)
+            time.sleep(65)
             send_message.after_call_assertions(user, advisor)
-
+            status = "passed"
 
 
 
@@ -106,6 +96,11 @@ class TestAdvisorLogin:
             
             raise
         finally:
+            # Update the status at the end
+            
+            user.execute_script(f"lambda-status={status}")
+            advisor.execute_script(f"lambda-status={status}")
+
             # Clean up
             user.quit_driver()
             advisor.quit_driver()
