@@ -7,7 +7,7 @@ import random
 import time
 
 class SendMessage:
-    def send_message_in_live(self, web_user, web_advisor, test_data):
+    def send_message_in_live(self, web_user, web_advisor):
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
