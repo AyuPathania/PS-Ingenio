@@ -134,3 +134,6 @@ reports/
 *.log
 **/__init__.py
 .DS_Store
+try.py
+test.py
+run_test.py

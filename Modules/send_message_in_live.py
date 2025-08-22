@@ -91,9 +91,7 @@ class SendMessage:
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         try:
-            user.click(*user_web_locators.HANG_UP_BUTTON)
-            user.wait_for_element_visible(*user_web_locators.CONTINUE_BUTTON)
-            user.click(*user_web_locators.CONTINUE_BUTTON)
+
             advisor.wait_for_element_visible(*advisor_web_locators.TOTAL_DURATION)
             total_duration =advisor.get_element_text(*advisor_web_locators.TOTAL_DURATION)
             your_rate = float(advisor.get_element_text(*advisor_web_locators.YOUR_RATE).split("$")[1].strip().split("/")[0])
