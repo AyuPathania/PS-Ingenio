@@ -2,12 +2,17 @@ from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, ElementNotInteractableException, ElementClickInterceptedException
 from selenium import webdriver
 
 import time
 import os
 from config.config import Config
+
+class ElementNotInteractableError(Exception):
+    """Custom exception for when elements are not interactable"""
+    pass
+
 
 class AppiumDriver:
     def __init__(self, platform='android', user_type='user'):
@@ -213,10 +218,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.presence_of_element_located((locator_type, locator_value))
             )
+            print(f"✓ Element found: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not found: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not found after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error finding element: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def find_elements(self, locator_type, locator_value, timeout=None):
         """Find multiple elements with explicit wait"""
@@ -235,11 +246,36 @@ class AppiumDriver:
     # Click Methods
     def click(self, locator_type, locator_value, timeout=None):
         """Click on element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.click()
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.click()
+                print(f"✓ Clicked element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for clicking: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for clicking: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except ElementClickInterceptedException as e:
+            # Extract only the essential error message, remove stacktrace
+            error_details = str(e)
+            if "Message:" in error_details:
+                # Get only the message part before the stacktrace
+                message_part = error_details.split("Message:")[1].split("Stacktrace:")[0].strip()
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value} - {message_part}"
+            else:
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value}"
+            print(clean_error)
+            raise ElementNotInteractableError(clean_error)
+        except Exception as e:
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error clicking element: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def click_by_text(self, text, timeout=None):
         """Click element by text"""
@@ -253,20 +289,47 @@ class AppiumDriver:
     # Input Methods
     def input_text(self, locator_type, locator_value, text, timeout=None):
         """Input text into element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.clear()
-            element.send_keys(text)
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.clear()
+                element.send_keys(text)
+                print(f"✓ Input text '{text}' into element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for text input: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text input: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error inputting text: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def clear_text(self, locator_type, locator_value, timeout=None):
         """Clear text from element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.clear()
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.clear()
+                print(f"✓ Cleared text from element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for text clearing: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text clearing: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error clearing text: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Wait Methods
     def wait_for_element(self, locator_type, locator_value, timeout=None):
@@ -282,10 +345,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.visibility_of_element_located((locator_type, locator_value))
             )
+            print(f"✓ Element visible: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not visible: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not visible after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error waiting for element visibility: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_element_clickable(self, locator_type, locator_value, timeout=None):
         """Wait for element to be clickable"""
@@ -296,10 +365,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.element_to_be_clickable((locator_type, locator_value))
             )
+            print(f"✓ Element clickable: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not clickable: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not clickable after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error waiting for element clickability: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Navigation Methods
     def go_back(self):
@@ -324,20 +399,65 @@ class AppiumDriver:
     # Verification Methods
     def is_element_present(self, locator_type, locator_value, timeout=5):
         """Check if element is present"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        return element is not None
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                print(f"✓ Element present: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not present: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not present after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error checking element presence: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def is_element_visible(self, locator_type, locator_value, timeout=5):
         """Check if element is visible"""
-        element = self.wait_for_element_visible(locator_type, locator_value, timeout)
-        return element is not None
+        try:
+            element = self.wait_for_element_visible(locator_type, locator_value, timeout)
+            if element:
+                is_visible = element.is_displayed()
+                print(f"✓ Element visible: {is_visible} - {locator_type} = {locator_value}")
+                return is_visible
+            else:
+                error_msg = f"❌ Element not visible: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error checking element visibility: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def get_element_text(self, locator_type, locator_value, timeout=None):
         """Get text from element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            return element.text
-        return None
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                text = element.text
+                print(f"✓ Got text '{text}' from element: {locator_type} = {locator_value}")
+                return text
+            else:
+                error_msg = f"❌ Element not found for text extraction: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text extraction: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error getting element text: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Screenshot Methods
     def take_screenshot(self, filename=None):
@@ -606,10 +726,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.presence_of_element_located((locator_type, locator_value))
             )
+            print(f"✓ Element found: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not found: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not found after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error finding element: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def find_elements(self, locator_type, locator_value, timeout=None):
         """Find multiple elements with explicit wait"""
@@ -628,11 +754,36 @@ class AppiumDriver:
     # Click Methods
     def click(self, locator_type, locator_value, timeout=None):
         """Click on element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.click()
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.click()
+                print(f"✓ Clicked element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for clicking: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for clicking: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except ElementClickInterceptedException as e:
+            # Extract only the essential error message, remove stacktrace
+            error_details = str(e)
+            if "Message:" in error_details:
+                # Get only the message part before the stacktrace
+                message_part = error_details.split("Message:")[1].split("Stacktrace:")[0].strip()
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value} - {message_part}"
+            else:
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value}"
+            print(clean_error)
+            raise ElementNotInteractableError(clean_error)
+        except Exception as e:
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error clicking element: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def click_by_text(self, text, timeout=None):
         """Click element by text"""
@@ -646,20 +797,47 @@ class AppiumDriver:
     # Input Methods
     def input_text(self, locator_type, locator_value, text, timeout=None):
         """Input text into element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.clear()
-            element.send_keys(text)
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.clear()
+                element.send_keys(text)
+                print(f"✓ Input text '{text}' into element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for text input: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text input: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error inputting text: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def clear_text(self, locator_type, locator_value, timeout=None):
         """Clear text from element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            element.clear()
-            return True
-        return False
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                element.clear()
+                print(f"✓ Cleared text from element: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not found for text clearing: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text clearing: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error clearing text: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Wait Methods
     def wait_for_element(self, locator_type, locator_value, timeout=None):
@@ -675,10 +853,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.visibility_of_element_located((locator_type, locator_value))
             )
+            print(f"✓ Element visible: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not visible: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not visible after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error waiting for element visibility: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_element_clickable(self, locator_type, locator_value, timeout=None):
         """Wait for element to be clickable"""
@@ -689,10 +873,16 @@ class AppiumDriver:
             element = wait.until(
                 EC.element_to_be_clickable((locator_type, locator_value))
             )
+            print(f"✓ Element clickable: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not clickable: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not clickable after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error waiting for element clickability: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Navigation Methods
     def go_back(self):
@@ -717,20 +907,65 @@ class AppiumDriver:
     # Verification Methods
     def is_element_present(self, locator_type, locator_value, timeout=5):
         """Check if element is present"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        return element is not None
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                print(f"✓ Element present: {locator_type} = {locator_value}")
+                return True
+            else:
+                error_msg = f"❌ Element not present: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not present after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error checking element presence: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def is_element_visible(self, locator_type, locator_value, timeout=5):
         """Check if element is visible"""
-        element = self.wait_for_element_visible(locator_type, locator_value, timeout)
-        return element is not None
+        try:
+            element = self.wait_for_element_visible(locator_type, locator_value, timeout)
+            if element:
+                is_visible = element.is_displayed()
+                print(f"✓ Element visible: {is_visible} - {locator_type} = {locator_value}")
+                return is_visible
+            else:
+                error_msg = f"❌ Element not visible: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error checking element visibility: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def get_element_text(self, locator_type, locator_value, timeout=None):
         """Get text from element"""
-        element = self.find_element(locator_type, locator_value, timeout)
-        if element:
-            return element.text
-        return None
+        try:
+            element = self.find_element(locator_type, locator_value, timeout)
+            if element:
+                text = element.text
+                print(f"✓ Got text '{text}' from element: {locator_type} = {locator_value}")
+                return text
+            else:
+                error_msg = f"❌ Element not found for text extraction: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout for text extraction: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error getting element text: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     # Screenshot Methods
     def take_screenshot(self, filename=None):
@@ -786,3 +1021,4 @@ class AppiumDriver:
             print(f"LambdaTest status set to: {status}")
         except Exception as e:
             print(f"Failed to set LambdaTest status: {e}")
+

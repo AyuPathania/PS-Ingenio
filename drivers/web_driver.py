@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, ElementNotInteractableException, ElementClickInterceptedException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
@@ -19,10 +19,14 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager, IEDriverManag
 import time
 import os
 
+class ElementNotInteractableError(Exception):
+    """Custom exception for when elements are not interactable"""
+    pass
+
 class WebDriver:
     """WebDriver class for web browser automation"""
     
-    def __init__(self, browser='chrome', headless=False, implicit_wait=10, explicit_wait=20):
+    def __init__(self, browser='chrome', headless=False, implicit_wait=10, explicit_wait=10):
         """
         Initialize WebDriver
         
@@ -471,20 +475,21 @@ class WebDriver:
             return False
     
     def wait_for_page_load(self, timeout=30):
-        """Wait for page to fully load"""
+        """Wait for page to load completely"""
         try:
-            # Wait for document ready state
             WebDriverWait(self.driver, timeout).until(
                 lambda driver: driver.execute_script("return document.readyState") == "complete"
             )
-            print("Page loaded completely")
+            print("✓ Page loaded completely")
             return True
         except TimeoutException:
-            print(f"Page load timeout after {timeout} seconds")
-            return False
+            error_msg = f"❌ Page load timeout after {timeout} seconds"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for page load: {e}")
-            return False
+            error_msg = f"❌ Error waiting for page load: {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_element_visible(self, locator_type, locator_value, timeout=None):
         """Wait for element to be visible"""
@@ -493,14 +498,17 @@ class WebDriver:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.visibility_of_element_located((locator_type, locator_value))
             )
-            print(f"Element visible: {locator_type} = {locator_value}")
+            print(f"✓ Element visible: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not visible after {wait_time} seconds: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not visible after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for element visibility: {e}")
-            return None
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error waiting for element visibility: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_element_present(self, locator_type, locator_value, timeout=10):
         """Wait for element to be present in DOM"""
@@ -509,14 +517,17 @@ class WebDriver:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.presence_of_element_located((locator_type, locator_value))
             )
-            print(f"Element present: {locator_type} = {locator_value}")
+            print(f"✓ Element present: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not present after {wait_time} seconds: {locator_type} = {locator_value}")
-            return None
+            error_msg = f"❌ Element not present after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for element presence: {e}")
-            return None
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error waiting for element presence: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_element_clickable(self, locator_type, locator_value, timeout=10):
         """Wait for element to be clickable"""
@@ -525,14 +536,17 @@ class WebDriver:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.element_to_be_clickable((locator_type, locator_value))
             )
-            print(f"Element clickable: {locator_type} = {locator_value}")
+            print(f"✓ Element clickable: {locator_type} = {locator_value}")
             return element
         except TimeoutException:
-            print(f"Element not clickable after {wait_time} seconds: {locator_type} = {locator_value}")
-            return False
+            error_msg = f"❌ Element not clickable after {wait_time} seconds: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for element clickability: {e}")
-            return False
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error waiting for element clickability: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def click(self, locator_type, locator_value, timeout=None):
         """Click on element"""
@@ -540,14 +554,32 @@ class WebDriver:
             element = self.wait_for_element_clickable(locator_type, locator_value, timeout)
             if element:
                 element.click()
-                print(f"Clicked element: {locator_type} = {locator_value}")
+                print(f"✓ Clicked element: {locator_type} = {locator_value}")
                 return True
             else:
-                print(f"Failed to click element: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not clickable: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not clickable after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except ElementClickInterceptedException as e:
+            # Extract only the essential error message, remove stacktrace
+            error_details = str(e)
+            if "Message:" in error_details:
+                # Get only the message part before the stacktrace
+                message_part = error_details.split("Message:")[1].split("Stacktrace:")[0].strip()
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value} - {message_part}"
+            else:
+                clean_error = f"❌ Element click intercepted: {locator_type} = {locator_value}"
+            print(clean_error)
+            raise ElementNotInteractableError(clean_error)
         except Exception as e:
-            print(f"Error clicking element: {e}")
-            return False
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error clicking element: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def input_text(self, locator_type, locator_value, text, timeout=None):
         """Input text into element"""
@@ -556,14 +588,21 @@ class WebDriver:
             if element:
                 element.clear()
                 element.send_keys(text)
-                print(f"Input text '{text}' into element: {locator_type} = {locator_value}")
+                print(f"✓ Input text '{text}' into element: {locator_type} = {locator_value}")
                 return True
             else:
-                print(f"Failed to input text into element: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not visible for text input: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout for text input: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error inputting text: {e}")
-            return False
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error inputting text: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
 
 
     def get_element_text(self, locator_type, locator_value, timeout=None):
@@ -572,14 +611,21 @@ class WebDriver:
             element = self.wait_for_element_visible(locator_type, locator_value, timeout)
             if element:
                 text = element.text
-                print(f"Got text '{text}' from element: {locator_type} = {locator_value}")
+                print(f"✓ Got text '{text}' from element: {locator_type} = {locator_value}")
                 return text
             else:
-                print(f"Failed to get text from element: {locator_type} = {locator_value}")
-                return None
+                error_msg = f"❌ Element not visible for text extraction: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout for text extraction: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error getting element text: {e}")
-            return None
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error getting element text: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def get_element_attribute(self, locator_type, locator_value, attribute, timeout=None):
         """Get attribute value from element"""
@@ -587,14 +633,21 @@ class WebDriver:
             element = self.wait_for_element_present(locator_type, locator_value, timeout)
             if element:
                 value = element.get_attribute(attribute)
-                print(f"Got attribute '{attribute}' = '{value}' from element: {locator_type} = {locator_value}")
+                print(f"✓ Got attribute '{attribute}' = '{value}' from element: {locator_type} = {locator_value}")
                 return value
             else:
-                print(f"Failed to get attribute from element: {locator_type} = {locator_value}")
-                return None
+                error_msg = f"❌ Element not present for attribute extraction: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not present after timeout for attribute extraction: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error getting element attribute: {e}")
-            return None
+            # For other exceptions, show only the error message, not the full traceback
+            error_msg = f"❌ Error getting element attribute: {locator_type} = {locator_value} - {str(e).split('Stacktrace:')[0].strip()}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def is_element_displayed(self, locator_type, locator_value, timeout=None):
         """Check if element is displayed"""
@@ -602,14 +655,20 @@ class WebDriver:
             element = self.wait_for_element_visible(locator_type, locator_value, timeout)
             if element:
                 is_displayed = element.is_displayed()
-                print(f"Element displayed: {is_displayed} - {locator_type} = {locator_value}")
+                print(f"✓ Element displayed: {is_displayed} - {locator_type} = {locator_value}")
                 return is_displayed
             else:
-                print(f"Failed to check element display: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not visible for display check: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout for display check: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error checking element display: {e}")
-            return False
+            error_msg = f"❌ Error checking element display: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
 
     def is_element_not_displayed(self, locator_type, locator_value, timeout=None):
         """Check if element is not displayed"""
@@ -617,14 +676,20 @@ class WebDriver:
             element = self.wait_for_element_visible(locator_type, locator_value, timeout)
             if element:
                 is_displayed = not element.is_displayed()
-                print(f"Element not displayed: {is_displayed} - {locator_type} = {locator_value}")
+                print(f"✓ Element not displayed: {is_displayed} - {locator_type} = {locator_value}")
                 return is_displayed
             else:
-                print(f"Failed to check element display: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not visible for display check: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not visible after timeout for display check: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error checking element display: {e}")
-            return False
+            error_msg = f"❌ Error checking element display: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def is_element_enabled(self, locator_type, locator_value, timeout=None):
         """Check if element is enabled"""
@@ -632,18 +697,40 @@ class WebDriver:
             element = self.wait_for_element_present(locator_type, locator_value, timeout)
             if element:
                 is_enabled = element.is_enabled()
-                print(f"Element enabled: {is_enabled} - {locator_type} = {locator_value}")
+                print(f"✓ Element enabled: {is_enabled} - {locator_type} = {locator_value}")
                 return is_enabled
             else:
-                print(f"Failed to check element enabled: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not present for enabled check: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not present after timeout for enabled check: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error checking element enabled: {e}")
-            return False
+            error_msg = f"❌ Error checking element enabled: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def find_element(self, locator_type, locator_value, timeout=None):
         """Find element with explicit wait"""
-        return self.wait_for_element_present(locator_type, locator_value, timeout)
+        try:
+            element = self.wait_for_element_present(locator_type, locator_value, timeout)
+            if element:
+                print(f"✓ Element found: {locator_type} = {locator_value}")
+                return element
+            else:
+                error_msg = f"❌ Element not found: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not found after timeout: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
+        except Exception as e:
+            error_msg = f"❌ Error finding element: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def find_elements(self, locator_type, locator_value, timeout=None):
         """Find multiple elements with explicit wait"""
@@ -667,14 +754,20 @@ class WebDriver:
             element = self.wait_for_element_present(locator_type, locator_value, timeout)
             if element:
                 self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-                print(f"Scrolled to element: {locator_type} = {locator_value}")
+                print(f"✓ Scrolled to element: {locator_type} = {locator_value}")
                 return True
             else:
-                print(f"Failed to scroll to element: {locator_type} = {locator_value}")
-                return False
+                error_msg = f"❌ Element not present for scrolling: {locator_type} = {locator_value}"
+                print(error_msg)
+                raise ElementNotInteractableError(error_msg)
+        except TimeoutException:
+            error_msg = f"❌ Element not present after timeout for scrolling: {locator_type} = {locator_value}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error scrolling to element: {e}")
-            return False
+            error_msg = f"❌ Error scrolling to element: {locator_type} = {locator_value} - {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def scroll_to_top(self):
         """Scroll to top of page"""
@@ -696,21 +789,23 @@ class WebDriver:
             print(f"Error scrolling to bottom: {e}")
             return False
     
-    def wait_for_text_present(self, text, timeout=None):
+    def wait_for_text_present(self, text, timeout=10):
         """Wait for text to be present on page"""
         wait_time = timeout or self.explicit_wait
         try:
             WebDriverWait(self.driver, wait_time).until(
-                lambda driver: text in driver.page_source
+                EC.text_to_be_present_in_element((By.TAG_NAME, "body"), text)
             )
-            print(f"Text '{text}' found on page")
+            print(f"✓ Text '{text}' found on page")
             return True
         except TimeoutException:
-            print(f"Text '{text}' not found after {wait_time} seconds")
-            return False
+            error_msg = f"❌ Text '{text}' not found on page after {wait_time} seconds"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for text: {e}")
-            return False
+            error_msg = f"❌ Error waiting for text '{text}' to be present: {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_url_contains(self, url_part, timeout=None):
         """Wait for URL to contain specific text"""
@@ -719,14 +814,16 @@ class WebDriver:
             WebDriverWait(self.driver, wait_time).until(
                 lambda driver: url_part in driver.current_url
             )
-            print(f"URL contains '{url_part}'")
+            print(f"✓ URL contains '{url_part}'")
             return True
         except TimeoutException:
-            print(f"URL does not contain '{url_part}' after {wait_time} seconds")
-            return False
+            error_msg = f"❌ URL does not contain '{url_part}' after {wait_time} seconds. Current URL: {self.driver.current_url}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for URL: {e}")
-            return False
+            error_msg = f"❌ Error waiting for URL to contain '{url_part}': {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
     
     def wait_for_title_contains(self, title_part, timeout=None):
         """Wait for page title to contain specific text"""
@@ -735,14 +832,16 @@ class WebDriver:
             WebDriverWait(self.driver, wait_time).until(
                 lambda driver: title_part in driver.title
             )
-            print(f"Title contains '{title_part}'")
+            print(f"✓ Page title contains '{title_part}'")
             return True
         except TimeoutException:
-            print(f"Title does not contain '{title_part}' after {wait_time} seconds")
-            return False
+            error_msg = f"❌ Page title does not contain '{title_part}' after {wait_time} seconds. Current title: {self.driver.title}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         except Exception as e:
-            print(f"Error waiting for title: {e}")
-            return False
+            error_msg = f"❌ Error waiting for page title to contain '{title_part}': {str(e)}"
+            print(error_msg)
+            raise ElementNotInteractableError(error_msg)
         
     
         
