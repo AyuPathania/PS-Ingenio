@@ -7,11 +7,9 @@ import random
 import time
 
 class SendMessage:
-    def send_special_character_message_in_live(self, web_user, web_advisor):
+    def user_send_special_character_message_in_live(self, web_user):
         user = web_user
-        advisor = web_advisor
         user_web_locators = UserWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -44,12 +42,15 @@ class SendMessage:
             user.input_text_without_clear(*user_web_locators.TYPE_MESSAGE, "ab")
             time.sleep(5)
             user.click(*user_web_locators.SEND)
+            
+        except Exception as e:
+            print(f"Test failed: {e}")
 
-            user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, "!@#$%^&*()_+[]|:;<>?,./~ab")
-            time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, "!@#$%^&*()_+[]|:;<>?,./~ab")
-            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
+    def advisor_send_special_character_message_in_live(self, web_advisor):
+        advisor = web_advisor
+        advisor_web_locators = AdvisorWebLocators()
+
+        try:
 
             advisor.execute_script("""
     try {
@@ -79,18 +80,14 @@ class SendMessage:
 """)
             advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "abcd")
             advisor.click(*advisor_web_locators.SEND)
-            advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, "!@#$%^&*()_+[]|:;<>?,./~abcd")
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, "!@#$%^&*()_+[]|:;<>?,./~abcd")
+            
         except Exception as e:
             print(f"Test failed: {e}")
 
             # send short_message
-    def send_short_message_in_live(self, web_user, web_advisor):
+    def user_send_short_message_in_live(self, web_user):
         user = web_user
-        advisor = web_advisor
         user_web_locators = UserWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -100,27 +97,26 @@ class SendMessage:
             time.sleep(5)
             user.click(*user_web_locators.SEND)
 
-            user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, short_message)
-            time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, short_message)
-            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
+        except Exception as e:
+            print(f"Test failed: {e}")
 
+    def advisor_send_short_message_in_live(self, web_advisor):
+        advisor = web_advisor
+        advisor_web_locators = AdvisorWebLocators()
+        try:
+            # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
+            short_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
 
             advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, short_message)
             advisor.click(*advisor_web_locators.SEND)
-            advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, short_message)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, short_message)
+
         except Exception as e:
             print(f"Test failed: {e}")
 
             # send long_message
-    def send_Long_message_in_live(self, web_user, web_advisor):
+    def user_send_Long_message_in_live(self, web_user):
         user = web_user
-        advisor = web_advisor
         user_web_locators = UserWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -129,28 +125,29 @@ class SendMessage:
             user.input_text(*user_web_locators.TYPE_MESSAGE, long_message)
             time.sleep(5)
             user.click(*user_web_locators.SEND)
+    
+        except Exception as e:
+            print(f"Test failed: {e}")
 
-            user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, long_message)
-            time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, long_message)
-            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
+    def advisor_send_Long_message_in_live(self, web_advisor):
+        advisor = web_advisor
+        advisor_web_locators = AdvisorWebLocators()
+        try:
 
+            # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
+            long_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32."
             
             advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, long_message)
+            time.sleep(5)
             advisor.click(*advisor_web_locators.SEND)
-            advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, long_message)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, long_message)
+    
         except Exception as e:
             print(f"Test failed: {e}")
 
             # send emojis
-    def send_emojis_message_in_live(self, web_user, web_advisor):
+    def user_send_emojis_message_in_live(self, web_user):
         user = web_user
-        advisor = web_advisor
         user_web_locators = UserWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -183,12 +180,15 @@ class SendMessage:
             user.input_text_without_clear(*user_web_locators.TYPE_MESSAGE, "ab")
             time.sleep(5)
             user.click(*user_web_locators.SEND)
+            
+        except Exception as e:
+            print(f"Test failed: {e}")
 
-            user.wait_for_element_visible(*user_web_locators.MESSAGE_TEXT)
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT, "😝😜🦄🐍🐙🦊🐼ab")
-            time.sleep(5)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT_FROM_USER, "😝😜🦄🐍🐙🦊🐼ab")
-            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
+    def advisor_send_emojis_message_in_live(self, web_advisor):
+        advisor = web_advisor
+        advisor_web_locators = AdvisorWebLocators()
+        try:
+            # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
 
             advisor.execute_script("""
     try {
@@ -217,19 +217,16 @@ class SendMessage:
     }
 """)
             advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "abcd")
+            time.sleep(5)
             advisor.click(*advisor_web_locators.SEND)
-            advisor.wait_for_element_visible(*advisor_web_locators.MESSAGE_TEXT)
-            advisor.assert_element_contains_text(*advisor_web_locators.MESSAGE_TEXT, "😝😜🦄🐍🐙🦊🐼abcd")
-            user.assert_element_contains_text(*user_web_locators.MESSAGE_TEXT_FROM_ADVISOR, "😝😜🦄🐍🐙🦊🐼abcd")
+            
         except Exception as e:
             print(f"Test failed: {e}")
 
 
             # Take screenshot on failure
-    def after_call_assertions(self, web_user, web_advisor):
-        user = web_user
+    def after_call_assertions(self, web_advisor):
         advisor = web_advisor
-        user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         try:
 

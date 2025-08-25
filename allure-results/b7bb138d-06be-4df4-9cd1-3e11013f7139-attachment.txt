@@ -1,0 +1,35 @@
+Using LambdaTest hub for web browser: Chrome
+Server URL: https://ayushp:ad5dG2Obn0JrIT6qrATHQaiei3kLqZvAGzFhCcLHdoIv5oHNSU@hub.lambdatest.com/wd/hub
+Capabilities: {'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserName': 'Chrome', 'platformName': 'Windows 10', 'browserVersion': 'latest', 'LT:Options': {'username': 'ayushp', 'accessKey': 'ad5dG2Obn0JrIT6qrATHQaiei3kLqZvAGzFhCcLHdoIv5oHNSU', 'build': 'WebAndMobileChat', 'name': 'Web User Test', 'platform': 'Windows 10', 'region': 'ap', 'version': 'latest', 'selenium_version': '4.0.0', 'w3c': True, 'commandLog': True, 'console': True, 'idleTimeout': 400, 'isRealMobile': False, 'maxDuration': 20, 'queueTimeout': '900', 'systemLog': True, 'visual': True, 'network': True, 'enableNetworkThrottling': True, 'goog:chromeOptions': {'prefs': {'profile.default_content_setting_values.notifications': 1}}}}
+Chrome driver started successfully on LambdaTest
+Navigated to: https://st:purplestage@staging.purplegarden.co/
+✓ Page loaded completely
+Clearing user cookies, localStorage, and sessionStorage
+Navigated to: https://staging.purplegarden.co/
+✓ Page loaded completely
+✓ Element clickable: xpath = //button[@class='loginButtonContainer--r7uit']
+✓ Clicked element: xpath = //button[@class='loginButtonContainer--r7uit']
+✓ Element visible: xpath = //button[@class='wpccBtn--dwsPv']
+✓ Element clickable: xpath = //button[@class='wpccBtn--dwsPv']
+✓ Clicked element: xpath = //button[@class='wpccBtn--dwsPv']
+✓ Element visible: xpath = //input[@id='email']
+✓ Input text 'v7m3g@aa.com' into element: xpath = //input[@id='email']
+✓ Element visible: xpath = //input[@id='confirmEmail']
+✓ Input text 'v7m3g@aa.com' into element: xpath = //input[@id='confirmEmail']
+✓ Element visible: xpath = //input[@id='password']
+✓ Input text '6dcw46h' into element: xpath = //input[@id='password']
+✓ Element clickable: xpath = //button[@class='actionButton--UxfDy']
+✓ Clicked element: xpath = //button[@class='actionButton--UxfDy']
+✓ Element clickable: xpath = //button[@class='ppTofModalSignUpButton--Imglp']
+✓ Clicked element: xpath = //button[@class='ppTofModalSignUpButton--Imglp']
+✓ Page loaded completely
+✓ Element visible: xpath = (//button[@class='searchButton--zl5Mn'])[1]
+✓ Element visible: xpath = //input[@placeholder='Search by specialty or reading type']
+✓ Input text 'tetsLanguageOrder' into element: xpath = //input[@placeholder='Search by specialty or reading type']
+✓ Element clickable: xpath = (//button[@class='searchButton--zl5Mn'])[1]
+❌ Element click intercepted: xpath = (//button[@class='searchButton--zl5Mn'])[1] - element click intercepted: Element <button type="button" class="searchButton--zl5Mn" data-testid="search-bar-button">...</button> is not clickable at point (840, 399). Other element would receive the click: <div class="loaderConteiner--DoW_3">...</div>
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Test failed: Advisor element not found or not clickable: ❌ Element click intercepted: xpath = (//button[@class='searchButton--zl5Mn'])[1] - element click intercepted: Element <button type="button" class="searchButton--zl5Mn" data-testid="search-bar-button">...</button> is not clickable at point (840, 399). Other element would receive the click: <div class="loaderConteiner--DoW_3">...</div>
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Chrome driver quit successfully
+Chrome driver quit successfully
