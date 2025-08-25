@@ -2,9 +2,7 @@ from drivers.web_driver import WebDriver
 from Modules.signup import Signup
 from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
-from Modules.signup import Signup
 from Modules.login import Login
-from Modules.credit_card import CreditCard
 import time
 import random
 import string
@@ -12,41 +10,19 @@ import string
 class TestAdvisorLogin:
     """Test cases for Advisor Login functionality using WebDriver"""
     
-    def test_valid_login_web(self, web_user,web_advisor,test_data):
+    def test_valid_login_web(self, web_user,test_data):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
-        advisor = web_advisor
         user_web_locators = UserWebLocators()
-        # web_user_web_locators = AdvisorWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
-        login = Login()
-        signup = Signup()
-        credit_card = CreditCard()
+        web_user_web_locators = AdvisorWebLocators()
+        
+        # signup = Signup()
+        login = Login() 
 
         
         try:
             
-            signup.signup_with_user(user)
-            login.login_in_with_advisor(advisor, test_data)
-            time.sleep(10)
-            # user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
-            # while True:
-            #     minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
-            #     if minute_text == "1":
-            #         user.click(*user_web_locators.START_CHAT)
-            #         break
-            #     else:
-            #         user.click(*user_web_locators.BACK_BUTTON)
-            # user.click(*user_web_locators.START_CHAT)
-            # user.click(*user_web_locators.START_CHAT)
-            # payment_method added
-            user.click(*user_web_locators.SIDEMENU)
-            user.click(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
-            
-            time.sleep(10)
-            credit_card.add_credit_card(user, test_data)
-            # user.click(*user_web_locators.PAY_BUTTON)
-
+            login.login_in_with_user(user, "tc02@lt.com", "test123")
             # apply_Promocode
             # user.click(*user_web_locators.HOME_PAGE)
             user.wait_for_page_load()
@@ -54,12 +30,58 @@ class TestAdvisorLogin:
             time.sleep(5)
             user.click(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
-            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, "autotest19")
+            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, "autotest13")
             user.click(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             time.sleep(2)
             user.wait_for_element_visible(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
             user.click(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
+
+
+            # user.click(*user_web_locators.CLICK_CHAT)
+            # user.click(*user_web_locators.START_CHAT)
             time.sleep(3)
+
+            # add 10 on 10 bonus
+            # user.click(*user_web_locators.HOME_PAGE)
+            user.wait_for_page_load()
+            user.wait_for_document_loaded()
+            time.sleep(5)
+            user.click(*user_web_locators.SIDEMENU)
+            user.click(*user_web_locators.SIDE_MENU_ADD_FUNDS)
+            # user.input_text(*user_web_locators.SIDEMENU_PROMOCODE,)
+            user.click(*user_web_locators.GET_20_CREDIT)
+            user.click(*user_web_locators.PAY_BUTTON)
+            time.sleep(2)
+            user.wait_for_element_visible(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
+            user.click(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
+
+
+            
+
+
+            # add_credit_card details
+            user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
+            user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
+            user.click(*user_web_locators.FIND_ADVISOR)
+            time.sleep(10)
+            user.click(*user_web_locators.CLICK_ADVISOR)
+            user.click(*user_web_locators.CLICK_CHAT)
+            user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
+            while True:
+                minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
+                if minute_text == "1":
+                    user.click(*user_web_locators.START_CHAT)
+                    break
+                else:
+                    user.click(*user_web_locators.BACK_BUTTON)
+            # user.click(*user_web_locators.START_CHAT)
+            print("Chat started successfully")
+            # credit_card_details
+            # user.wait_for_element_visible(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
+            # user.click(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
+            time.sleep(10)
+
+            
 
 
             # add_credit_card details
@@ -114,6 +136,18 @@ class TestAdvisorLogin:
 
             # user.click(*user_web_locators.START_CHAT)
             time.sleep(10)
+            # user_Details_form
+            # user.wait_for_element_visible(*user_web_locators.NICKNAME)
+            # user.input_text(*user_web_locators.NICKNAME, "TestUser")
+            # user.click(*user_web_locators.GENDER)
+            # user.input_text(*user_web_locators.DATE_OF_BIRTH, "01/01/1990")
+            # user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
+            # time.sleep(5)
+            # start live chat
+            # credit_card_details
+            # user.wait_for_element_visible(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
+            # print("Add new credit card button is visible")
+            # user.click(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
             
             
             
@@ -124,7 +158,7 @@ class TestAdvisorLogin:
          
             
             # Wait a moment to see the result
-            # time.sleep(5)
+            time.sleep(5)
             
         except Exception as e:
             print(f"Test failed: {e}")

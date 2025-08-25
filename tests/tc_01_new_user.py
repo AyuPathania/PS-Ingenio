@@ -187,6 +187,21 @@ class TestAdvisorLogin:
                 allure.attach(f"Emoji message assertion passed. User: {result}, Advisor: {advisor_receive_message}", "Assertion Result", allure.attachment_type.TEXT)
                 print("Emoji message assertion passed.")
 
+            time.sleep(10)
+            send_message_in_live.advisor_send_emojis_message_in_live(advisor)
+            time.sleep(5)
+            advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
+            user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
+            
+            advisor_send_message = advisor.get_element_text(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
+            user_receive_message = user.get_element_text(*user_web_locators.USER_SEND_MESSAGE_TEXT)
+            # Remove "\n" followed by dynamic time in hh:mm format
+            result = re.sub(r'\n\d{1,2}:\d{2}', '', user_receive_message)
+            assert advisor_send_message == result, f"Expected user message '{advisor_send_message}' to match advisor message '{result}'"
+            print("Special character message assertion passed.")
+            time.sleep(30)
+            send_message_in_live.after_call_assertions(advisor)
+
             with allure.step("Test advisor sending emoji messages"):
                 time.sleep(10)
                 send_message_in_live.advisor_send_emojis_message_in_live(advisor)

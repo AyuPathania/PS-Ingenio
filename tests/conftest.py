@@ -180,7 +180,7 @@ def test_data():
         'user': {
             'valid_email': 'ayushp@aa.com',
             'valid_password': 'test123',
-            'advisor_name': 'tetsLanguageOrder',
+            'advisor_name': 'Hubert Blaine',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',

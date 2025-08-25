@@ -4,7 +4,6 @@ from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
 from Modules.signup import Signup
 from Modules.login import Login
-from Modules.modules import Modules
 from Modules.send_message_in_live import SendMessage
 from Modules.credit_card import CreditCard
 from Modules.your_details_form import DetailsForm
@@ -25,13 +24,12 @@ class TestAdvisorLogin:
         mixpanel_locators = MixPanelLocators()
         login = Login()
         send_message_in_live = SendMessage()
-        modules = Modules()
 
         
         try:
         
             login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
-            modules.login_in_with_advisor(advisor, test_data)
+            login.login_in_with_advisor(advisor, test_data)
             time.sleep(10)
 
             # add_credit_card details

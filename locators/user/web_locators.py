@@ -78,6 +78,10 @@ class UserWebLocators:
     SIDEMENU_ACTIVITY_USER_MESSAGE_VALIDATION = (By.XPATH, "(//div[contains(text(),'Hello Hubert')])[1]")
     ADVISOR_MESSAGE_ON_USER_SIDE = (By.XPATH, "(//div[@class='chatBubbleMessageText--n2ssQ'])[1]")
     USER_MESSAGE_ON_USER_SIDE = (By.XPATH, "(//div[@class='chatBubbleMessageText--n2ssQ'])[1]")
+    SIDE_MENU_ADD_FUNDS = (By.XPATH, "//div[text()='Add funds']")
+    GET_20_CREDIT = (By.XPATH, "(//button[@class='btn--cEcKk'])[1]")
+    SIDE_MENU_PAYMENT_METHOD = (By.XPATH, "(//div[text()='Payment methods'])[1]")
+    ADD_NEW_PAYMENT_METHOD_BUTTON = (By.XPATH, "//div[text()='Add a new payment method']")
 
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
@@ -95,6 +99,8 @@ class UserWebLocators:
     ACTUAL_AMOUNT = (By.XPATH, "(//b[@class='priceTitle--iaF2q'])[1]")
     PAY_TEXT = (By.XPATH, "//div[@class='buyButton--Xc2uP']")
     CLOSE_POPUP_AFTER_CALL = (By.XPATH, "//button[@data-testid='popup-close-btn']")
+    SEARCH_ICON_BUTTON = (By.XPATH, "//button[@class='headerSearchButton--t8pEi']//*[name()='svg']")
+    HEADER_SIDE_FIND_ADVISOR = (By.XPATH, "//button[@class='headerSearchLineButton--iuug7']")
 
     #call calculations
 
