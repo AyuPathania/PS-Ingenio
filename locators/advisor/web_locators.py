@@ -31,7 +31,7 @@ class AdvisorWebLocators:
     SELECT_CLIENT = (By.XPATH, "//td[normalize-space()='{client}']")
     MESSAGE_TAB = (By.XPATH, "//div[normalize-space()='Messages']")
     CLOSE_CHAT_BUTTON = (By.XPATH, "//button[normalize-space()='Close Chat']")
-
+    
 
 
 

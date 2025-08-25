@@ -43,8 +43,8 @@ class CreditCard:
             
             user.input_text(*user_web_locators.ZIP_CODE, test_data['creditcard']['postcode'])            
             user.click(*user_web_locators.ADD_CARD_BUTTON)
-            user.wait_for_element_visible(*user_web_locators.PAY_BUTTON)
-            user.click(*user_web_locators.PAY_BUTTON)
+            # user.wait_for_element_visible(*user_web_locators.PAY_BUTTON)
+            # user.click(*user_web_locators.PAY_BUTTON)
            
             
         except Exception as e:
