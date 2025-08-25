@@ -1,11 +1,78 @@
 import pytest
 import sys
 import os
+import subprocess
+import time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
 from config.config import Config
 from faker import Faker
+
+def pytest_sessionfinish(session, exitstatus):
+    """Generate Allure report automatically after test session completes"""
+    try:
+        allure_results_dir = "./allure-results"
+        allure_report_dir = "./allure-report"
+        
+        # Check if allure-results directory exists and has content
+        if os.path.exists(allure_results_dir) and os.listdir(allure_results_dir):
+            print("\n" + "="*80)
+            print("🔄 GENERATING ALLURE REPORT...")
+            print("="*80)
+            
+            # Try to use allure command if available
+            try:
+                # Generate the report
+                result = subprocess.run(
+                    ["allure", "generate", allure_results_dir, "--clean", "-o", allure_report_dir],
+                    capture_output=True,
+                    text=True,
+                    timeout=60
+                )
+                
+                if result.returncode == 0:
+                    print("✅ Allure report generated successfully!")
+                    print(f"📁 Report location: {os.path.abspath(allure_report_dir)}")
+                    print(f"🌐 Open report: open {os.path.abspath(allure_report_dir)}/index.html")
+                    
+                    # Try to open the report automatically
+                    try:
+                        if sys.platform == "darwin":  # macOS
+                            subprocess.run(["open", f"{allure_report_dir}/index.html"])
+                        elif sys.platform == "win32":  # Windows
+                            subprocess.run(["start", f"{allure_report_dir}/index.html"], shell=True)
+                        elif sys.platform.startswith("linux"):  # Linux
+                            subprocess.run(["xdg-open", f"{allure_report_dir}/index.html"])
+                        print("🚀 Report opened in browser automatically!")
+                    except Exception as e:
+                        print(f"⚠️  Could not open report automatically: {e}")
+                        print(f"📖 Please open manually: {allure_report_dir}/index.html")
+                        
+                else:
+                    print("❌ Failed to generate Allure report")
+                    print(f"Error: {result.stderr}")
+                    
+            except FileNotFoundError:
+                print("⚠️  Allure command not found. Installing...")
+                print("💡 Please install Allure first:")
+                print("   macOS: brew install allure")
+                print("   Windows: scoop install allure")
+                print("   Linux: sudo apt-get install allure")
+                print(f"📁 Results are available in: {os.path.abspath(allure_results_dir)}")
+                
+            except subprocess.TimeoutExpired:
+                print("⏰ Allure report generation timed out")
+                print(f"📁 Results are available in: {os.path.abspath(allure_results_dir)}")
+                
+        else:
+            print("\n📝 No test results found to generate report")
+            
+        print("="*80)
+        
+    except Exception as e:
+        print(f"❌ Error generating Allure report: {e}")
+        print(f"📁 Results are available in: {os.path.abspath(allure_results_dir)}")
 
 @pytest.fixture(scope="function")
 def android_user_driver():
@@ -123,8 +190,8 @@ def test_data():
             'valid_password_mp': '360logica@09',
         },
         'advisor': {
-            'valid_email': 'mykhailo.orban+0108001@bargestech.com',
-            'valid_password': 'qwerty',
+            'valid_email': 'anna.benishai+0302@ingenio.com',
+            'valid_password': 'test666',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
@@ -139,5 +206,6 @@ def test_data():
             'card_holder_name': fake.name()
         }
     }
+
 
 

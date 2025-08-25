@@ -1,0 +1,2 @@
+Failed to find or click advisor element: ❌ Element click intercepted: xpath = (//button[@class='searchButton--zl5Mn'])[1] - element click intercepted: Element <button type="button" class="searchButton--zl5Mn" data-testid="search-bar-button">...</button> is not clickable at point (840, 399). Other element would receive the click: <div class="loaderConteiner--DoW_3">...</div>
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
