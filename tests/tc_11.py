@@ -48,6 +48,7 @@ class TestAdvisorLogin:
             user.wait_for_element_visible(*user_web_locators.ADD_ANOTHER_PAYMENT_METHOD)
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
+            user.wait_for_element_clickable(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, promo_code)
             data['promocode'].pop(0)
@@ -94,6 +95,7 @@ class TestAdvisorLogin:
             pay_20_credit = f"Pay (${formatted_20_credit})"
             print(pay_20_credit)  # Output: Pay ($20.00)
             # Output: Pay ($20.00)
+            user.wait_for_element_visible(*user_web_locators.PAY_TEXT)
             Pay_Button_Text = user.get_element_text(*user_web_locators.PAY_TEXT)
 
             try:
@@ -117,7 +119,7 @@ class TestAdvisorLogin:
             add_doller_sign=f"${formatted_amount}"
             print(add_doller_sign)
 
-
+            user.wait_for_element_visible(*user_web_locators.CURRENT_BALANCE_TEXT)
             get_current_balance_text = user.get_element_text(*user_web_locators.CURRENT_BALANCE_TEXT)
 
             try:
