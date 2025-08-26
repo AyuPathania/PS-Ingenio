@@ -1,7 +1,6 @@
 from drivers.web_driver import WebDriver
 from Modules.signup import Signup
-from locators.user.web_locators import UserWebLocators
-from locators.advisor.web_locators import AdvisorWebLocators
+from locators.locator_factory import LocatorFactory
 from Modules.signup import Signup
 from Modules.login import Login
 from Modules.credit_card import CreditCard
@@ -17,9 +16,11 @@ class TestAdvisorLogin:
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
         advisor = web_advisor
-        user_web_locators = UserWebLocators()
-        web_user_web_locators = AdvisorWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
+        
+        # Get dynamic locators based on current platform
+        user_web_locators = LocatorFactory.get_user_web_locators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
+        
         login = Login()
         signup = Signup()
         credit_card = CreditCard()

@@ -1,8 +1,6 @@
 import allure
 from drivers.web_driver import WebDriver
-from locators.MixPanel.MixPanel import MixPanelLocators
-from locators.user.web_locators import UserWebLocators
-from locators.advisor.web_locators import AdvisorWebLocators
+from locators.locator_factory import LocatorFactory
 from Modules.signup import Signup
 from Modules.login import Login
 from Modules.send_message_in_live import SendMessage
@@ -28,8 +26,11 @@ class TestAdvisorLogin:
         """Test valid login on Web Advisor app using LambdaTest"""
         advisor = web_advisor
         user = web_user
-        user_web_locators = UserWebLocators()
-        advisor_web_locators = AdvisorWebLocators()
+        
+        # Get dynamic locators based on current platform
+        user_web_locators = LocatorFactory.get_user_web_locators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
+        
         signup = Signup()
         login = Login()
         send_message_in_live = SendMessage()
@@ -38,7 +39,14 @@ class TestAdvisorLogin:
         status = "failed"
 
         with allure.step("Initialize test setup"):
-            pass
+            # Log the current platform being used
+            from config.config import Config
+            current_platform = Config.get_platform()
+            allure.attach(f"Platform: {current_platform}", "Test Configuration", allure.attachment_type.TEXT)
+            
+            # Log the locator classes being used
+            allure.attach(f"User locators: {user_web_locators.__name__}\nAdvisor locators: {advisor_web_locators.__name__}", 
+                         "Locator Classes", allure.attachment_type.TEXT)
         
         try:
             with allure.step("Perform user signup"):
@@ -65,6 +73,10 @@ class TestAdvisorLogin:
             with allure.step("Initiate chat session"):
                 try:
                     user.click(*user_web_locators.CLICK_CHAT)
+                    
+                    # Wait a moment for page to load
+                    time.sleep(3)
+                    
                     user.wait_for_element_visible(*user_web_locators.START_CHAT)
                     user.click(*user_web_locators.START_CHAT)
                     time.sleep(10)

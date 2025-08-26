@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from locators.user.web_locators import UserWebLocators
+from locators.locator_factory import LocatorFactory
 import time
 import random
 import string
@@ -8,7 +8,7 @@ class Signup:
     def signup_with_user(self, web_user):
         """Test valid signup on Web user using LambdaTest"""
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
         
         
         try:

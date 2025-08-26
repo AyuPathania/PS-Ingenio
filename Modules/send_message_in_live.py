@@ -1,15 +1,14 @@
 from selenium.webdriver.common.by import By
 # from locators.test.ayush_locator import AyushLocator
-from locators.MixPanel.MixPanel import MixPanelLocators
-from locators.user.web_locators import UserWebLocators
-from locators.advisor.web_locators import AdvisorWebLocators
+# from locators.MixPanel.MixPanel import MixPanelLocators
+from locators.locator_factory import LocatorFactory
 import random
 import time
 
 class SendMessage:
     def user_send_special_character_message_in_live(self, web_user):
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -48,7 +47,7 @@ class SendMessage:
 
     def advisor_send_special_character_message_in_live(self, web_advisor):
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
 
         try:
 
@@ -88,7 +87,7 @@ class SendMessage:
             # send short_message
     def user_send_short_message_in_live(self, web_user):
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -103,7 +102,7 @@ class SendMessage:
 
     def advisor_send_short_message_in_live(self, web_advisor):
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
         try:
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
             short_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
@@ -118,7 +117,7 @@ class SendMessage:
             # send long_message
     def user_send_Long_message_in_live(self, web_user):
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -133,7 +132,7 @@ class SendMessage:
 
     def advisor_send_Long_message_in_live(self, web_advisor):
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
         try:
 
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
@@ -149,7 +148,7 @@ class SendMessage:
             # send emojis
     def user_send_emojis_message_in_live(self, web_user):
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
         try:
             user.wait_for_element_visible(*user_web_locators.TYPE_MESSAGE)
 
@@ -188,7 +187,7 @@ class SendMessage:
 
     def advisor_send_emojis_message_in_live(self, web_advisor):
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
         try:
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
 
@@ -229,7 +228,7 @@ class SendMessage:
             # Take screenshot on failure
     def after_call_assertions(self, web_advisor):
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
         try:
 
             advisor.wait_for_element_visible(*advisor_web_locators.TOTAL_DURATION)

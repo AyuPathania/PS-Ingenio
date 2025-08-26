@@ -1,8 +1,6 @@
 from selenium.webdriver.common.by import By
 # from locators.test.ayush_locator import AyushLocator
-from locators.MixPanel.MixPanel import MixPanelLocators
-from locators.user.web_locators import UserWebLocators
-from locators.advisor.web_locators import AdvisorWebLocators
+from locators.locator_factory import LocatorFactory
 
 import time
 
@@ -11,7 +9,7 @@ class Login:
     def login_in_with_user(self, web_user, user_name, password):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
 
         
         try:
@@ -53,7 +51,7 @@ class Login:
     def login_in_with_advisor(self, web_advisor, test_data):
    
         advisor = web_advisor
-        advisor_web_locators = AdvisorWebLocators()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
 
         try:
             advisor.go_to_url("https://stg-expert.purpleocean.co/sign-in")

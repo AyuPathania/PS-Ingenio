@@ -3,6 +3,11 @@ import sys
 import os
 import subprocess
 import time
+
+# Load environment variables BEFORE importing config
+from dotenv import load_dotenv
+load_dotenv()
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
@@ -147,24 +152,32 @@ def ios_advisor_driver():
 #             driver.quit_driver()
 
 @pytest.fixture(scope="function")
-def web_advisor():
+def web_advisor(request):
     """Fixture for Selenium WebDriver Advisor driver using LambdaTest"""
     driver = None
     try:
         driver = WebDriver(browser='Chrome', headless=False)
-        driver.start_driver(user_type='advisor')
+        # Get the test file path for build name
+        test_file_path = str(request.fspath)
+        # Get the test function name for the test name
+        test_function_name = request.function.__name__
+        driver.start_driver(user_type='advisor', build_name=test_file_path, test_name=test_function_name)
         yield driver
     finally:
         if driver and driver.driver:
             driver.quit_driver()
 
 @pytest.fixture(scope="function")
-def web_user():
+def web_user(request):
     """Fixture for Selenium WebDriver User driver using LambdaTest"""
     driver = None
     try:
         driver = WebDriver(browser='Chrome', headless=False)
-        driver.start_driver(user_type='user')
+        # Get the test file path for build name
+        test_file_path = str(request.fspath)
+        # Get the test function name for the test name
+        test_function_name = request.function.__name__
+        driver.start_driver(user_type='user', build_name=test_file_path, test_name=test_function_name)
         yield driver
     finally:
         if driver and driver.driver:

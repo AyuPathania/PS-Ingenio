@@ -1,8 +1,7 @@
 from selenium.webdriver.common.by import By
 # from locators.test.ayush_locator import AyushLocator
-from locators.MixPanel.MixPanel import MixPanelLocators
-from locators.user.web_locators import UserWebLocators
-from locators.advisor.web_locators import AdvisorWebLocators
+# from locators.MixPanel.MixPanel import MixPanelLocators
+from locators.locator_factory import LocatorFactory
 
 import time
 
@@ -11,7 +10,7 @@ class DetailsForm:
     def your_details_form(self, web_user):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
-        user_web_locators = UserWebLocators()
+        user_web_locators = LocatorFactory.get_user_web_locators()
 
         
         try:

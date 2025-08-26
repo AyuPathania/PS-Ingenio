@@ -80,7 +80,7 @@ class WebDriver:
                 #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
                 "build": build_display_name,
-                "name": f"{test_name if test_name else user_type.title()} {user_type.title()}",
+                "name": test_name + " " + user_type.title() + f" ({Config.get_platform()})" if test_name else f"{user_type.title()} ({Config.get_platform()})",
                 "platform": "Windows 10",
                 "region": "ap",
                 "version": "latest",

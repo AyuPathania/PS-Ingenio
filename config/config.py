@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
+    # Platform Configuration
+    PLATFORM = os.getenv('PLATFORM', 'kasamba').lower()  # kasamba, purpelgarden, purpelocean
+    
     # LambdaTest Configuration
     LAMBDATEST_USERNAME = os.getenv('LT_USERNAME')
     LAMBDATEST_ACCESS_KEY = os.getenv('LT_ACCESS_KEY')
@@ -72,6 +75,26 @@ class Config:
             'platformName': 'Windows 11'
         }
     }
+    
+    @classmethod
+    def get_platform(cls):
+        """Get the current platform from environment variable"""
+        return cls.PLATFORM
+    
+    @classmethod
+    def is_kasamba(cls):
+        """Check if current platform is kasamba"""
+        return cls.PLATFORM == 'kasamba'
+    
+    @classmethod
+    def is_purpelgarden(cls):
+        """Check if current platform is PurpelGarden"""
+        return cls.PLATFORM == 'purpelgarden'
+    
+    @classmethod
+    def is_purpelocean(cls):
+        """Check if current platform is PurpelOcean"""
+        return cls.PLATFORM == 'purpelocean'
     
     @classmethod
     def get_lambdatest_capabilities(cls, platform, user_type='user'):

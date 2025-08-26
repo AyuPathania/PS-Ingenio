@@ -1,12 +1,12 @@
 from selenium.webdriver.common.by import By
 
-class UserWebLocators:
+class PurpelGardenUserWebLocators:
     """Web locators for User website"""
        # User
-    SIGN_IN = (By.XPATH, "//button[normalize-space()='Sign in']")
+    SIGN_IN = (By.XPATH, "//button[normalize-space()='ayush']")
     EMAIL = (By.XPATH, "//input[@id='email']")
     PASSWORD = (By.XPATH, "//input[@id='password']")
-    ACCEPT = (By.XPATH, "//button[@class='wpccBtn--dwsPv']")
+    ACCEPT = (By.XPATH, "//button[@class='PurpelGarden']")
     SIGN_IN_BUTTON = (By.XPATH, "//button[@data-testid='login-button' and @type='button']")
     PROFILE = (By.XPATH, "//div[@type='button']//div[contains(text(),'Sweet')]")
     SEARCH_ADVISOR = (By.XPATH, "//input[@placeholder='Search by specialty or reading type']")
@@ -18,7 +18,7 @@ class UserWebLocators:
     SEND_MESSAGE_BUTTON_USER = (By.XPATH, "//button[normalize-space()='Send']")
     NETWORK_OFFLINE = (By.XPATH, "//div[contains(text(),'Network seems to be offline')]")
     NETWORK_SESSION_EXPIRED = (By.XPATH, "//div[@class='hangupError--B8h5h']")
-    JOIN = (By.XPATH, "//button[@class='loginButtonContainer--r7uit']")
+    JOIN = (By.XPATH, "//button[@class='purpelgarden']")
     RANDOM_EMAIL = (By.XPATH, "//input[@id='email']")
     RETYPE_EMAIL = (By.XPATH, "//input[@id='confirmEmail']")
     RANDOM_PASSWORD = (By.XPATH, "//input[@id='password']")

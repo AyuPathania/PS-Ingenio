@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class AdvisorWebLocators:
+class PurpelGardenAdvisorWebLocators:
     """Web locators for Advisor website"""
     
     EMAIL_ADVISOR = (By.XPATH, "//input[@placeholder='Email']")
