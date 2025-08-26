@@ -164,6 +164,11 @@ class TestAdvisorLogin:
             assert advisor_send_message == result, f"Expected user message '{advisor_send_message}' to match advisor message '{result}'"
             print("Special character message assertion passed.")
 
+            user.minimize_window()
+            time.sleep(2)
+            user.maximize_window()
+
+
 
 
 
