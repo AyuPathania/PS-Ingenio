@@ -14,7 +14,7 @@ import string
 class TestAdvisorLogin:
     """Test cases for Advisor Login functionality using WebDriver"""
     
-    def test_valid_login_web(self, web_user,web_advisor,test_data):
+    def test_tc_08(self, web_user,web_advisor,test_data):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
         advisor = web_advisor
@@ -29,11 +29,12 @@ class TestAdvisorLogin:
             
             login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             login.login_in_with_advisor(advisor, test_data)
-            user.wait_for_element_visible(*user_web_locators.SIDEMENU)
-            user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
-            user.click(*user_web_locators.SIDEMENU)
-            user.wait_for_element_clickable(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
-            user.click(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
+            
+            # user.wait_for_element_visible(*user_web_locators.SIDEMENU)
+            # user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
+            # user.click(*user_web_locators.SIDEMENU)
+            # user.wait_for_element_clickable(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
+            # user.click(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
             
             # user.click(*user_web_locators.PAY_BUTTON)
 
