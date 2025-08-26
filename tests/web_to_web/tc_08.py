@@ -19,9 +19,10 @@ class TestAdvisorLogin:
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
-        # web_user_web_locators = AdvisorWebLocators()
+        
         advisor_web_locators = AdvisorWebLocators()
         login = Login()
+        
         
 
         
@@ -29,7 +30,7 @@ class TestAdvisorLogin:
             
             login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             login.login_in_with_advisor(advisor, test_data)
-            
+
             # user.wait_for_element_visible(*user_web_locators.SIDEMENU)
             # user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             # user.click(*user_web_locators.SIDEMENU)
