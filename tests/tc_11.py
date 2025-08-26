@@ -6,6 +6,7 @@ from Modules.signup import Signup
 from Modules.login import Login
 from Modules.credit_card import CreditCard
 import time
+import json
 import re
 import random
 import string
@@ -23,6 +24,8 @@ class TestAdvisorLogin:
         login = Login()
         signup = Signup()
         credit_card = CreditCard()
+        data = json.load(open('test_data.json'))
+        promo_code = data['promocode'][0]
 
         
         try:
@@ -32,6 +35,7 @@ class TestAdvisorLogin:
             user.wait_for_element_visible(*user_web_locators.SIDEMENU)
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
+            user.wait_for_element_clickable(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
             user.click(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
             
             credit_card.add_credit_card(user, test_data)
@@ -45,7 +49,10 @@ class TestAdvisorLogin:
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
-            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, "autotest30")
+            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, promo_code)
+            data['promocode'].pop(0)
+            json.dump(data, open('test_data.json', 'w'), indent=2)
+            user.wait_for_element_clickable(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             user.click(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             
             user.wait_for_element_visible(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
@@ -54,6 +61,7 @@ class TestAdvisorLogin:
             # add funds
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
+            user.wait_for_element_clickable(*user_web_locators.SIDE_MENU_ADD_FUNDS)
             user.click(*user_web_locators.SIDE_MENU_ADD_FUNDS)
 
             user.wait_for_element_visible(*user_web_locators.GET_20_CREDIT)
@@ -66,6 +74,7 @@ class TestAdvisorLogin:
             add_dollar_20 = (f"${formatted_20_credit}")  # Output: $20.00
             print(add_dollar_20)
             
+            user.wait_for_element_clickable(*user_web_locators.GET_20_CREDIT)
             user.click(*user_web_locators.GET_20_CREDIT)
             
             # user.click(*user_web_locators.ACTUAL_AMOUNT)
