@@ -57,6 +57,7 @@ class UserWebLocators:
     # bonus_get
     ADD_BONUS_BUTTON = (By.XPATH, "//div[@class='buttonTitleText--pZbgX']")
     CONFIRM_BONUS_MESSAGE = (By.XPATH, "//button[@class='confirmButton--VMA1l']")
+    CURRENT_BALANCE_TEXT = (By.XPATH, "//span[@class='clientAvailableCreditText--PjAfk']")
 
     # user_balance_check
     USER_ICON = (By.XPATH, "//img[@class='avatar--e_6rk']")
@@ -82,6 +83,7 @@ class UserWebLocators:
     GET_20_CREDIT = (By.XPATH, "(//button[@class='btn--cEcKk'])[1]")
     SIDE_MENU_PAYMENT_METHOD = (By.XPATH, "(//div[text()='Payment methods'])[1]")
     ADD_NEW_PAYMENT_METHOD_BUTTON = (By.XPATH, "//div[text()='Add a new payment method']")
+    ADD_ANOTHER_PAYMENT_METHOD = (By.XPATH, "//div[text()='Add another payment method']")
 
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
