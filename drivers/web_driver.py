@@ -238,7 +238,24 @@ class WebDriver:
                 print(f"Failed to get session ID: {e}")
                 return None
         return None
+
+    def minimize_window(self):
+        """Minimize the browser window"""
+        if self.driver:
+            self.driver.minimize_window()
+            print("Window minimized")
+        else:
+            print("Driver not initialized")
     
+    def maximize_window(self):
+        """Maximize the browser window"""
+        if self.driver:
+            self.driver.maximize_window()
+            print("Window maximized")
+        else:
+            print("Driver not initialized")
+
+
     def handle_alert(self, action='accept'):
         """Handle browser alerts and permission dialogs
         
