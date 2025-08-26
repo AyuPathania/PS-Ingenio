@@ -19,7 +19,7 @@ class TestAdvisorLogin:
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
-        # web_user_web_locators = AdvisorWebLocators()
+        
         advisor_web_locators = AdvisorWebLocators()
         login = Login()
         
