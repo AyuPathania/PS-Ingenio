@@ -50,6 +50,7 @@ class TestAdvisorLogin:
             user.click(*user_web_locators.SIDEMENU)
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
+            user.wait_for_element_visible(*user_web_locators.SIDEMENU_PROMOCODE)
             user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, promo_code)
             data['promocode'].pop(0)
             json.dump(data, open('test_data.json', 'w'), indent=2)
