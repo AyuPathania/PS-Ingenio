@@ -23,12 +23,12 @@ class TestAdvisorLogin:
     @allure.description("Test complete flow from signup to live chat with various message types")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_tc_01(self, web_user, web_advisor, test_data):
+        
         """Test valid login on Web Advisor app using LambdaTest"""
         advisor = web_advisor
         user = web_user
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
-        mixpanel_locators = MixPanelLocators()
         signup = Signup()
         login = Login()
         send_message_in_live = SendMessage()
