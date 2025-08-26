@@ -54,6 +54,7 @@ class TestAdvisorLogin:
             time.sleep(15)
             send_message.send_message_in_live(user, advisor)
             time.sleep(65)
+            # hang up and add aditional few minutes to the call
             send_message.after_call_assertions(user, advisor)
             status = "passed"
 
