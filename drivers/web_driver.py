@@ -44,7 +44,7 @@ class WebDriver:
         self.driver = None
         self.wait = None
         
-    def start_driver(self, user_type='advisor'):
+    def start_driver(self, user_type='advisor', test_name=None, build_name=None):
         """Start the web driver using LambdaTest with exact capabilities structure"""
         try:
             from config.config import Config
@@ -62,13 +62,25 @@ class WebDriver:
             web_caps.set_capability("platformName", "Windows 10")
             web_caps.set_capability("browserVersion", "latest")
 
+            # Extract test folder name from build_name if provided
+            if build_name:
+                # Extract folder name from path like "tests/web_to_web/tc_03.py" -> "web_to_web"
+                import os
+                # Get the parent folder name (the folder containing the test file)
+                folder_name = os.path.basename(os.path.dirname(build_name))
+                build_display_name = folder_name
+                print(f"Using build name: {build_display_name} (from {build_name})")
+            else:
+                build_display_name = "WebAndMobileChat"
+                print(f"Using default build name: {build_display_name}")
+
             # LT:Options (this is where browserProfile goes)
             lt_options_web = {
                 "username": Config.LAMBDATEST_USERNAME,
                 #"browserProfile": "https://prod-magicleap-user-files-us-east-1-v1.s3.amazonaws.com/profile/chrome/orgId-2148160/Profile_4.zip",
                 "accessKey": Config.LAMBDATEST_ACCESS_KEY,
-                "build": "WebAndMobileChat",
-                "name": f"Web {user_type.title()} Test",
+                "build": build_display_name,
+                "name": f"{test_name if test_name else user_type.title()} {user_type.title()}",
                 "platform": "Windows 10",
                 "region": "ap",
                 "version": "latest",
