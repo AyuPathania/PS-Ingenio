@@ -22,7 +22,7 @@ class TestAdvisorLogin:
     @allure.title("Test New User Live Chat with Message Types")
     @allure.description("Test complete flow from signup to live chat with various message types")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_valid_login_web(self, web_user, web_advisor, test_data):
+    def test_tc_01(self, web_user, web_advisor, test_data):
         """Test valid login on Web Advisor app using LambdaTest"""
         advisor = web_advisor
         user = web_user
@@ -34,7 +34,7 @@ class TestAdvisorLogin:
         send_message_in_live = SendMessage()
         credit_card = CreditCard()
         details_form = DetailsForm()
-        
+        status = "failed"
 
         with allure.step("Initialize test setup"):
             pass
@@ -73,6 +73,8 @@ class TestAdvisorLogin:
                 
             with allure.step("Add credit card details"):
                 credit_card.add_credit_card(user, test_data)
+                user.wait_for_element_visible(*user_web_locators.PAY_BUTTON)
+                user.click(*user_web_locators.PAY_BUTTON)
 
             with allure.step("Start live chat"):
                 user.wait_for_element_visible(*user_web_locators.START_LIVE_CHAT_BUTTON)
@@ -187,21 +189,6 @@ class TestAdvisorLogin:
                 allure.attach(f"Emoji message assertion passed. User: {result}, Advisor: {advisor_receive_message}", "Assertion Result", allure.attachment_type.TEXT)
                 print("Emoji message assertion passed.")
 
-            time.sleep(10)
-            send_message_in_live.advisor_send_emojis_message_in_live(advisor)
-            time.sleep(5)
-            advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
-            user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
-            
-            advisor_send_message = advisor.get_element_text(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
-            user_receive_message = user.get_element_text(*user_web_locators.USER_SEND_MESSAGE_TEXT)
-            # Remove "\n" followed by dynamic time in hh:mm format
-            result = re.sub(r'\n\d{1,2}:\d{2}', '', user_receive_message)
-            assert advisor_send_message == result, f"Expected user message '{advisor_send_message}' to match advisor message '{result}'"
-            print("Special character message assertion passed.")
-            time.sleep(30)
-            send_message_in_live.after_call_assertions(advisor)
-
             with allure.step("Test advisor sending emoji messages"):
                 time.sleep(10)
                 send_message_in_live.advisor_send_emojis_message_in_live(advisor)
@@ -216,6 +203,18 @@ class TestAdvisorLogin:
                 allure.attach(f"Emoji message assertion passed. Advisor: {advisor_send_message}, User: {result}", "Assertion Result", allure.attachment_type.TEXT)
                 print("Emoji message assertion passed.")
 
+            with allure.step("Hang up the call from user side"):
+                user.wait_for_element_clickable(*user_web_locators.HANG_UP_BUTTON)
+                user.click(*user_web_locators.HANG_UP_BUTTON)
+
+                if user.is_element_displayed(*user_web_locators.CLOSE_POPUP_BUTTON):
+                    user.click(*user_web_locators.CLOSE_POPUP_BUTTON)
+
+
+            with allure.step("Assertions after call"):
+                send_message_in_live.after_call_assertions(advisor)
+                status = "passed"
+
             with allure.step("Test completion"):
                 # Wait a moment to see the result
                 time.sleep(5)
@@ -228,6 +227,8 @@ class TestAdvisorLogin:
             raise
         finally:
             with allure.step("Cleanup and driver quit"):
+                user.execute_script(f"lambda-status={status}")
+                advisor.execute_script(f"lambda-status={status}")                
                 # Clean up
                 user.quit_driver()
                 advisor.quit_driver()
