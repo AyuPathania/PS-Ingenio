@@ -93,8 +93,7 @@ class TestAdvisorLogin:
                 print(f"Assertion failed for pay button text: expected {Pay_Button_Text}, found {pay_20_credit}")
                 raise
 
-            time.sleep(5)
-
+            user.wait_for_element_visible(*user_web_locators.PAY_BUTTON)
             user.click(*user_web_locators.PAY_BUTTON)
             user.wait_for_element_clickable(*user_web_locators.CONFIRM_BONUS_MESSAGE)
             user.click(*user_web_locators.CONFIRM_BONUS_MESSAGE)
