@@ -131,6 +131,8 @@ dmypy.json
 # Project specific
 screenshots/
 reports/
+allure-report/
+allure-results/
 *.log
 **/__init__.py
 .DS_Store

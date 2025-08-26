@@ -6,6 +6,7 @@ from Modules.signup import Signup
 from Modules.login import Login
 from Modules.credit_card import CreditCard
 import time
+import json
 import random
 import string
 
@@ -17,44 +18,39 @@ class TestAdvisorLogin:
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
-        # web_user_web_locators = AdvisorWebLocators()
+        web_user_web_locators = AdvisorWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         login = Login()
         signup = Signup()
         credit_card = CreditCard()
-
+        data = json.load(open('test_data.json'))
+        promo_code = data['promocode'][0]
         
         try:
             
             signup.signup_with_user(user)
             login.login_in_with_advisor(advisor, test_data)
-            time.sleep(10)
-            # user.wait_for_element_visible(*user_web_locators.MINUTES_TEXT)
-            # while True:
-            #     minute_text = user.get_element_text(*user_web_locators.MINUTES_TEXT)
-            #     if minute_text == "1":
-            #         user.click(*user_web_locators.START_CHAT)
-            #         break
-            #     else:
-            #         user.click(*user_web_locators.BACK_BUTTON)
-            # user.click(*user_web_locators.START_CHAT)
-            # user.click(*user_web_locators.START_CHAT)
-            # payment_method added
+            user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
+            user.wait_for_element_visible(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
             user.click(*user_web_locators.SIDE_MENU_PAYMENT_METHOD)
             
             time.sleep(10)
             credit_card.add_credit_card(user, test_data)
-            # user.click(*user_web_locators.PAY_BUTTON)
+
 
             # apply_Promocode
             # user.click(*user_web_locators.HOME_PAGE)
             user.wait_for_page_load()
             user.wait_for_document_loaded()
             time.sleep(5)
+            user.wait_for_element_clickable(*user_web_locators.SIDEMENU)
             user.click(*user_web_locators.SIDEMENU)
+            user.wait_for_element_visible(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
-            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, "autotest19")
+            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, promo_code)
+            data['promocode'].pop(0)
+            json.dump(data, open('test_data.json', 'w'), indent=2)            
             user.click(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             time.sleep(2)
             user.wait_for_element_visible(*user_web_locators.PROMOCODE_SUCCESS_MESSAGE)
