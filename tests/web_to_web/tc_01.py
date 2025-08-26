@@ -28,7 +28,6 @@ class TestAdvisorLogin:
         user = web_user
         user_web_locators = UserWebLocators()
         advisor_web_locators = AdvisorWebLocators()
-        mixpanel_locators = MixPanelLocators()
         signup = Signup()
         login = Login()
         send_message_in_live = SendMessage()
