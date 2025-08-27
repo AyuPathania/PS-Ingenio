@@ -3,15 +3,20 @@ import sys
 import os
 import subprocess
 import time
+from pathlib import Path
 
 # Load environment variables BEFORE importing config
 from dotenv import load_dotenv
 load_dotenv()
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the project root to the Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
 from config.config import Config
+from config.credential_config import CredentialConfig
 from faker import Faker
 
 def pytest_sessionfinish(session, exitstatus):
@@ -189,28 +194,13 @@ def test_data():
     from faker import Faker
     fake = Faker()
     
+    # Get dynamic credentials for current platform
+    user_credentials = CredentialConfig.get_user_credentials()
+    advisor_credentials = CredentialConfig.get_advisor_credentials()
+    
     return {
-        'user': {
-            'valid_email': 'ayushp@aa.com',
-            'valid_password': 'test123',
-            'advisor_name': 'Hubert Blaine',
-            'invalid_email': 'invalid@example.com',
-            'invalid_password': 'wrongpassword',
-            'phone_number': '6666666666',
-            'otp': '656565',
-            'messageuser': 'Hello,@Hubert. I need your advice 2day!',
-            'valid_email_mp': 'basithusain@lambdatest.com',
-            'valid_password_mp': '360logica@09',
-        },
-        'advisor': {
-            'valid_email': 'anna.benishai+0302@ingenio.com',
-            'valid_password': 'test666',
-            'invalid_email': 'invalid@example.com',
-            'invalid_password': 'wrongpassword',
-            'phone_number': '6666666666',
-            'otp': '656565',
-            'messageadvisor': 'Hello, @Sweet what you want 2day!',
-        },
+        'user': user_credentials,
+        'advisor': advisor_credentials,
         'creditcard': {
             'card_number': fake.credit_card_number(card_type="visa"),
             'card_expire': fake.credit_card_expire(),

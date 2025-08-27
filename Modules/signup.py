@@ -1,21 +1,23 @@
 from selenium.webdriver.common.by import By
 from locators.locator_factory import LocatorFactory
+from config.url_config import URLConfig
+from config.credential_config import CredentialConfig
 import time
 import random
 import string
 
 class Signup:
-    def signup_with_user(self, web_user):
+    def signup_with_user(self, web_user, user_name=None, password=None):
         """Test valid signup on Web user using LambdaTest"""
         user = web_user
         user_web_locators = LocatorFactory.get_user_web_locators()
-        
+        user_urls = URLConfig.get_user_urls()
+        user_credentials = CredentialConfig.get_user_credentials()
         
         try:
                 
-                # user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
-                # user.wait_for_page_load()
-                user.go_to_url("https://st:purplestage@staging.purplegarden.co/")
+                # Use dynamic URL based on platform
+                user.go_to_url(user_urls['base_url'])
                 user.wait_for_page_load()
                 print("Clearing user cookies, localStorage, and sessionStorage")
                 user.driver.delete_all_cookies()
@@ -30,7 +32,8 @@ class Signup:
                         console.log('Storage clear error:', e);
                     }
                 """)
-                user.go_to_url("https://staging.purplegarden.co/")
+                # Use dynamic URL for the second navigation
+                user.go_to_url(user_urls['login_url'])
                 # Wait for storage clearing to take effect
                 user.wait_for_page_load()
 
