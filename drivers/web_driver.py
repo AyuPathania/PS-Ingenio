@@ -384,6 +384,11 @@ class WebDriver:
         """Set window size"""
         self.driver.set_window_size(width, height)
         print(f"Window size set to {width}x{height}")
+
+    def press_enter(self):
+        """Press enter"""
+        self.driver.execute_script("document.querySelector('body').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter' }));")
+        print("Pressed enter")
     
     def take_screenshot(self, filename=None):
         """Take screenshot"""
