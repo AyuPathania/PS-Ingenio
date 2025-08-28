@@ -4,7 +4,6 @@ from locators.user.web_locators import UserWebLocators
 from locators.advisor.web_locators import AdvisorWebLocators
 from Modules.signup import Signup
 from Modules.login import Login
-from Modules.modules import Modules
 from Modules.send_message_in_live import SendMessage
 from Modules.credit_card import CreditCard
 from Modules.your_details_form import DetailsForm

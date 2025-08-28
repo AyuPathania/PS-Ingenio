@@ -41,3 +41,5 @@ class AdvisorWebLocators:
     ADVISOR_SEND_MESSAGE_TEXT=(By.XPATH, "(//div[contains(@class,'message')])[last()]")
     MESSAGE_TEXT_FROM_USER=(By.XPATH, "(//div[@class='client-message'])")
     NOTES_TAB = (By.XPATH, "//div[normalize-space()='Notes']")
+    
+    
