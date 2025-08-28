@@ -16,7 +16,7 @@ class DetailsForm:
         
         try:
             user.wait_for_element_visible(*user_web_locators.NICKNAME)
-            user.input_text(*user_web_locators.NICKNAME, "Ayush Pathania")
+            user.input_text(*user_web_locators.NICKNAME, "JON")
             user.click(*user_web_locators.MALE_RADIO_BUTTON)
             user.input_text(*user_web_locators.DOB, "07031999")
            
