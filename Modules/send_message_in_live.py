@@ -40,7 +40,7 @@ class SendMessage:
     }
 """)
             user.input_text_without_clear(*user_web_locators.TYPE_MESSAGE, "ab")
-            time.sleep(5)
+            user.wait_for_element_clickable(*user_web_locators.SEND)
             user.click(*user_web_locators.SEND)
             
         except Exception as e:
@@ -52,6 +52,7 @@ class SendMessage:
 
         try:
 
+            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
             advisor.execute_script("""
     try {
         var special_chars = "!@#$%^&*()_+[]|:;<>?,./~";
@@ -79,7 +80,7 @@ class SendMessage:
     }
 """)
             advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "abcd")
-            time.sleep(5)
+            advisor.wait_for_element_clickable(*advisor_web_locators.SEND)
             advisor.click(*advisor_web_locators.SEND)
             
         except Exception as e:
@@ -95,7 +96,8 @@ class SendMessage:
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
             short_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
             user.input_text(*user_web_locators.TYPE_MESSAGE, short_message)
-            time.sleep(5)
+
+            user.wait_for_element_clickable(*user_web_locators.SEND)
             user.click(*user_web_locators.SEND)
 
         except Exception as e:
@@ -105,11 +107,13 @@ class SendMessage:
         advisor = web_advisor
         advisor_web_locators = AdvisorWebLocators()
         try:
+            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
             short_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
 
             advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, short_message)
-            time.sleep(5)
+
+            advisor.wait_for_element_clickable(*advisor_web_locators.SEND)
             advisor.click(*advisor_web_locators.SEND)
 
         except Exception as e:
@@ -125,7 +129,8 @@ class SendMessage:
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
             long_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32."
             user.input_text(*user_web_locators.TYPE_MESSAGE, long_message)
-            time.sleep(5)
+            
+            user.wait_for_element_clickable(*user_web_locators.SEND)
             user.click(*user_web_locators.SEND)
     
         except Exception as e:
@@ -135,12 +140,13 @@ class SendMessage:
         advisor = web_advisor
         advisor_web_locators = AdvisorWebLocators()
         try:
-
+            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
             long_message = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32."
             
             advisor.input_text(*advisor_web_locators.TYPE_MESSAGE, long_message)
-            time.sleep(5)
+
+            advisor.wait_for_element_clickable(*advisor_web_locators.SEND)
             advisor.click(*advisor_web_locators.SEND)
     
         except Exception as e:
@@ -180,7 +186,8 @@ class SendMessage:
     }
 """)
             user.input_text_without_clear(*user_web_locators.TYPE_MESSAGE, "ab")
-            time.sleep(5)
+            
+            user.wait_for_element_clickable(*user_web_locators.SEND)
             user.click(*user_web_locators.SEND)
             
         except Exception as e:
@@ -190,6 +197,7 @@ class SendMessage:
         advisor = web_advisor
         advisor_web_locators = AdvisorWebLocators()
         try:
+            advisor.wait_for_element_visible(*advisor_web_locators.TYPE_MESSAGE)
             # user.input_text(*user_web_locators.TYPE_MESSAGE, random_text)
 
             advisor.execute_script("""
@@ -219,7 +227,8 @@ class SendMessage:
     }
 """)
             advisor.input_text_without_clear(*advisor_web_locators.TYPE_MESSAGE, "abcd")
-            time.sleep(5)
+            
+            advisor.wait_for_element_clickable(*advisor_web_locators.SEND)
             advisor.click(*advisor_web_locators.SEND)
             
         except Exception as e:
@@ -317,3 +326,122 @@ class SendMessage:
         except Exception as e:
             print(f"Test failed: {e}")
             # Take screenshot on failure
+
+
+    def discount_50_percent_after_call_assertions(self, web_user):
+        # advisor = web_advisor
+        user = web_user
+        # advisor_web_locators = AdvisorWebLocators()
+        user_web_locators = UserWebLocators()
+        try:
+
+            # user.wait_for_element_visible(*user_web_locators.TOTAL_DURATION_50_PERCENT)
+            # total_duration =user.get_element_text(*user_web_locators.TOTAL_DURATION_50_PERCENT)            
+            # your_rate = float(user.get_element_text(*user_web_locators.YOUR_RATE_50_PERCENT).split("$")[1].strip().split("/")[0])
+            # total_credit_charged = float(user.get_element_text(*user_web_locators.SUBTOTAL_50_PERCENT).split("$")[1].strip())
+            # total_pay = (user.get_element_text(*user_web_locators.TOTAL_PAY))
+
+            # minutes = int(total_duration.split(":")[1].strip())
+            # if total_duration.split(":")[2].strip().startswith("0"):
+            #  seconds = int(total_duration.split(":")[2].strip()[-1])  # seconds = 7
+            # else:
+            #     seconds = int(total_duration.split(":")[2].strip())
+            # total_seconds = (minutes * 60) + seconds
+
+            # # Calculate total cost
+            # total = total_seconds * your_rate / 60
+            # total_cost = "{:.2f}".format(int(total * 100) / 100)
+            # print(f"Calculated total_cost: {total_cost}")
+
+            # changed_value= float(total_cost)
+            # discounted_pay = "{:.2f}".format(changed_value * 0.5)
+            # print(f"Calculated total_cost: {discounted_pay}")
+
+            # # add "$" sign in 30.00
+            # add_doller_sign_after_discount=f"${discounted_pay}"
+            # print(add_doller_sign_after_discount)
+
+            # # # add "$" sign in 30.00
+            # # add_doller_sign_before_discount=f"${total_cost}"
+            # # print(add_doller_sign_before_discount)
+
+            # print(f"Duration: {total_duration} ({total_seconds} seconds)")
+            # print(f"Rate: ${your_rate}/min")
+
+
+            # try:
+            #     assert float(total_cost) == float(total_credit_charged)
+            # except AssertionError:
+            #     print(f"Assertion failed for total_cost_before_discount: expected {total_credit_charged}, found {total_cost}")
+            #     raise
+
+            # try:
+            #     assert float(add_doller_sign_after_discount) == float(total_pay)
+            # except AssertionError:
+            #     print(f"Assertion failed for total_cost_before_discount: expected {total_pay}, found {add_doller_sign_after_discount}")
+            #     raise
+
+            user.wait_for_element_visible(*user_web_locators.YOUR_RATE)
+            call_rate= user.get_element_text(*user_web_locators.YOUR_RATE)
+            your_rate = float(call_rate.replace("$", ""))
+            print(your_rate)  # Output: 0.99
+
+            # time duration
+            user.wait_for_element_visible(*user_web_locators.TOTAL_DURATION)
+            time_str = user.get_element_text(*user_web_locators.TOTAL_DURATION)
+            # Split into hours, minutes, and seconds
+            h, m, s = map(int, time_str.split(":"))
+            # Convert to total seconds
+            total_seconds_digit = h * 3600 + m * 60 + s
+            # Assert to validate the conversion
+            print(total_seconds_digit)
+
+            # subtotal value calculation
+            user.wait_for_element_visible(*user_web_locators.SUBTOTAL_PRICE)
+            subtotal_cost = user.get_element_text(*user_web_locators.SUBTOTAL_PRICE)
+            total = total_seconds_digit * your_rate / 60
+            total_cost = "{:.2f}".format(int(total * 100) / 100)
+            print(f"Calculated total_cost: {total_cost}")
+
+            # final pay after discount
+            user.wait_for_element_visible(*user_web_locators.TOTAL_PAY)
+            final_pay = user.get_element_text(*user_web_locators.TOTAL_PAY)
+            changed_value= float(total_cost)
+            discounted_pay = "{:.2f}".format(changed_value * 0.5)
+            print(f"Calculated discount_cost: {discounted_pay}")
+
+            # add "$" sign in subtotal
+            add_doller_sign_before_discount=f"${total_cost}"
+            print(add_doller_sign_before_discount)
+
+            # add "$" sign in final pay
+            add_doller_sign_after_discount=f"${discounted_pay}"
+            print(add_doller_sign_after_discount)
+
+            # assert subtotal_cost == add_doller_sign_before_discount, f"Expected {subtotal_cost} but got {add_doller_sign_before_discount}"
+            try:
+                assert subtotal_cost == add_doller_sign_before_discount
+            except AssertionError:
+                print(f"Assertion failed for total_cost_before_discount: expected {add_doller_sign_before_discount}, found {subtotal_cost}")
+                raise
+
+
+            # assert final_pay == add_doller_sign_after_discount, f"Expected {final_pay} but got {add_doller_sign_after_discount}"
+            try:
+                assert final_pay == add_doller_sign_after_discount
+            except AssertionError:
+                print(f"Assertion failed for total_cost_before_discount: expected {add_doller_sign_after_discount}, found {final_pay}")
+                raise
+
+
+
+            
+
+            
+            print("✅ All financial assertions passed in send_message_in_live!")
+            # advisor.assert_element_contains_text(*advisor_web_locators.TOTAL_DURATION, total_duration)
+            # advisor.assert_element_contains_text(*advisor_web_locators.YOUR_RATE, your_rate)
+            # advisor.assert_element_contains_text(*advisor_web_locators.TOTAL_CREDIT_CHARGED, total_credit_charged)
+        except Exception as e:
+            print(f"Test failed: {e}")
+            # Take screenshot on failure       

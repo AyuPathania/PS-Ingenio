@@ -30,20 +30,20 @@ class TestAdvisorLogin:
         
             login.login_in_with_user(user, test_data['user']['valid_email'], test_data['user']['valid_password'])
             login.login_in_with_advisor(advisor, test_data)
-            time.sleep(10)
 
             # add_credit_card details
-            user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
+            user.wait_for_element_visible(*user_web_locators.SEARCH_ADVISOR)
             user.input_text(*user_web_locators.SEARCH_ADVISOR, "Hubert Blaine")
+            user.wait_for_element_clickable(*user_web_locators.FIND_ADVISOR)
             user.click(*user_web_locators.FIND_ADVISOR)
             formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
                     user_web_locators.CLICK_ADVISOR[1].format(advisor_name="Hubert Blaine"))
             user.wait_for_element_visible(*formatted_locator)
             user.click(*formatted_locator)
+            user.wait_for_element_clickable(*user_web_locators.CLICK_CHAT)
             user.click(*user_web_locators.CLICK_CHAT)
             user.wait_for_element_visible(*user_web_locators.START_CHAT)
             user.click(*user_web_locators.START_CHAT)
-            time.sleep(10)
             # credit_card.add_credit_card(user, test_data)
 
 
@@ -54,10 +54,10 @@ class TestAdvisorLogin:
 
             # user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
             # advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
+            advisor.wait_for_element_clickable(*advisor_web_locators.ACCEPT_CHAT)
             advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-            time.sleep(15)
+            
             send_message_in_live.user_send_special_character_message_in_live(user)
-            time.sleep(5)
 
             # special character assertion
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
@@ -71,7 +71,7 @@ class TestAdvisorLogin:
             assert result == advisor_receive_message, f"Expected user message '{result}' to match advisor message '{advisor_receive_message}'"
             print("Special character message assertion passed.")
             
-            time.sleep(10)
+            
             send_message_in_live.advisor_send_special_character_message_in_live(advisor)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
@@ -84,9 +84,9 @@ class TestAdvisorLogin:
             print("Special character message assertion passed.")
 
 
-            time.sleep(10)
+            
             send_message_in_live.user_send_short_message_in_live(user)
-            time.sleep(5)
+            
             # short message assertion
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
@@ -97,9 +97,9 @@ class TestAdvisorLogin:
             assert result == advisor_receive_message, f"Expected user message '{result}' to match advisor message '{advisor_receive_message}'"
             print("Short message assertion passed.")
 
-            time.sleep(10)
+            
             send_message_in_live.advisor_send_short_message_in_live(advisor)
-            time.sleep(5)
+            
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             
@@ -110,9 +110,9 @@ class TestAdvisorLogin:
             assert advisor_send_message == result, f"Expected user message '{advisor_send_message}' to match advisor message '{result}'"
             print("Short message assertion passed.")
 
-            time.sleep(10)
+            
             send_message_in_live.user_send_Long_message_in_live(user)
-            time.sleep(5)
+            
             # long message assertion
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
@@ -123,9 +123,9 @@ class TestAdvisorLogin:
             assert result == advisor_receive_message, f"Expected user message '{result}' to match advisor message '{advisor_receive_message}'"
             print("Short message assertion passed.")
 
-            time.sleep(10)
+            
             send_message_in_live.advisor_send_Long_message_in_live(advisor)
-            time.sleep(5)
+            
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             
@@ -136,9 +136,9 @@ class TestAdvisorLogin:
             assert advisor_send_message == result, f"Expected user message '{advisor_send_message}' to match advisor message '{result}'"
             print("Short message assertion passed.")
 
-            time.sleep(10)
+            
             send_message_in_live.user_send_emojis_message_in_live(user)
-            time.sleep(5)
+            
             # emogie assertion
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
@@ -151,9 +151,9 @@ class TestAdvisorLogin:
             assert result == advisor_receive_message, f"Expected user message '{result}' to match advisor message '{advisor_receive_message}'"
             print("Special character message assertion passed.")
 
-            time.sleep(10)
+            
             send_message_in_live.advisor_send_emojis_message_in_live(advisor)
-            time.sleep(5)
+            
             advisor.wait_for_element_visible(*advisor_web_locators.ADVISOR_SEND_MESSAGE_TEXT)
             user.wait_for_element_visible(*user_web_locators.USER_SEND_MESSAGE_TEXT)
             
@@ -165,7 +165,7 @@ class TestAdvisorLogin:
             print("Special character message assertion passed.")
 
             user.minimize_window()
-            time.sleep(2)
+            time.sleep(5)
             user.maximize_window()
 
 

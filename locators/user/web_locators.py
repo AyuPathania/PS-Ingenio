@@ -111,5 +111,24 @@ class UserWebLocators:
     TOTAL_DURATION = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[1]")
     ADVISOR_RATE = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[2]")
     TOTAL_CREDIT_CHARGED = (By.XPATH, "(//div[@class='totalValue--iTijP'])")
+    COUPON_TEXT_ON_USER_SIDE = (By.XPATH, "//div[@class='mbw-coupon-info-container']")
+    ACTUAL_PRICE = (By.XPATH, "(//span[@class='modePrice--Dl5PX'])[1]//span")
+    DISCOUNTED_PRICE = (By.XPATH, "(//span[@class='modePrice--Dl5PX'])[1]//div")
+
+    # 50% discount
+    BEFORE_50_DISCOUNT_PRICE = (By.XPATH, "(//span[@class='sale--QvuT7'])[1]")
+    AFTER_50_DISCOUNT_PRICE = (By.XPATH, "(//span[@class='sale--QvuT7'])[1]/following-sibling::div")
+    ADD_CHAT_TIME = (By.XPATH, "//button[@class='mbw-button-primary']")
+    CALL_END = (By.XPATH, "//button[@class='mbw-button-secondary']")
+    CLOSE_QR_CODE_SCREEN = (By.XPATH, "//button[@class='downloadAppPopupCloseBtn--E9rKR']")
+    TOTAL_DURATION = (By.XPATH, "//span[normalize-space()='Total duration']/following-sibling::div")
+    YOUR_RATE = (By.XPATH, "(//span[contains(@class,'descriptionTextBrowser--uQkcb')]/following-sibling::div)[2]")
+    SUBTOTAL_PRICE = (By.XPATH, "//span[normalize-space()='Subtotal']/following-sibling::div")
+    DISCOUNT_50_PERCENT = (By.XPATH, "//div[normalize-space()='Discount']/following-sibling::div")
+    TOTAL_PAY = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[1]")
+    YOU_SAVED = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[2]")
+    SELECT_ONE_MINUTE = (By.XPATH, "(//div[@class='durationItem--qG0j_'])[1]")
+
+
 
 
