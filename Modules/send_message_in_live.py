@@ -335,52 +335,6 @@ class SendMessage:
         user_web_locators = UserWebLocators()
         try:
 
-            # user.wait_for_element_visible(*user_web_locators.TOTAL_DURATION_50_PERCENT)
-            # total_duration =user.get_element_text(*user_web_locators.TOTAL_DURATION_50_PERCENT)            
-            # your_rate = float(user.get_element_text(*user_web_locators.YOUR_RATE_50_PERCENT).split("$")[1].strip().split("/")[0])
-            # total_credit_charged = float(user.get_element_text(*user_web_locators.SUBTOTAL_50_PERCENT).split("$")[1].strip())
-            # total_pay = (user.get_element_text(*user_web_locators.TOTAL_PAY))
-
-            # minutes = int(total_duration.split(":")[1].strip())
-            # if total_duration.split(":")[2].strip().startswith("0"):
-            #  seconds = int(total_duration.split(":")[2].strip()[-1])  # seconds = 7
-            # else:
-            #     seconds = int(total_duration.split(":")[2].strip())
-            # total_seconds = (minutes * 60) + seconds
-
-            # # Calculate total cost
-            # total = total_seconds * your_rate / 60
-            # total_cost = "{:.2f}".format(int(total * 100) / 100)
-            # print(f"Calculated total_cost: {total_cost}")
-
-            # changed_value= float(total_cost)
-            # discounted_pay = "{:.2f}".format(changed_value * 0.5)
-            # print(f"Calculated total_cost: {discounted_pay}")
-
-            # # add "$" sign in 30.00
-            # add_doller_sign_after_discount=f"${discounted_pay}"
-            # print(add_doller_sign_after_discount)
-
-            # # # add "$" sign in 30.00
-            # # add_doller_sign_before_discount=f"${total_cost}"
-            # # print(add_doller_sign_before_discount)
-
-            # print(f"Duration: {total_duration} ({total_seconds} seconds)")
-            # print(f"Rate: ${your_rate}/min")
-
-
-            # try:
-            #     assert float(total_cost) == float(total_credit_charged)
-            # except AssertionError:
-            #     print(f"Assertion failed for total_cost_before_discount: expected {total_credit_charged}, found {total_cost}")
-            #     raise
-
-            # try:
-            #     assert float(add_doller_sign_after_discount) == float(total_pay)
-            # except AssertionError:
-            #     print(f"Assertion failed for total_cost_before_discount: expected {total_pay}, found {add_doller_sign_after_discount}")
-            #     raise
-
             user.wait_for_element_visible(*user_web_locators.YOUR_RATE)
             call_rate= user.get_element_text(*user_web_locators.YOUR_RATE)
             your_rate = float(call_rate.replace("$", ""))
