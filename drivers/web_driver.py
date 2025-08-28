@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementNotInteractableException, ElementClickInterceptedException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -384,6 +385,18 @@ class WebDriver:
         """Set window size"""
         self.driver.set_window_size(width, height)
         print(f"Window size set to {width}x{height}")
+
+    def press_enter(self, locator_type, locator_value):
+        """Press enter on a specific element"""
+        try:
+            element = self.wait_for_element_visible(locator_type, locator_value)
+            if element:
+                element.send_keys(Keys.RETURN)
+                print(f"✓ Pressed enter on element: {locator_type} = {locator_value}")
+                return True
+        except Exception as e:
+            print(f"❌ Error pressing enter: {e}")
+            return False
     
     def take_screenshot(self, filename=None):
         """Take screenshot"""

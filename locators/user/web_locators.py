@@ -8,7 +8,9 @@ class UserWebLocators:
     PASSWORD = (By.XPATH, "//input[@id='password']")
     ACCEPT = (By.XPATH, "//button[@class='wpccBtn--dwsPv']")
     SIGN_IN_BUTTON = (By.XPATH, "//button[@data-testid='login-button' and @type='button']")
-    PROFILE = (By.XPATH, "//div[@type='button']//div[contains(text(),'Sweet')]")
+    PROFILE = (By.XPATH, "(//img[@class='avatar--e_6rk'])[1]")
+    SETTING_BUTTON_ON_PROFILE = (By.XPATH, "(//a[@class='popoverItem--CEguW'])[1]")
+    USER_ID = (By.XPATH, "//div[text()='User ID']/following-sibling::div")
     SEARCH_ADVISOR = (By.XPATH, "//input[@placeholder='Search by specialty or reading type']")
     FIND_ADVISOR = (By.XPATH, "(//button[@class='searchButton--zl5Mn'])[1]")
     CLICK_ADVISOR = (By.XPATH, "//img[@alt='{advisor_name}']")
@@ -109,6 +111,9 @@ class UserWebLocators:
     TOTAL_DURATION = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[1]")
     ADVISOR_RATE = (By.XPATH, "(//div[@class='descriptionDataBrowser--GrQN_'])[2]")
     TOTAL_CREDIT_CHARGED = (By.XPATH, "(//div[@class='totalValue--iTijP'])")
+    COUPON_TEXT_ON_USER_SIDE = (By.XPATH, "//div[@class='mbw-coupon-info-container']")
+    ACTUAL_PRICE = (By.XPATH, "(//span[@class='modePrice--Dl5PX'])[1]//span")
+    DISCOUNTED_PRICE = (By.XPATH, "(//span[@class='modePrice--Dl5PX'])[1]//div")
 
     # 50% discount
     BEFORE_50_DISCOUNT_PRICE = (By.XPATH, "(//span[@class='sale--QvuT7'])[1]")

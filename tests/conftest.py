@@ -147,24 +147,24 @@ def ios_advisor_driver():
 #             driver.quit_driver()
 
 @pytest.fixture(scope="function")
-def web_advisor():
+def web_advisor(request):
     """Fixture for Selenium WebDriver Advisor driver using LambdaTest"""
     driver = None
     try:
         driver = WebDriver(browser='Chrome', headless=False)
-        driver.start_driver(user_type='advisor')
+        driver.start_driver(user_type='advisor', build_name=request.fspath, test_name=request.function.__name__)
         yield driver
     finally:
         if driver and driver.driver:
             driver.quit_driver()
 
 @pytest.fixture(scope="function")
-def web_user():
+def web_user(request):
     """Fixture for Selenium WebDriver User driver using LambdaTest"""
     driver = None
     try:
         driver = WebDriver(browser='Chrome', headless=False)
-        driver.start_driver(user_type='user')
+        driver.start_driver(user_type='user', build_name=request.fspath, test_name=request.function.__name__)
         yield driver
     finally:
         if driver and driver.driver:
@@ -190,8 +190,8 @@ def test_data():
             'valid_password_mp': '360logica@09',
         },
         'advisor': {
-            'valid_email': 'anna.benishai+0302@ingenio.com',
-            'valid_password': 'test666',
+            'valid_email': 'mykhailo.orban+0108001@bargestech.com',
+            'valid_password': 'qwerty',
             'invalid_email': 'invalid@example.com',
             'invalid_password': 'wrongpassword',
             'phone_number': '6666666666',
