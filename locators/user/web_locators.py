@@ -14,8 +14,8 @@ class UserWebLocators:
     SEARCH_ADVISOR = (By.XPATH, "//input[@placeholder='Search by specialty or reading type']")
     FIND_ADVISOR = (By.XPATH, "(//button[@class='searchButton--zl5Mn'])[1]")
     CLICK_ADVISOR = (By.XPATH, "//img[@alt='{advisor_name}']")
-    CLICK_CHAT = (By.XPATH, "(//span[@class='modeTitle--KFD4l'][normalize-space()='Chat'])[2]")
-    START_CHAT = (By.XPATH, "//button[@class='mbw-button-primary']")
+    CLICK_CHAT = (By.XPATH, "(//span[@class='modeTitle--KFD4l'][normalize-space()='Chat'])[1]")
+    START_CHAT = (By.XPATH, "(//button[@class='mbw-button-primary'])[1]")
     TYPE_MESSAGE_USER2ADVISOR = (By.XPATH, "//textarea[@placeholder='Your message...']")
     SEND_MESSAGE_BUTTON_USER = (By.XPATH, "//button[normalize-space()='Send']")
     NETWORK_OFFLINE = (By.XPATH, "//div[contains(text(),'Network seems to be offline')]")
@@ -96,7 +96,7 @@ class UserWebLocators:
     # chat duration pop up
     BACK_BUTTON = (By.XPATH, "(//div[@class='arrowImgContainer--bSijc'])[1]")
     FORWARD_BUTTON = (By.XPATH, "(//div[@class='arrowImgContainer--bSijc'])[2]")
-    MINUTES_TEXT = (By.XPATH, "//div[@class='mbw-duration-item-duration-selected']")
+    MINUTES_TEXT = (By.XPATH, "(//div[@class='mbw-duration-item-duration-selected'])[1]")
     CLOSE_POPUP_BUTTON = (By.XPATH, "(//button[@class='downloadAppPopupCloseBtn--E9rKR'])[1]")
     AMOUNT_BEFORE_PAYMENT_PRICE = (By.XPATH, "//div[@class='mbw-duration-item-selected']// div[@class='durationItemPriceContainerPrice--MBHsQ']")
     AMOUNT_BEFORE_PAYMENT_SALES = (By.XPATH, "//div[@class='mbw-duration-item-selected']// div[@class='durationItemPriceContainerSalesPrice--wS3iW']")
@@ -118,7 +118,7 @@ class UserWebLocators:
     # 50% discount
     BEFORE_50_DISCOUNT_PRICE = (By.XPATH, "(//span[@class='sale--QvuT7'])[1]")
     AFTER_50_DISCOUNT_PRICE = (By.XPATH, "(//span[@class='sale--QvuT7'])[1]/following-sibling::div")
-    ADD_CHAT_TIME = (By.XPATH, "//button[@class='mbw-button-primary']")
+    ADD_CHAT_TIME = (By.XPATH, "(//button[@data-testid='mbw-button'])[2]")
     CALL_END = (By.XPATH, "//button[@class='mbw-button-secondary']")
     CLOSE_QR_CODE_SCREEN = (By.XPATH, "//button[@class='downloadAppPopupCloseBtn--E9rKR']")
     TOTAL_DURATION = (By.XPATH, "//span[normalize-space()='Total duration']/following-sibling::div")
@@ -128,6 +128,9 @@ class UserWebLocators:
     TOTAL_PAY = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[1]")
     YOU_SAVED = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[2]")
     SELECT_ONE_MINUTE = (By.XPATH, "(//div[@class='durationItem--qG0j_'])[1]")
+
+    CHAT_DISCOUNT_TEXT = (By.XPATH, "(//span[@class='bubbdleText--PUOSa'])[1]")
+    DISCOUNT_ON_COUPON_TEXT = (By.XPATH, "(//DIV[@class='smallBlockValue--GRQbW'])[1]")
 
 
 
