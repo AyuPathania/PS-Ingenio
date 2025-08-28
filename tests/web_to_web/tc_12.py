@@ -20,13 +20,14 @@ class TestAdvisorLogin:
         user = web_user
         advisor = web_advisor
         user_web_locators = UserWebLocators()
-        web_user_web_locators = AdvisorWebLocators()
         advisor_web_locators = AdvisorWebLocators()
         login = Login()
         signup = Signup()
         credit_card = CreditCard()
         details_form = DetailsForm()
         send_message_in_live = SendMessage()
+        data = json.load(open('50_percent_discount.json'))
+        promo_code_50 = data['promocode50'][0]
         
         try:
             
@@ -52,7 +53,9 @@ class TestAdvisorLogin:
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.click(*user_web_locators.SIDEMENU_APPLY_PROMOCODE)
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU_PROMOCODE)
-            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, "autotest_pd_9")
+            user.input_text(*user_web_locators.SIDEMENU_PROMOCODE, promo_code_50)
+            data['promocode50'].pop(0)
+            json.dump(data, open('50_percent_discount.json', 'w'), indent=2) 
             user.wait_for_element_clickable(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             user.click(*user_web_locators.SIDEMENU_SUBMIT_BUTTON)
             
@@ -127,51 +130,8 @@ class TestAdvisorLogin:
 
 
 
-
-            # assert_bonus_message
-            # Expected_Bonus_Message = "Add $10, get $10 bonus"
-            # Actual_Bonus_Message=user.get_element_text(*user_web_locators.ADD_BONUS_BUTTON)
-            # user.assert_element_text_equals(*user_web_locators.ADD_BONUS_BUTTON, Expected_Bonus_Message)
-            # print("✅ Message validation successful — "+Actual_Bonus_Message)
-
-            
-            # user.click(*user_web_locators.ADD_BONUS_BUTTON)
-            # print("show bonus button")
-            # time.sleep(10)
-            # user.wait_for_element_visible(*user_web_locators.CONFIRM_BONUS_MESSAGE)
-            # user.click(*user_web_locators.CONFIRM_BONUS_MESSAGE)
-            # time.sleep(3)
-            # user.wait_for_element_visible(*user_web_locators.CLOSE_CHAT_POPUP)
-            # user.click(*user_web_locators.CLOSE_CHAT_POPUP)
-
-
-            # check_user_balance
-            # time.sleep(2)
-            # user.wait_for_element_visible(*user_web_locators.USER_ICON)
-            # user.click(*user_web_locators.USER_ICON)
-            # time.sleep(2)
-            # user.wait_for_element_visible(*user_web_locators.BALANCE)
-            # # user.click(*user_web_locators.BALANCE)
-
-            # # balance_assertion
-            # Expected_balance = "Credits: $20"
-            # Actual_balance = user.get_element_text(*user_web_locators.BALANCE)
-            # user.assert_element_text_equals(*user_web_locators.BALANCE, Expected_balance)
-            # print("✅ Message validation successful — "+Actual_balance)
-
-
-
-            # user.click(*user_web_locators.START_CHAT)
             time.sleep(10)
-            
-            
-            
-            
-            
-            
-
-         
-            
+                        
             # Wait a moment to see the result
             # time.sleep(5)
             
