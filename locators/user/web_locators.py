@@ -86,6 +86,10 @@ class UserWebLocators:
     SIDE_MENU_PAYMENT_METHOD = (By.XPATH, "(//div[text()='Payment methods'])[1]")
     ADD_NEW_PAYMENT_METHOD_BUTTON = (By.XPATH, "//div[text()='Add a new payment method']")
     ADD_ANOTHER_PAYMENT_METHOD = (By.XPATH, "//div[text()='Add another payment method']")
+    SEARCH_BY_ADVISORS = (By.XPATH, "//input[@placeholder='Search by advisors']")
+    SELECT_ADVISOR = (By.XPATH, "//div[@class='infoData--z5ros']")
+    CONNECT_NOW_BUTTON = (By.XPATH, "//a[@class='connectButton--s0k4r']//button[@class='mbw-button-primary']")
+    MESSAGE_LIMIT_TEXT = (By.XPATH, "//div[@class='messageLimit--SKUrc']")
 
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Your message...']")
@@ -128,6 +132,11 @@ class UserWebLocators:
     TOTAL_PAY = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[1]")
     YOU_SAVED = (By.XPATH, "(//div[normalize-space()='Total']/following-sibling::div)[2]")
     SELECT_ONE_MINUTE = (By.XPATH, "(//div[@class='durationItem--qG0j_'])[1]")
+
+    # new user chat
+    YOUR_MESSAGE = (By.XPATH, "//textarea[@id='sendInput']")
+    USER_ACTIVITY_MSG_TEXT = (By.XPATH, "(//div[@class='chatBubbleMessage--KYtJC'])[1]")
+
 
 
 

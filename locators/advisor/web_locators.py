@@ -37,6 +37,9 @@ class AdvisorWebLocators:
     SELECT_CLIENT = (By.XPATH, "//td[normalize-space()='{client}']")
     MESSAGE_TAB = (By.XPATH, "//div[normalize-space()='Messages']")
     CLOSE_CHAT_BUTTON = (By.XPATH, "//button[normalize-space()='Close Chat']")
+    ADVISOR_ACTIVITY_MSG_TEXT = (By.XPATH, "(//div[@class='instant-message__content'])[last()]")
+    ACTIONS_MESSAGE = (By.XPATH, "//button[@class='cl-shedule-button']")
+    CLOSE_ACTIVITY_CHATBOX = (By.XPATH, "//div[@class='close']")
     
 
 
@@ -44,7 +47,7 @@ class AdvisorWebLocators:
     #chat on live call
     TYPE_MESSAGE= (By.XPATH, "//textarea[@placeholder='Say hello to your client']")
     SEND=(By.XPATH, "//div[@class='send-button']")
-    ADVISOR_SEND_MESSAGE_TEXT=(By.XPATH, "(//div[contains(@class,'message')])[last()]")
+    ADVISOR_SEND_MESSAGE_TEXT=(By.XPATH, "(//div[contains(@class,'instant-message__content')])[last()]")
     MESSAGE_TEXT_FROM_USER=(By.XPATH, "(//div[@class='client-message'])")
     NOTES_TAB = (By.XPATH, "//div[normalize-space()='Notes']")
     

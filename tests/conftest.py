@@ -178,7 +178,7 @@ def test_data():
     
     return {
         'user': {
-            'valid_email': 'ayushp@aa.com',
+            'valid_email': 'random3@aa.com',
             'valid_password': 'test123',
             'advisor_name': 'Hubert Blaine',
             'invalid_email': 'invalid@example.com',
