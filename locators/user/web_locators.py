@@ -99,6 +99,7 @@ class UserWebLocators:
     MINUTES_TEXT = (By.XPATH, "(//div[@class='mbw-duration-item-duration-selected'])[1]")
     CLOSE_POPUP_BUTTON = (By.XPATH, "(//button[@class='downloadAppPopupCloseBtn--E9rKR'])[1]")
     AMOUNT_BEFORE_PAYMENT_PRICE = (By.XPATH, "//div[@class='mbw-duration-item-selected']// div[@class='durationItemPriceContainerPrice--MBHsQ']")
+    AMOUNT_BEFORE_PAYMENT_PRICE_ON_CHAT = (By.XPATH, "//div[@class='mbw-duration-item-current-balance']")
     AMOUNT_BEFORE_PAYMENT_SALES = (By.XPATH, "//div[@class='mbw-duration-item-selected']// div[@class='durationItemPriceContainerSalesPrice--wS3iW']")
     ACTUAL_AMOUNT = (By.XPATH, "(//b[@class='priceTitle--iaF2q'])[1]")
     PAY_TEXT = (By.XPATH, "//div[@class='buyButton--Xc2uP']")

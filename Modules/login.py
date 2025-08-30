@@ -50,7 +50,7 @@ class Login:
             # Take screenshot on failure
             
 
-    def login_in_with_advisor(self, web_advisor, test_data):
+    def login_in_with_advisor(self, web_advisor, email, password):
    
         advisor = web_advisor
         advisor_web_locators = AdvisorWebLocators()
@@ -59,9 +59,9 @@ class Login:
             advisor.go_to_url("https://stg-expert.purpleocean.co/sign-in")
             advisor.wait_for_page_load()
             advisor.wait_for_element_visible(*advisor_web_locators.EMAIL_ADVISOR)
-            advisor.input_text(*advisor_web_locators.EMAIL_ADVISOR, test_data['advisor']['valid_email'])
+            advisor.input_text(*advisor_web_locators.EMAIL_ADVISOR, email)
             advisor.wait_for_element_visible(*advisor_web_locators.PASSWORD_ADVISOR)
-            advisor.input_text(*advisor_web_locators.PASSWORD_ADVISOR, test_data['advisor']['valid_password'])
+            advisor.input_text(*advisor_web_locators.PASSWORD_ADVISOR, password)
             advisor.click(*advisor_web_locators.SIGN_IN_BUTTON_ADVISOR)
             # advisor.wait_for_element_visible(*locators.ALLOW_NOTIFICATIONS)
             # advisor.click(*locators.ALLOW_NOTIFICATIONS)

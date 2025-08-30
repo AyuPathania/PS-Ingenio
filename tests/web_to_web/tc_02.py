@@ -21,27 +21,32 @@ class TestAdvisorLogin:
         mixpanel_locators = MixPanelLocators()
         login = Login()   
         status = "failed"
+        advisor_name = test_data['advisor']['Hubert']['name']
+        advisor_email = test_data['advisor']['Hubert']['email']
+        advisor_password = test_data['advisor']['Hubert']['password']
+        user_email = test_data['user']['tc_02']['email']
+        user_password = test_data['user']['tc_02']['password']
         
         with allure.step("Initialize test setup"):
             pass
         
         try:
             with allure.step("Login with advisor account"):
-                login.login_in_with_advisor(advisor, test_data)
+                login.login_in_with_advisor(advisor, advisor_email, advisor_password)
                 time.sleep(10)
 
             with allure.step("Login with user account"):
-                login.login_in_with_user(user, "tc02@lt.com", "test123")
+                login.login_in_with_user(user, user_email, user_password)
                 time.sleep(10)
             
             with allure.step("Search and select advisor"):
                 try:
                     user.wait_for_element_visible(*user_web_locators.SEARCH_ADVISOR)
                     user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
-                    user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
+                    user.input_text(*user_web_locators.SEARCH_ADVISOR, advisor_name)
                     user.click(*user_web_locators.FIND_ADVISOR)
                     formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
-                            user_web_locators.CLICK_ADVISOR[1].format(advisor_name="tetsLanguageOrder"))
+                            user_web_locators.CLICK_ADVISOR[1].format(advisor_name=advisor_name))
                     user.wait_for_element_visible(*formatted_locator)
                     user.click(*formatted_locator)
                     user.wait_for_element_visible(*user_web_locators.CLICK_CHAT)
@@ -55,8 +60,10 @@ class TestAdvisorLogin:
                     time.sleep(5)
                     if  user.is_element_displayed(*user_web_locators.AMOUNT_BEFORE_PAYMENT_PRICE):
                         amount_before_payment=user.get_element_text(*user_web_locators.AMOUNT_BEFORE_PAYMENT_PRICE)
+                    elif user.is_element_displayed(*user_web_locators.AMOUNT_BEFORE_PAYMENT_PRICE_ON_CHAT):
+                        user.click(*user_web_locators.FORWARD_BUTTON)
+                        time.sleep(5)
                     else:
-                        amount_before_payment=user.get_element_text(*user_web_locators.AMOUNT_BEFORE_PAYMENT_SALES)
                         amount_before_payment=user.get_element_text(*user_web_locators.AMOUNT_BEFORE_PAYMENT_SALES)
                 except Exception as e:
                     allure.attach(f"Failed to verify amount before payment: {e}", "Error", allure.attachment_type.TEXT)

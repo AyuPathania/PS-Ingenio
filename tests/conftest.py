@@ -177,26 +177,78 @@ def test_data():
     fake = Faker()
     
     return {
+        # user data
         'user': {
-            'valid_email': 'ayushp@aa.com',
-            'valid_password': 'test123',
-            'advisor_name': 'Hubert Blaine',
-            'invalid_email': 'invalid@example.com',
-            'invalid_password': 'wrongpassword',
-            'phone_number': '6666666666',
-            'otp': '656565',
-            'messageuser': 'Hello,@Hubert. I need your advice 2day!',
-            'valid_email_mp': 'basithusain@lambdatest.com',
-            'valid_password_mp': '360logica@09',
+            'tc_01':{
+                'email': "tc01@lt.com",
+                'password': "test123"
+            },
+            'tc_02':{
+                'email': "tc02@lt.com",
+                'password': "test123"
+            },
+            'tc_03':{
+                'email': "tc03@lt.com",
+                'password': "test123"
+            },
+            'tc_04':{
+                'email': "tc04@lt.com",
+                'password': "test123"
+            },
+            'tc_05':{
+                'email': "tc05@lt.com",
+                'password': "test123"
+            },
+            'tc_06':{
+                'email': "tc06@lt.com",
+                'password': "test123"
+            },
+            'tc_07':{
+                'email': "tc07@lt.com",
+                'password': "test123"
+            },
+            'tc_08':{
+                'email': "tc08@lt.com",
+                'password': "test123"
+            },
+            'tc_09':{
+                'email': "tc09@lt.com",
+                'password': "test123"
+            },
+            'tc_10':{
+                'email': "tc10@lt.com",
+                'password': "test123"
+            },
+            'tc_11':{
+                'email': "tc11@lt.com",
+                'password': "test123"
+            },
+            'tc_12':{
+                'email': "tc12@lt.com",
+                'password': "test123"
+            },
+            'tc_13':{
+                'email': "tc13@lt.com",
+                'password': "test123"
+            },
+            'default':{
+                'email': "ayushp@aa.com",
+                'password': "test123"
+            }
         },
+
+        # advisor data
         'advisor': {
-            'valid_email': 'mykhailo.orban+0108001@bargestech.com',
-            'valid_password': 'qwerty',
-            'invalid_email': 'invalid@example.com',
-            'invalid_password': 'wrongpassword',
-            'phone_number': '6666666666',
-            'otp': '656565',
-            'messageadvisor': 'Hello, @Sweet what you want 2day!',
+            'Hubert':{
+                         'name': 'Hubert Blaine',
+                         'email': 'anna.benishai+0302@ingenio.com',
+                         'password': 'test666',
+                     },
+            'tetsLanguageOrder':{
+                         'name': 'tetsLanguageOrder',
+                         'email': 'mykhailo.orban+0108001@bargestech.com',
+                         'password': 'qwerty',
+            }
         },
         'creditcard': {
             'card_number': fake.credit_card_number(card_type="visa"),
