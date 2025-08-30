@@ -1,19 +1,17 @@
 from selenium.webdriver.common.by import By
 from locators.locator_factory import LocatorFactory
 from config.url_config import URLConfig
-from config.credential_config import CredentialConfig
+from config.credentials import CredentialConfig
 import time
 import random
 import string
 
 class Signup:
-    def signup_with_user(self, web_user, user_name=None, password=None):
+    def signup_with_user(self, web_user):
         """Test valid signup on Web user using LambdaTest"""
         user = web_user
         user_web_locators = LocatorFactory.get_user_web_locators()
         user_urls = URLConfig.get_user_urls()
-        user_credentials = CredentialConfig.get_user_credentials()
-        
         try:
                 
                 # Use dynamic URL based on platform

@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 from drivers.appium_driver import AppiumDriver
 from drivers.web_driver import WebDriver
 from config.config import Config
-from config.credential_config import CredentialConfig
+from config.credentials import CredentialConfig
 from faker import Faker
 
 def pytest_sessionfinish(session, exitstatus):
@@ -193,22 +193,90 @@ def test_data():
     """Test data for all test cases"""
     from faker import Faker
     fake = Faker()
-    
-    # Get dynamic credentials for current platform
-    user_credentials = CredentialConfig.get_user_credentials()
-    advisor_credentials = CredentialConfig.get_advisor_credentials()
-    
     return {
-        'user': user_credentials,
-        'advisor': advisor_credentials,
+        # user data
+        'kasamba': {
+            'user': {
+                'tc_01': {
+                    'email': "kasamba_tc_01@lt.com",
+                    'password': "test123"
+                },
+                'tc_02': {
+                    'email': "kasamba_tc_02@lt.com",
+                    'password': "test123"
+                },
+                'tc_03': {
+                    'email': "kasamba_tc_03@lt.com",
+                    'password': "test123"
+                },
+            },
+            'advisor': {
+                'Hubert': {
+                    'name': 'Hubert Blaine',
+                    'email': 'kasamba_advisor_Hubert@lt.com',
+                    'password': 'test666',
+                },
+                'tetsLanguageOrder': {
+                    'name': 'tetsLanguageOrder',
+                    'email': 'kasamba_advisor_tetsLanguageOrder@lt.com',
+                    'password': 'qwerty',
+                }
+            }
+        },
+        'purpelgarden': {
+            'user': {
+                'tc_01': {
+                    'email': "tc01@lt.com",
+                    'password': "test123"
+                },
+            },
+            'advisor': {
+                'Hubert': {
+                         'name': 'Hubert Blaine',
+                         'email': 'anna.benishai+0302@ingenio.com',
+                         'password': 'test666',
+                },
+                'tetsLanguageOrder': {
+                         'name': 'tetsLanguageOrder',
+                         'email': 'mykhailo.orban+0108001@bargestech.com',
+                         'password': 'qwerty',
+                }
+            }
+        },
+        'purpelocean': {
+            'user': {
+                'tc_01': {
+                    'email': "purpelocean_tc_01@lt.com",
+                    'password': "test123"
+                },
+            },
+            'advisor': {
+                'Hubert': {
+                    'name': 'Hubert Blaine',
+                    'email': 'purpelocean_advisor_Hubert@lt.com',
+                    'password': 'test666',
+                },
+                'tetsLanguageOrder': {
+                    'name': 'tetsLanguageOrder',
+                    'email': 'purpelocean_advisor_tetsLanguageOrder@lt.com',
+                    'password': 'qwerty',
+                }
+            }
+        },
         'creditcard': {
-            'card_number': fake.credit_card_number(card_type="visa"),
-            'card_expire': fake.credit_card_expire(),
-            'card_security_code': fake.credit_card_security_code(card_type="visa"),
-            'postcode': fake.postcode(),
-            'card_holder_name': fake.name()
+            
+                'card_number': fake.credit_card_number(card_type="visa"),
+                'card_expire': fake.credit_card_expire(),
+                'card_security_code': fake.credit_card_security_code(card_type="visa"),
+                'postcode': fake.postcode(),
+                'card_holder_name': fake.name()
+            
         }
     }
 
+@pytest.fixture(scope="session")
+def platform_credentials(test_data):
+    """Get platform credentials using CredentialConfig"""
+    return CredentialConfig.get_platform_credentials(test_data)
 
 

@@ -1,15 +1,14 @@
 import allure
 from drivers.web_driver import WebDriver
 from locators.locator_factory import LocatorFactory
-from Modules.signup import Signup
 from Modules.login import Login
+from Modules.signup import Signup
 from Modules.send_message_in_live import SendMessage
 from Modules.credit_card import CreditCard
 from Modules.your_details_form import DetailsForm
+from config.credentials import CredentialConfig
 import time
 import re
-import random
-import string
 
 @allure.epic("Ingenio Platform")
 @allure.feature("Live Chat Functionality")
@@ -20,50 +19,49 @@ class TestAdvisorLogin:
     @allure.title("Test New User Live Chat with Message Types")
     @allure.description("Test complete flow from signup to live chat with various message types")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_01(self, web_user, web_advisor, test_data):
-        
+    def test_tc_01(self, web_user, web_advisor, test_data, platform_credentials): 
         
         """Test valid login on Web Advisor app using LambdaTest"""
+        current_platform = CredentialConfig.get_platform()
+        creds = platform_credentials[current_platform]['tc_01']        
         advisor = web_advisor
-        user = web_user
-        
-        # Get dynamic locators based on current platform
+        user = web_user        
         user_web_locators = LocatorFactory.get_user_web_locators()
-        advisor_web_locators = LocatorFactory.get_advisor_web_locators()
-        
-        signup = Signup()
+        advisor_web_locators = LocatorFactory.get_advisor_web_locators()       
         login = Login()
         send_message_in_live = SendMessage()
         credit_card = CreditCard()
         details_form = DetailsForm()
+        signup = Signup()
         status = "failed"
 
         with allure.step("Initialize test setup"):
             # Log the current platform being used
-            from config.config import Config
-            current_platform = Config.get_platform()
             allure.attach(f"Platform: {current_platform}", "Test Configuration", allure.attachment_type.TEXT)
             
             # Log the locator classes being used
             allure.attach(f"User locators: {user_web_locators.__name__}\nAdvisor locators: {advisor_web_locators.__name__}", 
                          "Locator Classes", allure.attachment_type.TEXT)
+            
+            # Log the credentials being used
+            allure.attach(f"Using credentials for platform: {current_platform}\nUser: {creds['user']}\nAdvisor: {creds['advisor']}", 
+                         "Credentials", allure.attachment_type.TEXT)
         
         try:
             with allure.step("Perform user signup"):
                 signup.signup_with_user(user)
-                
             with allure.step("Login with advisor account"):
-                login.login_in_with_advisor(advisor, test_data)
+                login.login_in_with_advisor(advisor, creds['advisor']['email'], creds['advisor']['password'])
                 time.sleep(10)
 
             with allure.step("Search and select advisor"):
                 # add_credit_card details
                 try:
                     user.wait_for_element_visible(*user_web_locators.FIND_ADVISOR)
-                    user.input_text(*user_web_locators.SEARCH_ADVISOR, "tetsLanguageOrder")
+                    user.input_text(*user_web_locators.SEARCH_ADVISOR, creds['advisor']['name'])
                     user.click(*user_web_locators.FIND_ADVISOR)
                     formatted_locator = (user_web_locators.CLICK_ADVISOR[0], 
-                            user_web_locators.CLICK_ADVISOR[1].format(advisor_name="tetsLanguageOrder"))
+                            user_web_locators.CLICK_ADVISOR[1].format(advisor_name=creds['advisor']['name']))
                     user.wait_for_element_visible(*formatted_locator)
                     user.click(*formatted_locator)
                 except Exception as e:
@@ -73,10 +71,6 @@ class TestAdvisorLogin:
             with allure.step("Initiate chat session"):
                 try:
                     user.click(*user_web_locators.CLICK_CHAT)
-                    
-                    # Wait a moment for page to load
-                    time.sleep(3)
-                    
                     user.wait_for_element_visible(*user_web_locators.START_CHAT)
                     user.click(*user_web_locators.START_CHAT)
                     time.sleep(10)
@@ -100,7 +94,7 @@ class TestAdvisorLogin:
                 user.click(*user_web_locators.START_LIVE_CHAT_BUTTON)
                 advisor.wait_for_element_visible(*advisor_web_locators.ACCEPT_CHAT)
                 advisor.click(*advisor_web_locators.ACCEPT_CHAT)
-                time.sleep(15)
+                time.sleep(20)
                 
             with allure.step("Test special character messages"):
                 send_message_in_live.user_send_special_character_message_in_live(user)
@@ -234,6 +228,8 @@ class TestAdvisorLogin:
                 allure.attach("All message type tests completed successfully", "Test Status", allure.attachment_type.TEXT)
             
         except Exception as e:
+            user.wait_for_element_clickable(*user_web_locators.HANG_UP_BUTTON)
+            user.click(*user_web_locators.HANG_UP_BUTTON)            
             allure.attach(f"Test failed: {e}", "Error Details", allure.attachment_type.TEXT)
             print(f"Test failed: {e}")
             # Take screenshot on failure
@@ -245,4 +241,3 @@ class TestAdvisorLogin:
                 # Clean up
                 user.quit_driver()
                 advisor.quit_driver()
-

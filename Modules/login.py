@@ -2,22 +2,16 @@ from selenium.webdriver.common.by import By
 # from locators.test.ayush_locator import AyushLocator
 from locators.locator_factory import LocatorFactory
 from config.url_config import URLConfig
-from config.credential_config import CredentialConfig
 
 import time
 
 class Login:
     
-    def login_in_with_user(self, web_user, user_name=None, password=None):
+    def login_in_with_user(self, web_user, user_name, password):
         """Test valid login on Web Advisor app using LambdaTest"""
         user = web_user
         user_web_locators = LocatorFactory.get_user_web_locators()
         user_urls = URLConfig.get_user_urls()
-        user_credentials = CredentialConfig.get_user_credentials()
-
-        # Use passed parameters if provided, otherwise use dynamic credentials
-        email_to_use = user_name if user_name is not None else user_credentials['valid_email']
-        password_to_use = password if password is not None else user_credentials['valid_password']
         
         try:
             # Use dynamic URL based on platform
@@ -43,9 +37,9 @@ class Login:
             user.wait_for_element_visible(*user_web_locators.SIGN_IN)
             user.click(*user_web_locators.SIGN_IN)
             user.wait_for_element_visible(*user_web_locators.EMAIL)
-            user.input_text(*user_web_locators.EMAIL, email_to_use)
+            user.input_text(*user_web_locators.EMAIL, user_name)
             user.wait_for_element_visible(*user_web_locators.PASSWORD)
-            user.input_text(*user_web_locators.PASSWORD, password_to_use)
+            user.input_text(*user_web_locators.PASSWORD, password)
             user.wait_for_element_visible(*user_web_locators.ACCEPT)
             user.click(*user_web_locators.ACCEPT)
             user.wait_for_element_visible(*user_web_locators.SIGN_IN_BUTTON)
@@ -57,29 +51,19 @@ class Login:
             # Take screenshot on failure
             
 
-    def login_in_with_advisor(self, web_advisor, test_data=None):
+    def login_in_with_advisor(self, web_advisor, email, password):
    
         advisor = web_advisor
         advisor_web_locators = LocatorFactory.get_advisor_web_locators()
         advisor_urls = URLConfig.get_advisor_urls()
-        advisor_credentials = CredentialConfig.get_advisor_credentials()
-
-        # Use test_data if provided, otherwise use dynamic credentials
-        if test_data and 'advisor' in test_data:
-            email_to_use = test_data['advisor']['valid_email']
-            password_to_use = test_data['advisor']['valid_password']
-        else:
-            email_to_use = advisor_credentials['valid_email']
-            password_to_use = advisor_credentials['valid_password']
-
         try:
             # Use dynamic URL based on platform
             advisor.go_to_url(advisor_urls['login_url'])
             advisor.wait_for_page_load()
             advisor.wait_for_element_visible(*advisor_web_locators.EMAIL_ADVISOR)
-            advisor.input_text(*advisor_web_locators.EMAIL_ADVISOR, email_to_use)
+            advisor.input_text(*advisor_web_locators.EMAIL_ADVISOR, email)
             advisor.wait_for_element_visible(*advisor_web_locators.PASSWORD_ADVISOR)
-            advisor.input_text(*advisor_web_locators.PASSWORD_ADVISOR, password_to_use)
+            advisor.input_text(*advisor_web_locators.PASSWORD_ADVISOR, password)
             advisor.click(*advisor_web_locators.SIGN_IN_BUTTON_ADVISOR)
             # advisor.wait_for_element_visible(*locators.ALLOW_NOTIFICATIONS)
             # advisor.click(*locators.ALLOW_NOTIFICATIONS)

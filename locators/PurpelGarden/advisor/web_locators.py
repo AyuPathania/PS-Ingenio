@@ -13,6 +13,12 @@ class PurpelGardenAdvisorWebLocators:
     ACCEPT_CHAT = (By.XPATH, "(//button[normalize-space()='ANSWER CHAT'])[1]")
     TYPE_MESSAGE_ADVISOR2USER = (By.XPATH, "//textarea[@placeholder='Say hello to your client']")
     SEND_MESSAGE_BUTTON_ADVISOR = (By.XPATH, "//button[@class='client-card-messages__send-button']")
+    SEARCH_USER_ID = (By.XPATH, "//input[@placeholder='Search client nickname, name or ID']")
+    SEARCH_RESULT_TEXT = (By.XPATH, "//div[@class='cs-table-name']")
+    CLIENT_ID = (By.XPATH, "//td[@class='td-client-id']")
+    COUPON_BUTTON = (By.XPATH, "//button[@class='offer-btn']")
+    SELECTED_COUPON = (By.XPATH, "//div[@class='discount-card selected with-mark']")
+    SEND_COUPON_BUTTON = (By.XPATH, "//button[@class='send-promotion-btn']")
     NETWORK_SESSION_EXPIRED = (By.XPATH, "//div[normalize-space()='Your session got disconnected due to connectivity issues, we apologize for the inconvenience']")
     TOTAL_DURATION = (By.XPATH, "//label[normalize-space()='Total duration']/following-sibling::span")
     YOUR_RATE = (By.XPATH, "//label[normalize-space()='Your rate']/following-sibling::span")
@@ -41,3 +47,5 @@ class PurpelGardenAdvisorWebLocators:
     ADVISOR_SEND_MESSAGE_TEXT=(By.XPATH, "(//div[contains(@class,'message')])[last()]")
     MESSAGE_TEXT_FROM_USER=(By.XPATH, "(//div[@class='client-message'])")
     NOTES_TAB = (By.XPATH, "//div[normalize-space()='Notes']")
+    
+    

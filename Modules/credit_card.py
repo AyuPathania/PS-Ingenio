@@ -15,6 +15,7 @@ class CreditCard:
         
         try:
             user.wait_for_element_visible(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
+            user.wait_for_element_clickable(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
             user.click(*user_web_locators.ADD_NEW_CREDIT_DEBIT_CARD)
             
             time.sleep(10)
@@ -40,7 +41,9 @@ class CreditCard:
             user.input_text(*user_web_locators.CVV, test_data['creditcard']['card_security_code'])
             user.switch_to_default_content()
             
-            user.input_text(*user_web_locators.ZIP_CODE, test_data['creditcard']['postcode'])            
+            user.wait_for_element_visible(*user_web_locators.ZIP_CODE)
+            user.input_text(*user_web_locators.ZIP_CODE, test_data['creditcard']['postcode'])
+            user.wait_for_element_clickable(*user_web_locators.ADD_CARD_BUTTON)            
             user.click(*user_web_locators.ADD_CARD_BUTTON)
             # user.wait_for_element_visible(*user_web_locators.PAY_BUTTON)
             # user.click(*user_web_locators.PAY_BUTTON)

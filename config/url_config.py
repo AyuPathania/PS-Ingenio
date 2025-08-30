@@ -12,8 +12,8 @@ class URLConfig:
     PLATFORM_URLS = {
         'kasamba': {
             'user': {
-                'base_url': 'https://kasamba.user.baseurl.com/',
-                'login_url': 'https://kasamba.user.loginurl.com/',
+                'base_url': 'https://st:purplestage@staging.purplegarden.co/',
+                'login_url': 'https://staging.purplegarden.co/',
                 'signup_url': 'https://kasamba.user.signupurl.com/'
             },
             'advisor': {
